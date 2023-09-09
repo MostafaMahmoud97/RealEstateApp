@@ -34,7 +34,7 @@ return new class extends Migration
             $table->double("gas_meter_reading")->default(0)->nullable();
             $table->integer("water_meter_number")->default(0)->nullable();
             $table->double("water_meter_reading")->default(0)->nullable();
-            $table->text("description")->default("")->nullable();
+            $table->text("description")->nullable();
             $table->boolean("is_publish")->default(0)->nullable();
 
             $table->softDeletes();
