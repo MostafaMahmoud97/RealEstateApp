@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer("number_parking_lots")->default(0)->nullable();
             $table->double("sign_area")->default(0)->nullable();
             $table->string("sign_location")->default("")->nullable();
-            $table->text("special_sign_specification")->default("")->nullable();
+            $table->text("special_sign_specification")->nullable();
             $table->bigInteger("insurance_policy_number")->default(0)->nullable();
             $table->boolean("mezzanine")->default(0)->nullable();
             $table->boolean("unit_finishing")->default(0)->nullable();
