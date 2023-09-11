@@ -4,6 +4,7 @@
 namespace App\Services\Admin;
 
 
+use App\Http\Resources\Admin\RealEstate\editRealEstateResource;
 use App\Http\Resources\Admin\RealEstate\ListAllPropertiesResource;
 use App\Http\Resources\Admin\RealEstate\PaginateIndexResource;
 use App\Http\Resources\Admin\RealEstate\PaginateListAllUnitsResource;
@@ -18,6 +19,7 @@ use App\Models\Unit;
 use App\Models\User;
 use App\Traits\GeneralFileService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -150,17 +152,28 @@ class RealEstateService
         return Response::successResponse(ShowPropertyResource::make($Unit),__("real_estate.property has been fetched"));
     }
 
-    public function listAllUnits(){
-        $Units = Unit::select("id","real_estate_id","purpose_property_id","price","unit_number","unit_area")->with(["RealEstate" =>function($q){
-            $q->select("id","building_type_id","building_type_use_id","national_address")
+    public function listAllUnits($request){
+
+        $Units = Unit::with(["RealEstate" =>function($q){
+            $q->select("id","lat","lon","building_type_id","building_type_use_id","national_address")
                 ->with(["media","BuildingType" => function($q){
-                $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
-            },"BuildingTypeUse" => function($q){
-                $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
-            }]);
+                    $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+                },"BuildingTypeUse" => function($q){
+                    $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+                }]);
         },"PurposeProperty" => function($q){
             $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
-        }])->paginate(10);
+        }]);
+
+        if($request->lat && $request->lon){
+            $Units = $Units->select(DB::raw("units.id,units.real_estate_id,units.purpose_property_id,units.price,units.unit_number,units.unit_area,SQRT(POWER(real_estates.lat - ".$request->lat.",2) + POWER(real_estates.lon - ".$request->lon.",2)) AS distance"))
+                ->join('real_estates','units.real_estate_id' ,'=','real_estates.id')->orderBy('distance');
+        }else{
+
+            $Units = $Units->select("id","real_estate_id","purpose_property_id","price","unit_number","unit_area");
+        }
+
+        $Units = $Units->paginate(8);
 
         return Response::successResponse(PaginateListAllUnitsResource::make($Units),__("real_estate.Units have been fetched success"));
     }
@@ -179,10 +192,30 @@ class RealEstateService
         },"Media"])->find($unit_id);
 
         if (!$Unit){
-            return Response::errorResponse(__("real_estate.please select valid property"));
+            return Response::errorResponse(__("real_estate.please select valid unit"));
         }
 
         return Response::successResponse(ShowPropertyResource::make($Unit),__("real_estate.Unit has been fetched"));
-
     }
+
+    public function editRealEstate($unit_id){
+        $Unit = Unit::find($unit_id);
+        if (!$Unit){
+            return Response::errorResponse(__("real_estate.please select valid unit"));
+        }
+        $RealEstate_id = $Unit->RealEstate->id;
+
+        $RealEstate = RealEstate::with(["BuildingType" => function ($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        },"BuildingTypeUse" => function ($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        },"Units" => function ($q){
+            $q->with(["PurposeProperty" => function($q){
+                $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+            },"CommercialInfo","media"]);
+        },"media"])->find($RealEstate_id);
+
+        return Response::successResponse(new editRealEstateResource($RealEstate),__("real_estate.Real Estate has been fetched success for update"));
+    }
+
 }

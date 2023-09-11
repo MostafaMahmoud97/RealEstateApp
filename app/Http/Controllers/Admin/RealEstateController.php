@@ -51,11 +51,15 @@ class RealEstateController extends Controller
         return $this->service->showProperty($request);
     }
 
-    public function listAllUnits(){
-        return $this->service->listAllUnits();
+    public function listAllUnits(Request $request){
+        return $this->service->listAllUnits($request);
     }
 
     public function showUnit($unit_id){
         return $this->service->showUnit($unit_id);
+    }
+
+    public function editRealEstate($unit_id){
+        return $this->service->editRealEstate($unit_id);
     }
 }

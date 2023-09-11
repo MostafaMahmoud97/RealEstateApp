@@ -20,6 +20,8 @@ class ListAllUnitsResource extends JsonResource
             "unit_area" => $this->unit_area,
             "purpose" => $this['PurposeProperty']->title,
             "address" => $this['RealEstate']->national_address,
+            "lat" => $this['RealEstate']->lat,
+            "lon" => $this['RealEstate']->lon,
             "building_type" => $this['RealEstate']['BuildingType']->title,
             "building_type_use" => $this['RealEstate']['BuildingTypeUse']->title,
             "CoverRealEstate" => count($this['RealEstate']['Media']) > 0 ? $this['RealEstate']['Media'][0]->file_path : "",

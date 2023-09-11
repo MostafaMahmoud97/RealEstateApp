@@ -38,5 +38,6 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("show-property",[RealEstateController::class,"showProperty"]);
         Route::get("list-units",[RealEstateController::class,"listAllUnits"]);
         Route::get("show-unit/{unit_id}",[RealEstateController::class,"showUnit"]);
+        Route::get("edit-real-estate/{unit_id}",[RealEstateController::class,"editRealEstate"]);
     });
 });
