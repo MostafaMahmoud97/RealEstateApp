@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RealEstate\RealEstateStoreRequest;
+use App\Http\Requests\Admin\RealEstate\RealEstateUpdateRequest;
 use App\Models\Media;
 use App\Models\Unit;
 use App\Services\Admin\RealEstateService;
@@ -61,5 +62,17 @@ class RealEstateController extends Controller
 
     public function editRealEstate($unit_id){
         return $this->service->editRealEstate($unit_id);
+    }
+
+    public function updateRealEstate($real_estate_id,RealEstateUpdateRequest $request){
+        return $this->service->updateRealEstate($real_estate_id,$request);
+    }
+
+    public function deleteRealEstate($real_estate_id){
+        return $this->service->deleteRealEstate($real_estate_id);
+    }
+
+    public function deleteUnit($unit_id){
+        return $this->service->deleteUnit($unit_id);
     }
 }

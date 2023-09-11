@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\RealEstate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RealEstateStoreRequest extends FormRequest
+class RealEstateUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class RealEstateStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "user_id" => "required|numeric",
             "building_type_id" => "required|numeric|in:1,2,3,4,5,6,7,8,9",
             "building_type_use_id" => "required|numeric|in:1,2",
             "national_address" => "required|string",
@@ -33,8 +32,8 @@ class RealEstateStoreRequest extends FormRequest
             "number_floors" => "numeric|nullable",
             "number_units" => "numeric|nullable",
             "number_parking_lots" => "numeric|nullable",
-            "cover_real_estate" => "required|mimes:jpg,png,jpeg|max:2048",
             "units" => "required|array|min:1",
+            "units.*.id" => "required|numeric",
             "units.*.purpose_property_id" => "required|numeric|in:1,2",
             "units.*.price" => "required|numeric",
             "units.*.unit_type" => "required|string",
@@ -53,8 +52,6 @@ class RealEstateStoreRequest extends FormRequest
             "units.*.water_meter_reading" => "numeric|nullable",
             "units.*.description" => "string|nullable",
             "units.*.is_publish" => "required|boolean|nullable",
-            "units.*.media" => "required|array|min:1",
-            "units.*.media.*" => "max:2048",
             "units.*.unit_length" => "numeric|nullable",
             "units.*.unit_direction" => "string|nullable",
             "units.*.number_parking_lots" => "numeric|nullable",
@@ -70,8 +67,6 @@ class RealEstateStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            "user_id.required" => __("real_estate.you must enter user id"),
-            "user_id.numeric" => __("real_estate.you must enter user id as number"),
             "building_type_id.required" => __("real_estate.you must choose building type"),
             "building_type_id.numeric" => __("real_estate.you must choose building type and send id number"),
             "building_type_id.in" => __("real_estate.you must choose building type from 1 : 9"),
@@ -92,6 +87,8 @@ class RealEstateStoreRequest extends FormRequest
             "units.required" => __("real_estate.you must add unit"),
             "units.array" => __("real_estate.you must add unit as array"),
             "units.min" => __("real_estate.you must add min 1 unit"),
+            "units.*.id.required" => __("real_estate.you must send unit id"),
+            "units.*.id.numeric" => __("real_estate.you must send unit id as number"),
             "units.*.purpose_property_id.required" => __("real_estate.you must choose purpose property"),
             "units.*.purpose_property_id.numeric" => __("real_estate.you must choose purpose property and send id number"),
             "units.*.price.required" => __("real_estate.you must enter price"),
@@ -115,7 +112,7 @@ class RealEstateStoreRequest extends FormRequest
             "units.*.water_meter_reading.numeric" => __("real_estate.you must enter water meter reading as numeric"),
             "units.*.description.string" => __("real_estate.you must enter description as string"),
             "units.*.is_publish.required" => __("real_estate.you must choose is_publish"),
-                "units.*.description.boolean" => __("real_estate.you must choose is_publish as yes or no"),
+            "units.*.description.boolean" => __("real_estate.you must choose is_publish as yes or no"),
             "units.*.media.required" => __("real_estate.you must choose unit media"),
             "units.*.media.array" => __("real_estate.you must choose unit media as array"),
             "units.*.unit_length.numeric" => __("real_estate.you must enter unit length as number"),

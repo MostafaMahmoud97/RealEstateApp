@@ -5,7 +5,6 @@ namespace App\Services\Admin;
 
 
 use App\Http\Resources\Admin\RealEstate\editRealEstateResource;
-use App\Http\Resources\Admin\RealEstate\ListAllPropertiesResource;
 use App\Http\Resources\Admin\RealEstate\PaginateIndexResource;
 use App\Http\Resources\Admin\RealEstate\PaginateListAllUnitsResource;
 use App\Http\Resources\Admin\RealEstate\ShowPropertyResource;
@@ -18,7 +17,6 @@ use App\Models\RealEstate;
 use App\Models\Unit;
 use App\Models\User;
 use App\Traits\GeneralFileService;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -216,6 +214,69 @@ class RealEstateService
         },"media"])->find($RealEstate_id);
 
         return Response::successResponse(new editRealEstateResource($RealEstate),__("real_estate.Real Estate has been fetched success for update"));
+    }
+
+    public function updateRealEstate($real_estate_id,$request){
+        $RealEstate = RealEstate::find($real_estate_id);
+        if (!$RealEstate){
+            return Response::errorResponse(__("real_estate.No reel estate by this id"));
+        }
+
+
+        $RealEstate = $RealEstate->update($request->all());
+
+        if($request->units){
+            foreach ($request->units as $unit){
+                $Unit = Unit::where("real_estate_id",$real_estate_id)->find($unit["id"]);
+                if (!$unit){
+                    return Response::errorResponse(__("real_estate.No unit by this id"));
+                }
+                $Unit->Update($unit);
+
+                //update commercial info
+                if ($request->building_type_use_id == 1){
+                    $CommercialInfo = $Unit->CommercialInfo;
+                    $CommercialInfo->update($unit);
+                }
+
+            }
+        }
+
+        return Response::successResponse($RealEstate,__("real_estate.Real estate has been updated success"));
+    }
+
+    public function deleteRealEstate($real_estate_id){
+        $RealEstate = RealEstate::find($real_estate_id);
+        if (!$RealEstate){
+            return Response::errorResponse(__("real_estate.No reel estate by this id"));
+        }
+
+        $Units = $RealEstate->Units;
+        foreach ($Units as $unit){
+            if ($unit->unit_status_id != 1 && $unit->unit_status_id != 2){
+                return Response::errorResponse(__("real_estate.You can't delete this real estate because unit is not new or pending"));
+            }
+
+            $unit->delete();
+        }
+
+        $RealEstate->delete();
+        return Response::successResponse([],__("real_estate.Real estate has been deleted success"));
+    }
+
+    public function deleteUnit($unit_id){
+        $Unit = Unit::find($unit_id);
+        if (!$Unit){
+            return Response::errorResponse(__("real_estate.please select valid unit"));
+        }
+
+        $Units = Unit::where("real_estate_id",$Unit->real_estate_id)->get()->count();
+        if ($Units == 1){
+            return Response::errorResponse(__("real_estate.you can't delete this unit you can delete the real estate"));
+        }
+
+        $Unit->delete();
+        return Response::successResponse([],__("real_estate.Unit has been deleted success"));
     }
 
 }

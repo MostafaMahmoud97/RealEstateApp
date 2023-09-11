@@ -88,4 +88,22 @@ class ClientService
 
         return Response::successResponse($Client,__("client.Client has been reset password success"));
     }
+
+    public function is_active($client_id){
+        $client = User::find($client_id);
+        if(!$client){
+            return Response::errorResponse([],__("client.no client by this id"));
+        }
+
+        if($client->is_active == 0){
+            $client->update([
+                "is_active" => 1
+            ]);
+        }else{
+            $client->update([
+                "is_active" => 0
+            ]);
+        }
+        return Response::successResponse($client,__("client.Client has been updated success"));
+    }
 }

@@ -6,6 +6,7 @@ use \App\Http\Controllers\Admin\AdminAuthController;
 use \App\Http\Controllers\Admin\ClientController;
 use \App\Http\Controllers\Admin\CommercialActivitiesController;
 use \App\Http\Controllers\Admin\RealEstateController;
+use \App\Http\Controllers\Admin\EmployeeController;
 
 Route::post('login',[AdminAuthController::class,'login']);
 Route::post('logout',[AdminAuthController::class,'logout'])->middleware('auth:admin-api');
@@ -21,6 +22,7 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("show/{id}",[ClientController::class,"show"]);
         Route::put("update/{id}",[ClientController::class,"update"]);
         Route::put("reset-password/{id}",[ClientController::class,"resetPassword"]);
+        Route::put("is-active/{client_id}",[ClientController::class,"is_active"]);
     });
 
     Route::group(["prefix"=> "commercial-activity","middleware" => "auth:admin-api"],function (){
@@ -39,5 +41,17 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("list-units",[RealEstateController::class,"listAllUnits"]);
         Route::get("show-unit/{unit_id}",[RealEstateController::class,"showUnit"]);
         Route::get("edit-real-estate/{unit_id}",[RealEstateController::class,"editRealEstate"]);
+        Route::put("update-real-estate/{real_estate_id}",[RealEstateController::class,"updateRealEstate"]);
+        Route::delete("delete-real-estate/{real_estate_id}",[RealEstateController::class,"deleteRealEstate"]);
+        Route::delete("delete-unit/{unit_id}",[RealEstateController::class,"deleteUnit"]);
+    });
+
+    Route::group(['prefix' => 'employee','middleware' => "auth:admin-api"],function (){
+        Route::post("store",[EmployeeController::class,"store"]);
+        Route::get("index",[EmployeeController::class,"index"]);
+        Route::get("show/{id}",[EmployeeController::class,"show"]);
+        Route::put("update/{id}",[EmployeeController::class,"update"]);
+        Route::put("reset-password/{id}",[EmployeeController::class,"resetPassword"]);
+        Route::put("is-active/{id}",[EmployeeController::class,"is_active"]);
     });
 });

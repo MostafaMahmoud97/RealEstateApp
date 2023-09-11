@@ -54,9 +54,6 @@ class ClientStoreRequest extends FormRequest
             "password.required" => __("client.you must enter password"),
             "password.confirmed" => __("client.password confirmation not match with password"),
             "password.min" => __("client.you must enter min:8 characters in password"),
-
-
-
         ];
     }
 }

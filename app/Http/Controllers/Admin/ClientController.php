@@ -53,4 +53,8 @@ class ClientController extends Controller
 
         return $this->service->resetPassword($id,$request);
     }
+
+    public function is_active($client_id){
+        return $this->service->is_active($client_id);
+    }
 }
