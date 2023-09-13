@@ -11,6 +11,7 @@ use App\Services\Admin\RealEstateService;
 use App\Traits\GeneralFileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class RealEstateController extends Controller
 {
@@ -44,8 +45,12 @@ class RealEstateController extends Controller
         return $this->service->store($request);
     }
 
-    public function listAllProperties($user_id){
-        return $this->service->listAllProperties($user_id);
+    public function listAllStatus(){
+        return $this->service->listAllStatus();
+    }
+
+    public function listAllProperties($user_id,Request $request){
+        return $this->service->listAllProperties($user_id,$request);
     }
 
     public function showProperty(Request $request){
@@ -65,6 +70,20 @@ class RealEstateController extends Controller
     }
 
     public function updateRealEstate($real_estate_id,RealEstateUpdateRequest $request){
+        //validate media
+        if ($request->new_units){
+            foreach ($request->new_units as $unit){
+                if ($unit['media']){
+                    foreach ($unit['media'] as $media){
+                        $check = $this->getValidateFile($media);
+                        if (!$check){
+                            return Response::errorResponse(__("real_estate.You must add image or video in media"));
+                        }
+                    }
+                }
+            }
+        }
+
         return $this->service->updateRealEstate($real_estate_id,$request);
     }
 
@@ -74,5 +93,25 @@ class RealEstateController extends Controller
 
     public function deleteUnit($unit_id){
         return $this->service->deleteUnit($unit_id);
+    }
+
+    public function updateCoverRealEstate(Request $request){
+        $Validator = Validator::make($request->all(),[
+            "cover" => "required|mimes:jpg,png,jpeg|max:2048",
+        ],[
+            "cover.required" => __("real_estate.you must choose cover image"),
+            "cover.mimes" => __("real_estate.you must choose cover image as jpg,png,jpeg"),
+        ]);
+
+        if ($Validator->fails()){
+            return Response::errorResponse($Validator->errors()->first());
+        }
+
+
+        return $this->service->updateCoverRealEstate($request);
+    }
+
+    public function updateMediaUnit(Request $request){
+        return $this->service->updateMediaUnit($request);
     }
 }

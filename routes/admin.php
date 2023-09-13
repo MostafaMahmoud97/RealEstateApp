@@ -35,6 +35,7 @@ Route::group(['middleware' => 'localRequest'], function()
 
     Route::group(["prefix" => "real-estate","middleware" => "auth:admin-api"],function (){
         Route::get("help-data",[RealEstateController::class,"getHelpData"]);
+        Route::get("list-unit-status",[RealEstateController::class,"listAllStatus"]);
         Route::post("store",[RealEstateController::class,"store"]);
         Route::get("list-all-properties/{user_id}",[RealEstateController::class,"listAllProperties"]);
         Route::get("show-property",[RealEstateController::class,"showProperty"]);
@@ -44,6 +45,8 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::put("update-real-estate/{real_estate_id}",[RealEstateController::class,"updateRealEstate"]);
         Route::delete("delete-real-estate/{real_estate_id}",[RealEstateController::class,"deleteRealEstate"]);
         Route::delete("delete-unit/{unit_id}",[RealEstateController::class,"deleteUnit"]);
+        Route::put("update-cover-real-estate",[RealEstateController::class,"updateCoverRealEstate"]);
+        Route::put("update-media-unit",[RealEstateController::class,"updateMediaUnit"]);
     });
 
     Route::group(['prefix' => 'employee','middleware' => "auth:admin-api"],function (){

@@ -25,10 +25,6 @@ class UnitStatusTableSeeder extends Seeder
                 "title_en" => "Pending"
             ],
             [
-                "title_ar" => "قيد الانتظار",
-                "title_en" => "Pending"
-            ],
-            [
                 "title_ar" => "تاجر",
                 "title_en" => "Seller"
             ],

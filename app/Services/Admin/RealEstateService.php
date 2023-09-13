@@ -15,6 +15,7 @@ use App\Models\Media;
 use App\Models\PurposeProperty;
 use App\Models\RealEstate;
 use App\Models\Unit;
+use App\Models\UnitStatus;
 use App\Models\User;
 use App\Traits\GeneralFileService;
 use Illuminate\Support\Facades\DB;
@@ -98,15 +99,36 @@ class RealEstateService
         return Response::successResponse($RealEstate,__("real_estate.Real estate has been added success"));
     }
 
-    public function listAllProperties($user_id){
+    public function listAllStatus(){
+        $status = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
+        return Response::successResponse($status,__("real_estate.Status has been fetched success"));
+    }
+
+    public function listAllProperties($user_id,$request){
         $User = User::find($user_id);
         if(!$User){
             return Response::errorResponse(__("real_estate.You must choose valid user"));
         }
 
-        $Units = Unit::select('id','real_estate_id','beneficiary_id','purpose_property_id','unit_status_id','price')->where(function ($q) use ($user_id){
-            $q->where("beneficiary_id",$user_id)->OrWhereHas("RealEstate",function ($q) use ($user_id){
-                $q->where("user_id",$user_id);
+        $Units = Unit::select('id','real_estate_id','beneficiary_id','purpose_property_id','unit_status_id','price')->where(function ($q) use ($user_id,$request){
+            $q->where(function ($q) use ($user_id,$request){
+                $q->where("beneficiary_id",$user_id)->where(function ($q) use ($user_id,$request){
+                    $q->whereHas("RealEstate",function ($q) use ($user_id,$request){
+                        $q->where("national_address",'like','%'.$request->search.'%');
+                    })->OrWhere("id",$request->search);
+                })->whereIn("unit_status_id",$request->status);
+            })->OrWhere(function ($q) use ($request){
+                $q->WhereHas("Beneficiary",function ($q) use ($request){
+                    $q->where("name","like","%".$request->search."%");
+                })->whereIn("unit_status_id",$request->status);
+            })->OrWhere(function ($q) use ($user_id,$request){
+                $q->where("id",$request->search)->whereHas("RealEstate",function ($q) use ($user_id,$request){
+                    $q->where("user_id",$user_id);
+                })->whereIn("unit_status_id",$request->status);
+            })->OrWhere(function ($q) use ($user_id,$request){
+                $q->whereHas("RealEstate",function ($q) use ($user_id,$request){
+                    $q->where("user_id",$user_id)->where("national_address",'like','%'.$request->search.'%');
+                })->whereIn("unit_status_id",$request->status);
             });
         })->with(["RealEstate" => function($q){
             $q->with(["BuildingType" => function($q){
@@ -242,6 +264,44 @@ class RealEstateService
             }
         }
 
+        // add units
+        $UnitsArray = [];
+        if ($request->new_units){
+            foreach ($request->new_units as $unit){
+                $unit['real_estate_id'] = $real_estate_id;
+
+                $UnitX = Unit::create($unit);
+                $unit['unit_id'] = $UnitX->id;
+                array_push($UnitsArray,$unit);
+                if ($unit['media']){
+                    $path = "Unit_Media/";
+                    foreach ($unit['media'] as $media){
+                        $file_name = $this->SaveFile($media,$path);
+                        $type = $this->getFileType($media);
+                        Media::create([
+                            'mediable_type' => $UnitX->getMorphClass(),
+                            'mediable_id' => $UnitX->id,
+                            'title' => "Unit",
+                            'type' => $type,
+                            'directory' => $path,
+                            'filename' => $file_name
+                        ]);
+                    }
+                }
+            }
+        }
+
+
+        // add commercial data
+        if($request->building_type_use_id == 1){
+            if($request->new_units){
+                foreach ($UnitsArray as $unit){
+                    $commercialInfo = CommercialInfo::create($unit);
+                }
+
+            }
+        }
+
         return Response::successResponse($RealEstate,__("real_estate.Real estate has been updated success"));
     }
 
@@ -278,5 +338,66 @@ class RealEstateService
         $Unit->delete();
         return Response::successResponse([],__("real_estate.Unit has been deleted success"));
     }
+
+    public function updateCoverRealEstate($request){
+        $RealEstate = RealEstate::find($request->real_estate_id);
+        if (!$RealEstate){
+            return Response::errorResponse(__("real_estate.No reel estate by this id"));
+        }
+        $CoverImages = $RealEstate->Media;
+
+        foreach ($CoverImages as $coverImage){
+            $coverImage->delete();
+        }
+
+        if ($request->cover){
+            $path = "RealEstateCover/";
+            $file_name = $this->SaveFile($request->cover,$path);
+            $type = $this->getFileType($request->cover);
+            Media::create([
+                'mediable_type' => $RealEstate->getMorphClass(),
+                'mediable_id' => $RealEstate->id,
+                'title' => "Real Estate",
+                'type' => $type,
+                'directory' => $path,
+                'filename' => $file_name
+            ]);
+        }
+        $CoverImages = $RealEstate->Media;
+
+        return Response::successResponse($RealEstate,__("real_estate.cover real estate image has been updated success"));
+    }
+
+        public function updateMediaUnit($request)
+        {
+            $Unit = Unit::find($request->unit_id);
+            if (!$Unit) {
+                return Response::errorResponse(__("real_estate.please select valid unit"));
+            }
+            $UnitImages = $Unit->Media;
+
+            foreach ($UnitImages as $image) {
+                $image->delete();
+            }
+
+            if ($request->media) {
+                $path = "Unit_Media/";
+                foreach ($request->media as $media) {
+                    $file_name = $this->SaveFile($media, $path);
+                    $type = $this->getFileType($media);
+                    Media::create([
+                        'mediable_type' => $Unit->getMorphClass(),
+                        'mediable_id' => $Unit->id,
+                        'title' => "Unit",
+                        'type' => $type,
+                        'directory' => $path,
+                        'filename' => $file_name
+                    ]);
+                }
+                $UnitImages = $Unit->Media;
+
+                return Response::successResponse($Unit, __("real_estate.media unit has been updated success"));
+            }
+        }
 
 }

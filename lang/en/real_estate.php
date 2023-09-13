@@ -18,6 +18,10 @@ return [
     "Real estate has been deleted success" => "Real estate has been deleted success",
     "Unit has been deleted success" => "Unit has been deleted success",
     "you can't delete this unit you can delete the real estate" => "you can't delete this unit you can delete the real estate",
+    "Status has been fetched success" => "Status has been fetched success",
+    "cover real estate image has been updated success" => "cover real estate image has been updated success",
+    "media unit has been updated success" => "media unit has been updated success",
+
 
     "you must send unit id" => "you must send unit id",
     "you must send unit id as number" => "you must send unit id as number",
