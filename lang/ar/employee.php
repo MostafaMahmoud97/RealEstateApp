@@ -8,6 +8,8 @@ return [
     "Employee has been fetched success" => "لقد تم جلب الموظف النجاح",
     "Employee has been updated success" => "تم تحديث الموظف بنجاح",
     "Employee has been reset password success" => "تمت إعادة تعيين كلمة المرور بنجاح للموظف",
+    "logo has been updated" => "تم تحديث الشعار",
+
 
     "you must enter full name" => "يجب ادخال الاسم بالكامل",
     "you must enter string in full name" => "يجب ادخال الاسم صحيحاً",
@@ -20,5 +22,9 @@ return [
     "you must enter password" => "يجب ادخال البسورد",
     "password confirmation not match with password" => "تاكيد البسورد لا يتطبق مع البسورد",
     "you must enter min:8 characters in password" => "يجب ان لا يقل البسورد عن 8 حروف",
+    "you must enter job title" => "يجب عليك إدخال المسمى الوظيفي",
+    "you must enter job title as string" => "يجب عليك إدخال المسمى الوظيفي كسلسلة",
+    "you must choose logo image" => "يجب عليك اختيار صورة الشعار",
+    "you must choose logo image as jpg,png,jpeg" => "يجب عليك اختيار صورة الشعار بصيغة jpg,png,jpeg",
 
 ];

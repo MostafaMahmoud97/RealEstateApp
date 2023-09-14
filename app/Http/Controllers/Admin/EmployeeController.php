@@ -34,6 +34,21 @@ class EmployeeController extends Controller
         return $this->service->update($id,$request);
     }
 
+    public function update_logo($id,Request $request){
+        $Validator = Validator::make($request->all(),[
+            "logo" => "required|mimes:jpg,png,jpeg|max:2048"
+        ],[
+            "logo.required" => __("employee.you must choose logo image"),
+            "logo.mimes" => __("employee.you must choose logo image as jpg,png,jpeg"),
+        ]);
+
+        if ($Validator->fails()){
+            return Response::errorResponse($Validator->errors());
+        }
+
+        return $this->service->updateLogo($id,$request);
+    }
+
     public function resetPassword($id,Request $request){
         $Validation = Validator::make($request->all(),[
             "password" => "required|confirmed|min:8"

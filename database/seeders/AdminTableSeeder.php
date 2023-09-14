@@ -21,6 +21,7 @@ class AdminTableSeeder extends Seeder
             'phone' => '01110347546',
             'email' => 'zoka@gmail.com',
             'password' => Hash::make('123456789'),
+            'job_title' => "admin",
             'is_active' => 1
         ]);
     }

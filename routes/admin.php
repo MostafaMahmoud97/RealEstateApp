@@ -54,6 +54,7 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("index",[EmployeeController::class,"index"]);
         Route::get("show/{id}",[EmployeeController::class,"show"]);
         Route::put("update/{id}",[EmployeeController::class,"update"]);
+        Route::put("update-logo/{id}",[EmployeeController::class,"update_logo"]);
         Route::put("reset-password/{id}",[EmployeeController::class,"resetPassword"]);
         Route::put("is-active/{id}",[EmployeeController::class,"is_active"]);
     });

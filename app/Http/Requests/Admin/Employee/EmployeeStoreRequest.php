@@ -27,7 +27,9 @@ class EmployeeStoreRequest extends FormRequest
             "name" => "required|string",
             "phone" => "required|string|unique:admins,phone",
             "email" => "required|email|unique:admins,email",
-            "password" => "required|confirmed|min:8"
+            "password" => "required|confirmed|min:8",
+            "job_title" => "required|string",
+            "logo" => "required|mimes:jpg,png,jpeg|max:2048"
         ];
     }
 
@@ -45,6 +47,10 @@ class EmployeeStoreRequest extends FormRequest
             "password.required" => __("employee.you must enter password"),
             "password.confirmed" => __("employee.password confirmation not match with password"),
             "password.min" => __("employee.you must enter min:8 characters in password"),
+            "job_title.required" => __("employee.you must enter job title"),
+            "job_title.string" => __("employee.you must enter job title as string"),
+            "logo.required" => __("employee.you must choose logo image"),
+            "logo.mimes" => __("employee.you must choose logo image as jpg,png,jpeg"),
         ];
     }
 }

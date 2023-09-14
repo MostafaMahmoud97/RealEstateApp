@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 
 
 use App\Models\Admin;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,12 @@ class AdminAuthService
             $token = Auth::guard('admin-api')->user()->createToken('passport_token')->accessToken;
             $user = Auth::guard('admin-api')->user();
 
+            $media = $user->media;
+            if (count($media) > 0){
+                $user->logo = $media[0]->file_path;
+            }else{
+                $user->logo = "";
+            }
 
             if($user->is_active == 0){
                 Return Response::errorResponse("you can't login");

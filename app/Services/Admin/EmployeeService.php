@@ -3,32 +3,48 @@
 
 namespace App\Services\Admin;
 
-
+use App\Http\Resources\Admin\Employee\EmployeeIndexResource;
 use App\Http\Resources\Admin\Employee\PaginateIndexResource;
 use App\Models\Admin;
-use App\Models\TypeIdentity;
-use App\Models\User;
+use App\Models\Media;
+use App\Traits\GeneralFileService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 class EmployeeService
 {
+    use GeneralFileService;
 
     public function store($request){
+
         $Employee = Admin::create([
             "name" => $request->name,
             "phone" => $request->phone,
             "email" => $request->email,
-            "password" => Hash::make($request->password)
+            "job_title" => $request->job_title,
+            "password" => Hash::make($request->password),
         ]);
+
+        if ($request->logo){
+            $path = "Admin_logo/";
+            $file_name = $this->SaveFile($request->logo,$path);
+            $type = $this->getFileType($request->logo);
+            Media::create([
+                'mediable_type' => $Employee->getMorphClass(),
+                'mediable_id' => $Employee->id,
+                'title' => "Admin logo",
+                'type' => $type,
+                'directory' => $path,
+                'filename' => $file_name
+            ]);
+        }
 
         return Response::successResponse($Employee,__("employee.Employee has been created success"));
     }
 
     public function index($request){
-        $Employees = Admin::where(function ($q) use ($request){
+        $Employees = Admin::with("media")->where(function ($q) use ($request){
             $q->where("name","like","%".$request->search."%")
                 ->OrWhere("phone","like","%".$request->search."%")
                 ->OrWhere("id","like","%".$request->search."%")
@@ -45,11 +61,11 @@ class EmployeeService
     }
 
     public function show($id){
-        $Employee = Admin::find($id);
+        $Employee = Admin::with("media")->find($id);
         if(!$Employee){
             return Response::errorResponse([],__("employee.no employee by this id"));
         }
-        return Response::successResponse($Employee,__('employee.Employee has been fetched success'));
+        return Response::successResponse(new EmployeeIndexResource($Employee),__('employee.Employee has been fetched success'));
     }
 
     public function update($id,$request){
@@ -60,6 +76,34 @@ class EmployeeService
         $Employee->update($request->all());
 
         return Response::successResponse($Employee,__("employee.Employee has been updated success"));
+    }
+
+    public function updateLogo($id,$request){
+        $Employee = Admin::find($id);
+        if(!$Employee){
+            return Response::errorResponse([],__("employee.no employee by this id"));
+        }
+
+        if ($request->logo){
+            $Media = $Employee->media;
+            foreach ($Media as $media){
+                $media->delete();
+            }
+
+            $path = "Admin_logo/";
+            $file_name = $this->SaveFile($request->logo,$path);
+            $type = $this->getFileType($request->logo);
+            Media::create([
+                'mediable_type' => $Employee->getMorphClass(),
+                'mediable_id' => $Employee->id,
+                'title' => "Admin logo",
+                'type' => $type,
+                'directory' => $path,
+                'filename' => $file_name
+            ]);
+        }
+
+        return Response::successResponse($Employee,__("employee.logo has been updated"));
     }
 
     public function resetPassword($id,$request){

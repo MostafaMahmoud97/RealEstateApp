@@ -18,6 +18,7 @@ class Admin extends Authenticatable
         'email',
         'password',
         'is_active',
+        'job_title'
     ];
 
     /**
@@ -44,6 +45,10 @@ class Admin extends Authenticatable
     {
         $url = "localhost:8000/reset?token=".$token.'&email='.$this->email;
         $this->notify(new ResetPasswordNotification($url,$this->name));
+    }
+
+    public function media(){
+        return $this->morphMany(Media::class,"mediable");
     }
 
 }
