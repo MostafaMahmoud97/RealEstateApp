@@ -45,7 +45,7 @@ class VerifyEmailNotify extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from('mostafamahmoud111115@gmail.com','Real Estate Month - App')
+                    ->from('info@aqarbroker.com','Real Estate Month - App')
                     ->line('Verify Email')
                     ->line("Hello ".$this->name)
                     ->line("You must use this token number in order to verify the email")

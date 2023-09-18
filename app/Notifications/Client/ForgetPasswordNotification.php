@@ -45,7 +45,7 @@ class ForgetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from('mostafamahmoud111115@gmail.com','Aqarr_Broker App')
+            ->from('info@aqarbroker.com','Aqarr_Broker App')
             ->line('Reset Password')
             ->line("Hello ".$this->name)
             ->line("verification code : ".$this->token)

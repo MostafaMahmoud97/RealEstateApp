@@ -45,7 +45,7 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from('mostafamahmoud111115@gmail.com','Real Estate Month - App')
+                    ->from('info@aqarbroker.com','Real Estate Month - App')
                     ->line('Reset Password')
                     ->line("Hello ".$this->name)
                     ->line("You Can Reset Password From Here")
