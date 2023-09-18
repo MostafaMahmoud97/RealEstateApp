@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string("generated_id")->default("")->nullable();
             $table->unsignedBigInteger("type_identities_id")->default(0);
             $table->string('name');
             $table->string("nationality")->default("")->nullable();

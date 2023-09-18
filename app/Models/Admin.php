@@ -43,7 +43,7 @@ class Admin extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $url = "localhost:8000/reset?token=".$token.'&email='.$this->email;
+        $url = "https://admin.aqarbroker.com/reset-password?token=".$token.'&email='.$this->email;
         $this->notify(new ResetPasswordNotification($url,$this->name));
     }
 

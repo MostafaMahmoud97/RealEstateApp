@@ -24,7 +24,7 @@ class ClientStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "type_id" => "required|numeric",
+            "type_id" => "required|numeric|in:1,2,3",
             "name" => "required|string",
             "nationality" => "required|string",
             "id_number" => "required|numeric",
@@ -39,6 +39,7 @@ class ClientStoreRequest extends FormRequest
         return [
             "type_id.required" => __("client.you must choose type id"),
             "type_id.numeric"=> __("client.you must enter number in type id"),
+            "type_id.in"=> __("client.you must enter number in type id as 1,2,3"),
             "name.required"=> __("client.you must enter full name"),
             "name.string" => __("client.you must enter string in full name"),
             "nationality.required" => __("client.you must enter nationality"),

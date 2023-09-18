@@ -8,13 +8,15 @@ use \App\Http\Controllers\Admin\CommercialActivitiesController;
 use \App\Http\Controllers\Admin\RealEstateController;
 use \App\Http\Controllers\Admin\EmployeeController;
 
-Route::post('login',[AdminAuthController::class,'login']);
-Route::post('logout',[AdminAuthController::class,'logout'])->middleware('auth:admin-api');
-Route::post('forgot-password',[AdminAuthController::class,'forgot_password']);
-Route::post('change-password',[AdminAuthController::class,'change_password']);
+
 
 Route::group(['middleware' => 'localRequest'], function()
 {
+    Route::post('login',[AdminAuthController::class,'login']);
+    Route::post('logout',[AdminAuthController::class,'logout'])->middleware('auth:admin-api');
+    Route::post('forgot-password',[AdminAuthController::class,'forgot_password']);
+    Route::post('change-password',[AdminAuthController::class,'change_password']);
+
     Route::group(['prefix' => 'client','middleware' => "auth:admin-api"],function (){
         Route::get("type-identities",[ClientController::class,"getTypeIdentities"]);
         Route::post("store",[ClientController::class,"store"]);

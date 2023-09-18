@@ -12,6 +12,7 @@ return [
 
     "you must choose type id" => "you must choose type id",
     "you must enter number in type id" => "you must enter number in type id",
+    "you must enter number in type id as 1,2,3" => "you must enter number in type id as 1,2,3",
     "you must enter full name" => "you must enter full name",
     "you must enter string in full name" => "you must enter string in full name",
     "you must enter nationality" => "you must enter nationality",

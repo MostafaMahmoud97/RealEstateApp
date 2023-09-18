@@ -20,6 +20,10 @@ class AdminAuthService
         $validator = Validator::make($request->all(), [
             'admin_identity' => 'required',
             'password' => 'required|min:6'
+        ],[
+            "admin_identity.required" => __("auth.admin identity is required"),
+            "password.required" => __("auth.the password is required"),
+            "password.min" => __("auth.The minimum password length is 6 characters"),
         ]);
 
         if ($validator->fails()) {
@@ -41,13 +45,13 @@ class AdminAuthService
             }
 
             if($user->is_active == 0){
-                Return Response::errorResponse("you can't login");
+                return Response::errorResponse(__("auth.you can't login"));
             }
 
             $data = ['user' => $user, 'token' => $token];
             return Response::successResponse($data);
         } else {
-            return Response::errorResponse('email,phone number or password incorrect');
+            return Response::errorResponse(__('auth.email,phone number or password incorrect'));
         }
     }
 
@@ -63,7 +67,7 @@ class AdminAuthService
     public function logout(){
         $user = Auth::guard('admin-api')->user()->token();
         $user->revoke();
-        return Response::successResponse([],"logout success");
+        return Response::successResponse([],__("auth.logout success"));
     }
 
     public function forgot_password(Request $request){
@@ -79,9 +83,9 @@ class AdminAuthService
         }
 
         if ($status == Password::RESET_THROTTLED){
-            return Response::errorResponse('reset message is sent to mail');
+            return Response::errorResponse(__('auth.reset message is sent to mail'));
         }elseif ($status == Password::INVALID_USER){
-            return Response::errorResponse('this user not found');
+            return Response::errorResponse(__('auth.this user not found'));
         }
 
         return Response::errorResponse($status);
@@ -92,6 +96,13 @@ class AdminAuthService
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6'
+        ],[
+            "token.required" => __("auth.token has been required"),
+            "email.required" => __("auth.email has been required"),
+            "email.email" => __("auth.The email must be valid and contain @"),
+            "password.required" => __("auth.the password is required"),
+            "password.min" => __("auth.The minimum password length is 6 characters"),
+            "password.confirmed" => __("auth.the confirmation password doesn't match with password"),
         ]);
 
         $status = Password::broker("admins")->reset(
@@ -105,7 +116,7 @@ class AdminAuthService
         );
 
         if ($status == Password::PASSWORD_RESET){
-            return Response::successResponse([],"password reset successfully");
+            return Response::successResponse([],__("auth.password reset successfully"));
         }
 
         return Response::errorResponse($status,[],500);

@@ -12,6 +12,7 @@ return [
 
     "you must choose type id" => "يجب ادخال نوع الهوية",
     "you must enter number in type id" => "يجب ادخال رقم فى نوع الهوية",
+    "you must enter number in type id as 1,2,3" => "يجب عليك إدخال الرقم في معرف النوع كـ 1،2،3",
     "you must enter full name" => "يجب ادخال الاسم بالكامل",
     "you must enter string in full name" => "يجب ادخال الاسم صحيحاً",
     "you must enter nationality" => "يجب ادخال الجنسية",

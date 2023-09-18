@@ -16,7 +16,6 @@ class ClientIndexResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "generated_id" => $this->generated_id,
             "full_name" => $this->name,
             "nationality" => $this->nationality,
             "id_number" => $this->id_number,

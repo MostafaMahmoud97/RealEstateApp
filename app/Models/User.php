@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\Client\ForgetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +23,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         "id",
-        "generated_id",
         "type_identities_id",
         "name",
         "nationality",
@@ -52,6 +52,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function EmailVerifications(){
+        return $this->hasMany(EmailVerificationClient::class,"user_id","id");
+    }
+
     public function TypeIdentity(){
         return $this->hasOne(TypeIdentity::class,"type_identities_id","id");
     }
@@ -66,5 +70,22 @@ class User extends Authenticatable
 
     public function Units(){
         return $this->hasMany(Unit::class,"beneficiary_id","id");
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $token = mt_rand(1000, 9999);
+        $email = $this->email;
+        $PasswordRest = PasswordReset::where("email",$email)->first();
+        if($PasswordRest){
+            $PasswordRest->delete();
+        }
+        PasswordReset::create([
+            "email" => $email,
+            "token" => $token
+        ]);
+
+        $name = $this->name;
+        $this->notify(new ForgetPasswordNotification($token,$name));
     }
 }

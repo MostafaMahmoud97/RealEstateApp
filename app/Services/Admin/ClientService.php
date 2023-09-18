@@ -30,11 +30,6 @@ class ClientService
             "password" => Hash::make($request->password)
         ]);
 
-        $seprateName = str_split($User->name,1);
-        $generated_ID = $seprateName[0]."_".$User->id;
-        $User->update([
-            "generated_id" => $generated_ID
-        ]);
 
         return Response::successResponse($User,__("client.Client has been created success"));
     }
@@ -43,7 +38,7 @@ class ClientService
         $Clients = User::where(function ($q) use ($request){
             $q->where("name","like","%".$request->search."%")
                 ->OrWhere("phone","like","%".$request->search."%")
-                ->OrWhere("generated_id","like","%".$request->search."%")
+                ->OrWhere("id",$request->search)
                 ->OrWhere("email","like","%".$request->search."%")
                 ->OrWhere("id_number","like","%".$request->search."%");
         });
