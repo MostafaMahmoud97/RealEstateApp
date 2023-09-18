@@ -34,4 +34,16 @@ class ClientAuthController extends Controller
     public function sendTokenToVerifyEmail(Request $request){
         return $this->service->sendTokenToVerifyEmail($request);
     }
+
+    public function forgotPassword(Request $request){
+        return $this->service->forgotPassword($request);
+    }
+
+    public function sendForgotPasswordToken(Request $request){
+        return $this->service->sendForgotPasswordToken($request);
+    }
+
+    public function change_password(Request $request){
+        return $this->service->change_password($request);
+    }
 }

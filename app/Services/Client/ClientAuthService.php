@@ -161,9 +161,9 @@ class ClientAuthService
         }
 
         if ($status == Password::RESET_THROTTLED){
-            return Response::errorResponse(__("auth.throttled reset attempt"),[],320);
+            return Response::errorResponse(__('auth.reset message is sent to mail'));
         }elseif ($status == Password::INVALID_USER){
-            return Response::errorResponse(__("auth.Invalid email"),[],310);
+            return Response::errorResponse(__('auth.this user not found'));
         }
 
         return Response::errorResponse($status,[],310);
@@ -187,6 +187,13 @@ class ClientAuthService
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed'
+        ],[
+            "token.required" => __("auth.token has been required"),
+            "email.required" => __("auth.email has been required"),
+            "email.email" => __("auth.The email must be valid and contain @"),
+            "password.required" => __("auth.the password is required"),
+            "password.min" => __("auth.The minimum password length is 6 characters"),
+            "password.confirmed" => __("auth.the confirmation password doesn't match with password"),
         ]);
 
         $PasswordRest = PasswordReset::where("email",$request->email)->where("token",$request->token)->first();
@@ -194,14 +201,14 @@ class ClientAuthService
             return Response::errorResponse(__("auth.token is incorrect| try again"));
         }
 
-        $user = Captain::where("email",$request->email)->first();
+        $user = User::where("email",$request->email)->first();
 
         $user->forceFill([
             'password' => Hash::make($request->password),
             'remember_token' => Str::random(60)
         ])->save();
 
-        return Response::successResponse([],"password reset successfully");
+        return Response::successResponse([],__("auth.password reset successfully"));
 
     }
 }

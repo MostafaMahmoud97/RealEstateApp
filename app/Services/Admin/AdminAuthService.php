@@ -79,7 +79,7 @@ class AdminAuthService
             ->sendResetLink($request->only('email'));
 
         if($status == Password::RESET_LINK_SENT){
-            return Response::successResponse([],$status);
+            return Response::successResponse([],__("auth.The token has been sent successfully"));
         }
 
         if ($status == Password::RESET_THROTTLED){

@@ -12,4 +12,7 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::post('register-client',[ClientAuthController::class,'registerClient']);
     Route::post('resend-verify-token',[ClientAuthController::class,'resendVerifyToken'])->middleware('auth:api');
     Route::post('send-verify-token',[ClientAuthController::class,'sendTokenToVerifyEmail'])->middleware('auth:api');
+    Route::post('forgot-password',[ClientAuthController::class,'forgotPassword']);
+    Route::post('check-forgot-password-token',[ClientAuthController::class,'sendForgotPasswordToken']);
+    Route::post('change-password',[ClientAuthController::class,'change_password']);
 });
