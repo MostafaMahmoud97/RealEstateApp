@@ -15,6 +15,12 @@ return [
     "The email must be valid and contain @" => "يجب أن يكون البريد الإلكتروني صالحاً ويحتوي على @",
     "the confirmation password doesn't match with password" => "كلمة مرور التأكيد لا تتطابق مع كلمة المرور",
     "password reset successfully" => "تم إعادة تعيين كلمة المرور بنجاح",
+    "The token has already been sent to you" => "لقد تم بالفعل إرسال الرمز المميز إليك",
+    "The token has been sent successfully" => "تم إرسال الرمز المميز بنجاح",
+    "This code is invalid or the grace period for this code has expired" => "هذا الرمز غير صالح أو انتهت فترة السماح لهذا الرمز",
+    "email has been verified success" => "تم التحقق من نجاح البريد الإلكتروني",
+    "token is incorrect| try again" => "الرمز المميز غير صحيح| حاول ثانية",
+    "token has been successfully" => "تم الرمز المميز بنجاح",
 
 
 // client

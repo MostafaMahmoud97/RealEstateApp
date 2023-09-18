@@ -14,6 +14,12 @@ return [
     "The email must be valid and contain @" => "The email must be valid and contain @",
     "the confirmation password doesn't match with password" => "the confirmation password doesn't match with password",
     "password reset successfully" => "password reset successfully",
+    "The token has already been sent to you" => "The token has already been sent to you",
+    "The token has been sent successfully" => "The token has been sent successfully",
+    "This code is invalid or the grace period for this code has expired" => "This code is invalid or the grace period for this code has expired",
+    "email has been verified success" => "email has been verified success",
+    "token is incorrect| try again" => "token is incorrect| try again",
+    "token has been successfully" => "token has been successfully",
 
 
 
