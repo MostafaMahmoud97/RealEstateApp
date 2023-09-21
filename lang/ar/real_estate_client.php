@@ -3,7 +3,6 @@
 return [
     "Help data has been fetched success" => "لقد تم جلب بيانات المساعدة بنجاح",
     "You must add image or video in media" => "يجب عليك إضافة صورة أو فيديو في الوسائط",
-    "You must choose valid user" => "يجب عليك اختيار مستخدم صالح",
     "Real estate has been added success" => "تمت إضافة العقاري النجاح",
     "Properties have been fetched" => "تم جلب الخصائص",
     "please select valid property" => "يرجى اختيار مالكية صالحة",

@@ -63,7 +63,7 @@ class RealEstateUpdateRequest extends FormRequest
             "units.*.unit_finishing" => "boolean|nullable",
 
 
-            "new_units" => "required|array|min:1",
+            "new_units" => "array|min:1",
             "new_units.*.purpose_property_id" => "required|numeric|in:1,2",
             "new_units.*.price" => "required|numeric",
             "new_units.*.unit_type" => "required|string",
@@ -157,7 +157,7 @@ class RealEstateUpdateRequest extends FormRequest
             "units.*.mezzanine.boolean" => __("real_estate.you must enter mezzanine as boolean yes or no"),
             "units.*.unit_finishing.boolean" => __("real_estate.you must enter unit finishing as boolean yes or no"),
 
-            "new_units.required" => __("real_estate.you must add unit"),
+
             "new_units.array" => __("real_estate.you must add unit as array"),
             "new_units.min" => __("real_estate.you must add min 1 unit"),
             "new_units.*.purpose_property_id.required" => __("real_estate.you must choose purpose property"),

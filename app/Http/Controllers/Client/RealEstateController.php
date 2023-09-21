@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\RealEstate\RealEstateStoreRequest;
-use App\Http\Requests\Admin\RealEstate\RealEstateUpdateRequest;
-use App\Models\Media;
-use App\Models\Unit;
-use App\Services\Admin\RealEstateService;
+use App\Http\Requests\Client\RealEstate\StoreRequest;
+use App\Http\Requests\Client\RealEstate\UpdateRequest;
+use App\Services\Client\RealEstateService;
 use App\Traits\GeneralFileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -17,6 +15,7 @@ class RealEstateController extends Controller
 {
     use GeneralFileService;
     protected $service;
+
     public function __construct(RealEstateService $service)
     {
         $this->service = $service;
@@ -26,8 +25,7 @@ class RealEstateController extends Controller
         return $this->service->getHelpData();
     }
 
-    public function store(RealEstateStoreRequest $request){
-
+    public function store(StoreRequest $request){
         //validate media
         if ($request->units){
             foreach ($request->units as $unit){
@@ -35,7 +33,7 @@ class RealEstateController extends Controller
                     foreach ($unit['media'] as $media){
                         $check = $this->getValidateFile($media);
                         if (!$check){
-                            return Response::errorResponse(__("real_estate.You must add image or video in media"));
+                            return Response::errorResponse(__("real_estate_client.You must add image or video in media"));
                         }
                     }
                 }
@@ -45,31 +43,19 @@ class RealEstateController extends Controller
         return $this->service->store($request);
     }
 
-    public function listAllStatus(){
-        return $this->service->listAllStatus();
+    public function listAllMyProperties(){
+        return $this->service->listAllMyProperties();
     }
 
-    public function listAllProperties($user_id,Request $request){
-        return $this->service->listAllProperties($user_id,$request);
-    }
-
-    public function showProperty(Request $request){
-        return $this->service->showProperty($request);
-    }
-
-    public function listAllUnits(Request $request){
-        return $this->service->listAllUnits($request);
-    }
-
-    public function showUnit($unit_id){
-        return $this->service->showUnit($unit_id);
+    public function showMyProperty($unit_id){
+        return $this->service->showMyProperty($unit_id);
     }
 
     public function editRealEstate($unit_id){
         return $this->service->editRealEstate($unit_id);
     }
 
-    public function updateRealEstate($real_estate_id,RealEstateUpdateRequest $request){
+    public function updateRealEstate($real_estate_id,UpdateRequest $request){
         //validate media
         if ($request->new_units){
             foreach ($request->new_units as $unit){
@@ -77,7 +63,7 @@ class RealEstateController extends Controller
                     foreach ($unit['media'] as $media){
                         $check = $this->getValidateFile($media);
                         if (!$check){
-                            return Response::errorResponse(__("real_estate.You must add image or video in media"));
+                            return Response::errorResponse(__("real_estate_client.You must add image or video in media"));
                         }
                     }
                 }
@@ -99,14 +85,13 @@ class RealEstateController extends Controller
         $Validator = Validator::make($request->all(),[
             "cover" => "required|mimes:jpg,png,jpeg|max:2048",
         ],[
-            "cover.required" => __("real_estate.you must choose cover image"),
-            "cover.mimes" => __("real_estate.you must choose cover image as jpg,png,jpeg"),
+            "cover.required" => __("real_estate_client.you must choose cover image"),
+            "cover.mimes" => __("real_estate_client.you must choose cover image as jpg,png,jpeg"),
         ]);
 
         if ($Validator->fails()){
             return Response::errorResponse($Validator->errors()->first());
         }
-
 
         return $this->service->updateCoverRealEstate($request);
     }
@@ -116,8 +101,8 @@ class RealEstateController extends Controller
             "media" => "required|array|min:1",
             "media.*" => "max:2048",
         ],[
-            "media.required" => __("real_estate.you must choose unit media"),
-            "media.array" => __("real_estate.you must choose unit media as array"),
+            "media.required" => __("real_estate_client.you must choose unit media"),
+            "media.array" => __("real_estate_client.you must choose unit media as array"),
         ]);
 
         if ($Validator->fails()){
@@ -128,7 +113,7 @@ class RealEstateController extends Controller
         foreach ($request->media as $media){
             $check = $this->getValidateFile($media);
             if (!$check){
-                return Response::errorResponse(__("real_estate.You must add image or video in media"));
+                return Response::errorResponse(__("real_estate_client.You must add image or video in media"));
             }
         }
 
