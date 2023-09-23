@@ -27,6 +27,6 @@ return [
     "This email is already in use" => "This email is already in use",
     "you must enter password" => "you must enter password",
     "password confirmation not match with password" => "password confirmation not match with password",
-    "you must enter min:8 characters in password" => "you must enter min:8 characters in password"
+    "you must enter min:6 characters in password" => "you must enter min:6 characters in password"
 
 ];

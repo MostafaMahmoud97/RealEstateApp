@@ -27,6 +27,6 @@ return [
     "This email is already in use" => "هذا الايميل مستخدم من قبل",
     "you must enter password" => "يجب ادخال البسورد",
     "password confirmation not match with password" => "تاكيد البسورد لا يتطبق مع البسورد",
-    "you must enter min:8 characters in password" => "يجب ان لا يقل البسورد عن 8 حروف",
+    "you must enter min:6 characters in password" => "يجب ان لا يقل البسورد عن 6 حروف",
 
 ];
