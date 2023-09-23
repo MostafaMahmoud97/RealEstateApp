@@ -24,8 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         "id",
         "type_identities_id",
+        "nationality_id",
         "name",
-        "nationality",
         "id_number",
         "phone",
         "is_active",
@@ -57,7 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function TypeIdentity(){
-        return $this->hasOne(TypeIdentity::class,"type_identities_id","id");
+        return $this->belongsTo(TypeIdentity::class,"type_identities_id","id");
+    }
+
+    public function Nationality(){
+        return $this->belongsTo(Nationality::class,"nationality_id","id");
     }
 
     public function CommercialActivities(){

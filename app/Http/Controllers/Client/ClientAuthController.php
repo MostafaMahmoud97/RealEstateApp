@@ -19,8 +19,8 @@ class ClientAuthController extends Controller
         return $this->service->login($request);
     }
 
-    public function getTypeIdentities(){
-        return $this->service->getTypeIdentities();
+    public function getHelpData(){
+        return $this->service->getHelpData();
     }
 
     public function registerClient(ClientStoreRequest $request){

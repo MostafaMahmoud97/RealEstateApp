@@ -18,7 +18,7 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::post('change-password',[AdminAuthController::class,'change_password']);
 
     Route::group(['prefix' => 'client','middleware' => "auth:admin-api"],function (){
-        Route::get("type-identities",[ClientController::class,"getTypeIdentities"]);
+        Route::get("get-help-data",[ClientController::class,"getHelpData"]);
         Route::post("store",[ClientController::class,"store"]);
         Route::get("index",[ClientController::class,"index"]);
         Route::get("show/{id}",[ClientController::class,"show"]);

@@ -9,7 +9,7 @@ use \App\Http\Controllers\Client\RealEstateController;
 Route::group(['middleware' => 'localRequest'], function()
 {
     Route::post('login',[ClientAuthController::class,'login']);
-    Route::get('type-identities',[ClientAuthController::class,'getTypeIdentities']);
+    Route::get("get-help-data",[ClientAuthController::class,"getHelpData"]);
     Route::post('register-client',[ClientAuthController::class,'registerClient']);
     Route::post('resend-verify-token',[ClientAuthController::class,'resendVerifyToken'])->middleware('auth:api');
     Route::post('send-verify-token',[ClientAuthController::class,'sendTokenToVerifyEmail'])->middleware('auth:api');

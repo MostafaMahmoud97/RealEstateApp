@@ -5,6 +5,7 @@ namespace App\Services\Client;
 
 
 use App\Models\EmailVerificationClient;
+use App\Models\Nationality;
 use App\Models\PasswordReset;
 use App\Models\TypeIdentity;
 use App\Models\User;
@@ -63,16 +64,18 @@ class ClientAuthService
         }
     }
 
-    public function getTypeIdentities(){
-        $TypeIdentities = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title")->get();
-        return Response::successResponse($TypeIdentities,__("client.Type identities have been fetched"));
+    public function getHelpData(){
+        $TypeIdentities = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title as title")->get();
+        $Nationality = Nationality::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
+
+        return Response::successResponse(["type_identities" => $TypeIdentities,"Nationalities" => $Nationality],__("client.Help data has been fetched"));
     }
 
     public function registerClient($request){
         $User = User::create([
             "type_identities_id" => $request->type_id,
             "name" => $request->name,
-            "nationality" => $request->nationality,
+            "nationality_id" => $request->nationality_id,
             "id_number" => $request->id_number,
             "phone" => $request->phone,
             "email" => $request->email,

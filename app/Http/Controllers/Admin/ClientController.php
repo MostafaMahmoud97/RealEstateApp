@@ -18,8 +18,8 @@ class ClientController extends Controller
         $this->service = $service;
     }
 
-    public function getTypeIdentities(){
-        return $this->service->getTypeIdentities();
+    public function getHelpData(){
+        return $this->service->getHelpData();
     }
 
     public function store(ClientStoreRequest $request){

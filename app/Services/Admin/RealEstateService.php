@@ -150,7 +150,10 @@ class RealEstateService
     public function showProperty($request){
         $Unit = Unit::with(["RealEstate" => function($q){
             $q->with(["User" => function($q){
-                $q->select("id","name","nationality","phone","email","id_number");
+                $q->select("id","name","nationality_id","phone","email","id_number")
+                ->with(["Nationality" => function($q) {
+                    $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+                }]);
             },"Media","BuildingType" => function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
             },"BuildingTypeUse" => function($q){
@@ -201,7 +204,10 @@ class RealEstateService
     public function showUnit($unit_id){
         $Unit = Unit::with(["RealEstate" => function($q){
             $q->with(["User" => function($q){
-                $q->select("id","name","nationality","phone","email","id_number");
+                $q->select("id","name","nationality_id","phone","email","id_number")
+                ->with(["Nationality" => function($q) {
+                    $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+                }]);
             },"Media","BuildingType" => function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
             },"BuildingTypeUse" => function($q){

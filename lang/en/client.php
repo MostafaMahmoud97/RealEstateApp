@@ -2,7 +2,7 @@
 
 return [
 
-    "Type identities have been fetched" => "Type identities have been fetched",
+    "Help data has been fetched" => "Help data has been fetched",
     "Client has been created success" => "Client has been created success",
     "Clients have been fetched success" => "Clients have been fetched success",
     "no client by this id" => "no client by this id",
@@ -16,7 +16,7 @@ return [
     "you must enter full name" => "you must enter full name",
     "you must enter string in full name" => "you must enter string in full name",
     "you must enter nationality" => "you must enter nationality",
-    "you must enter string in nationality" => "you must enter string in nationality",
+    "you must enter number in nationality" => "you must enter number in nationality",
     "you must enter id number" => "you must enter id number",
     "you must enter number in id number" => "you must enter number in id number",
     "you must enter phone number" => "you must enter phone number",

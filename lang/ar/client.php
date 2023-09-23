@@ -2,7 +2,7 @@
 
 return [
 
-    "Type identities have been fetched" => "تم جلب نوع الهويات",
+    "Help data has been fetched" => "تم جلب البيانات المساعدة",
     "Client has been created success" => "تم انشاء عميل جديد بنجاح",
     "Clients have been fetched success" => "تم جلب العملاء بنجاح",
     "no client by this id" => "الا يوجد عميل بهذا ال id",
@@ -16,7 +16,7 @@ return [
     "you must enter full name" => "يجب ادخال الاسم بالكامل",
     "you must enter string in full name" => "يجب ادخال الاسم صحيحاً",
     "you must enter nationality" => "يجب ادخال الجنسية",
-    "you must enter string in nationality" => "يجب ادخال الجنسية صحيحة",
+    "you must enter number in nationality" => "يجب ادخال الجنسية صحيحة",
     "you must enter id number" => "يجب ادخال رقم الهوية",
     "you must enter number in id number" => "يجب ادخال ارقام فى رقم الهوية",
     "you must enter phone number" => "يجب ادخال رقم الجوال",

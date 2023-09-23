@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 
 
 use App\Http\Resources\Admin\Client\PaginateIndexResource;
+use App\Models\Nationality;
 use App\Models\TypeIdentity;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -14,16 +15,18 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ClientService
 {
-    public function getTypeIdentities(){
-        $TypeIdentities = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title")->get();
-        return Response::successResponse($TypeIdentities,__("client.Type identities have been fetched"));
+    public function getHelpData(){
+        $TypeIdentities = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title as title")->get();
+        $Nationality = Nationality::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
+
+        return Response::successResponse(["type_identities" => $TypeIdentities,"Nationalities" => $Nationality],__("client.Help data has been fetched"));
     }
 
     public function store($request){
         $User = User::create([
             "type_identities_id" => $request->type_id,
             "name" => $request->name,
-            "nationality" => $request->nationality,
+            "nationality_id" => $request->nationality_id,
             "id_number" => $request->id_number,
             "phone" => $request->phone,
             "email" => $request->email,
@@ -35,7 +38,9 @@ class ClientService
     }
 
     public function index($request){
-        $Clients = User::where(function ($q) use ($request){
+        $Clients = User::with(["Nationality"=>function ($q){
+            $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+        }])->where(function ($q) use ($request){
             $q->where("name","like","%".$request->search."%")
                 ->OrWhere("phone","like","%".$request->search."%")
                 ->OrWhere("id",$request->search)
@@ -54,7 +59,9 @@ class ClientService
     }
 
     public function show($id){
-        $Client = User::find($id);
+        $Client = User::with(["Nationality"=>function ($q){
+            $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+        }])->find($id);
         if(!$Client){
             return Response::errorResponse([],__("client.no client by this id"));
         }
