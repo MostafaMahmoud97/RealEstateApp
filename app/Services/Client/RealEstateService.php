@@ -4,6 +4,7 @@
 namespace App\Services\Client;
 
 
+use App\Http\Resources\Client\RealEstate\DiscoverResource;
 use App\Http\Resources\Client\RealEstate\editRealEstateResource;
 use App\Http\Resources\Client\RealEstate\ListAllMyPropertiesResource;
 use App\Http\Resources\Client\RealEstate\ShowMyPropertyResource;
@@ -17,6 +18,7 @@ use App\Models\Unit;
 use App\Models\User;
 use App\Traits\GeneralFileService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -326,5 +328,60 @@ class RealEstateService
 
             return Response::successResponse($Unit, __("real_estate_client.media unit has been updated success"));
         }
+    }
+
+    public function DiscoverUnit($request){
+        $Units = Unit::with(["RealEstate" =>function($q){
+            $q->select("id","lat","lon","building_type_id","building_type_use_id","national_address")
+                ->with(["media","BuildingType" => function($q){
+                    $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+                },"BuildingTypeUse" => function($q){
+                    $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+                }]);
+        },"PurposeProperty" => function($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        }]);
+
+        if($request->location['lat'] && $request->location['lon']){
+            $Units = $Units->select(DB::raw("units.id,units.real_estate_id,units.purpose_property_id,units.price,units.unit_number,units.unit_area,SQRT(POWER(real_estates.lat - ".$request->location['lat'].",2) + POWER(real_estates.lon - ".$request->location['lon'].",2)) AS distance"))
+                ->join('real_estates','units.real_estate_id' ,'=','real_estates.id')->orderBy('distance');
+        }
+
+        if ($request->purpose_id){
+            $Units = $Units->whereHas("PurposeProperty",function ($q) use ($request){
+                $q->where("id",$request->purpose_id);
+            });
+        }
+
+        if ($request->price && $request->price['min'] && $request->price['max']){
+            $Units = $Units->whereBetween("price",[$request->price['min'],$request->price['max']]);
+        }
+
+        if ($request->area && $request->area['min'] && $request->area['max']){
+            $Units = $Units->whereBetween("unit_area",[$request->area['min'],$request->area['max']]);
+        }
+
+        if ($request->lots && $request->lots['min'] && $request->lots['max']){
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->whereBetween("number_parking_lots",[$request->lots['min'],$request->lots['max']]);
+            });
+        }
+
+        if ($request->property_type_id){
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->whereIn("building_type_id",$request->property_type_id);
+            });
+        }
+
+        if ($request->property_usage_id){
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->whereIn("building_type_use_id",$request->property_usage_id);
+            });
+        }
+
+
+        $Units = $Units->get();
+
+        return Response::successResponse(DiscoverResource::collection($Units),__("real_estate.Units have been fetched success"));
     }
 }

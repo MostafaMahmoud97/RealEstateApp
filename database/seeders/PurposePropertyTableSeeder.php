@@ -22,7 +22,7 @@ class PurposePropertyTableSeeder extends Seeder
             ],
             [
                 "title_ar" => "بيع",
-                "title_en" => "Sell"
+                "title_en" => "Sale"
             ]
         ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\RealEstate\DisoverRequest;
 use App\Http\Requests\Client\RealEstate\StoreRequest;
 use App\Http\Requests\Client\RealEstate\UpdateRequest;
 use App\Services\Client\RealEstateService;
@@ -118,5 +119,9 @@ class RealEstateController extends Controller
         }
 
         return $this->service->updateMediaUnit($request);
+    }
+
+    public function DiscoverUnit(DisoverRequest $request){
+        return $this->service->DiscoverUnit($request);
     }
 }

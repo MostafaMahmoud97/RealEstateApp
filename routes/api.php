@@ -28,5 +28,6 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::delete("delete-unit/{unit_id}",[RealEstateController::class,"deleteUnit"]);
         Route::put("update-cover-real-estate",[RealEstateController::class,"updateCoverRealEstate"]);
         Route::put("update-media-unit",[RealEstateController::class,"updateMediaUnit"]);
+        Route::get("discover-units",[RealEstateController::class,"DiscoverUnit"]);
     });
 });
