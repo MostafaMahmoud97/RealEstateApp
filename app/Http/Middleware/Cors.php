@@ -18,6 +18,7 @@ class Cors
     {
         return $next($request)
             ->header("Access-Control-Allow-Origin","https://admin.aqarbroker.com")
+            ->header("Access-Control-Allow-Credentials",true)
             ->header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,PATCH,OPTIONS")
             ->header("Access-Control-Allow-Headers","Accept,Authorization,Content-Type,X-App-Locale");
     }
