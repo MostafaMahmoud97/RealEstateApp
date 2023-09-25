@@ -16,10 +16,16 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
+        try{
+            $http_origin = $_SERVER['HTTP_ORIGIN'];
+        }catch (\Exception $e){
+            $http_origin = "http://localhost:3000";
+        }
+
         return $next($request)
-            ->header("Access-Control-Allow-Origin","*")
+            ->header("Access-Control-Allow-Origin",$http_origin)
             ->header("Access-Control-Allow-Credentials","true")
             ->header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,PATCH,OPTIONS")
-            ->header("Access-Control-Allow-Headers","Accept,Authorization,X-App-Locale");
+            ->header("Access-Control-Allow-Headers","Accept,Authorization,Content-Type,X-App-Locale");
     }
 }
