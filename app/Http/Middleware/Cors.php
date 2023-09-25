@@ -17,6 +17,7 @@ class Cors
     public function handle(Request $request, Closure $next)
     {
         $http_origin = $_SERVER['HTTP_ORIGIN'];
+        return $http_origin;
         return $next($request)
             ->header("Access-Control-Allow-Origin",$http_origin)
             ->header("Access-Control-Allow-Credentials","true")
