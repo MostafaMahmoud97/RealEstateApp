@@ -40,6 +40,8 @@ class ClientService
     public function index($request){
         $Clients = User::with(["Nationality"=>function ($q){
             $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+        },"TypeIdentity" => function($q){
+            $q->select("id",LaravelLocalization::getCurrentLocale()."_title"." as title");
         }])->where(function ($q) use ($request){
             $q->where("name","like","%".$request->search."%")
                 ->OrWhere("phone","like","%".$request->search."%")

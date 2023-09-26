@@ -18,6 +18,7 @@ class ClientIndexResource extends JsonResource
             "id" => $this->id,
             "full_name" => $this->name,
             "nationality" => $this['Nationality']->title,
+            "type_identity" => $this['TypeIdentity']->title,
             "id_number" => $this->id_number,
             "phone" => $this->phone,
             "email" => $this->email,
