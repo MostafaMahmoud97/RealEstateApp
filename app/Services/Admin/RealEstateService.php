@@ -104,16 +104,16 @@ class RealEstateService
         return Response::successResponse($status,__("real_estate.Status has been fetched success"));
     }
 
-    public function listAllProperties($user_id,$request){
-        $User = User::find($user_id);
+    public function listAllProperties($request){
+        $User = User::find($request->user_id);
         if(!$User){
             return Response::errorResponse(__("real_estate.You must choose valid user"));
         }
 
-        $Units = Unit::select('id','real_estate_id','beneficiary_id','purpose_property_id','unit_status_id','price')->where(function ($q) use ($user_id,$request){
-            $q->where(function ($q) use ($user_id,$request){
-                $q->where("beneficiary_id",$user_id)->where(function ($q) use ($user_id,$request){
-                    $q->whereHas("RealEstate",function ($q) use ($user_id,$request){
+        $Units = Unit::select('id','real_estate_id','beneficiary_id','purpose_property_id','unit_status_id','price')->where(function ($q) use ($request){
+            $q->where(function ($q) use ($request){
+                $q->where("beneficiary_id",$request->user_id)->where(function ($q) use ($request){
+                    $q->whereHas("RealEstate",function ($q) use ($request){
                         $q->where("national_address",'like','%'.$request->search.'%');
                     })->OrWhere("id",$request->search);
                 })->whereIn("unit_status_id",$request->status);
@@ -121,13 +121,13 @@ class RealEstateService
                 $q->WhereHas("Beneficiary",function ($q) use ($request){
                     $q->where("name","like","%".$request->search."%");
                 })->whereIn("unit_status_id",$request->status);
-            })->OrWhere(function ($q) use ($user_id,$request){
-                $q->where("id",$request->search)->whereHas("RealEstate",function ($q) use ($user_id,$request){
-                    $q->where("user_id",$user_id);
+            })->OrWhere(function ($q) use ($request){
+                $q->where("id",$request->search)->whereHas("RealEstate",function ($q) use ($request){
+                    $q->where("user_id",$request->user_id);
                 })->whereIn("unit_status_id",$request->status);
-            })->OrWhere(function ($q) use ($user_id,$request){
-                $q->whereHas("RealEstate",function ($q) use ($user_id,$request){
-                    $q->where("user_id",$user_id)->where("national_address",'like','%'.$request->search.'%');
+            })->OrWhere(function ($q) use ($request){
+                $q->whereHas("RealEstate",function ($q) use ($request){
+                    $q->where("user_id",$request->user_id)->where("national_address",'like','%'.$request->search.'%');
                 })->whereIn("unit_status_id",$request->status);
             });
         })->with(["RealEstate" => function($q){

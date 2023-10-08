@@ -49,8 +49,8 @@ class RealEstateController extends Controller
         return $this->service->listAllStatus();
     }
 
-    public function listAllProperties($user_id,Request $request){
-        return $this->service->listAllProperties($user_id,$request);
+    public function listAllProperties(Request $request){
+        return $this->service->listAllProperties($request);
     }
 
     public function showProperty(Request $request){
