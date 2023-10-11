@@ -110,16 +110,18 @@ class RealEstateService
             return Response::errorResponse(__("real_estate.You must choose valid user"));
         }
 
-        $Units = Unit::select('id','real_estate_id','beneficiary_id','purpose_property_id','unit_status_id','price')->where(function ($q) use ($request){
+        $Units = Unit::select('id','real_estate_id','beneficiary_id','purpose_property_id','unit_status_id','beneficiary_status_id','price')->where(function ($q) use ($request){
             $q->where(function ($q) use ($request){
                 $q->where("beneficiary_id",$request->user_id)->where(function ($q) use ($request){
                     $q->whereHas("RealEstate",function ($q) use ($request){
                         $q->where("national_address",'like','%'.$request->search.'%');
                     })->OrWhere("id",$request->search);
-                })->whereIn("unit_status_id",$request->status);
+                })->whereIn("beneficiary_status_id",$request->status);
             })->OrWhere(function ($q) use ($request){
                 $q->WhereHas("Beneficiary",function ($q) use ($request){
                     $q->where("name","like","%".$request->search."%");
+                })->WhereHas("RealEstate",function ($q) use ($request){
+                    $q->where("user_id",$request->user_id);
                 })->whereIn("unit_status_id",$request->status);
             })->OrWhere(function ($q) use ($request){
                 $q->where("id",$request->search)->whereHas("RealEstate",function ($q) use ($request){
@@ -142,7 +144,13 @@ class RealEstateService
             $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
         },"UnitStatus" => function($q){
             $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        },"BeneficiaryStatus" => function($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
         }])->paginate(10);
+
+        foreach ($Units->items() as $item){
+            $item->user_id = $request->user_id;
+        }
 
         return Response::successResponse(PaginateIndexResource::make($Units),__("real_estate.Properties have been fetched"));
     }

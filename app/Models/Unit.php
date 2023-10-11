@@ -16,6 +16,7 @@ class Unit extends Model
         "beneficiary_id",
         "purpose_property_id",
         "unit_status_id",
+        "beneficiary_status_id",
         "price",
         "unit_type",
         "unit_number",
@@ -55,6 +56,10 @@ class Unit extends Model
 
     public function UnitStatus(){
         return $this->belongsTo(UnitStatus::class,"unit_status_id","id");
+    }
+
+    public function BeneficiaryStatus(){
+        return $this->belongsTo(UnitStatus::class,"beneficiary_status_id","id");
     }
 
     public function CommercialInfo(){

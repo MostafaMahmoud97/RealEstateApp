@@ -6,6 +6,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ListAllPropertiesResource extends JsonResource
 {
+
+
+
+
     /**
      * Transform the resource into an array.
      *
@@ -22,9 +26,8 @@ class ListAllPropertiesResource extends JsonResource
             "address" => $this['RealEstate']->national_address,
             "real_estate_type" => $this['RealEstate']['BuildingType']->title,
             "beneficiary" => $this->Beneficiary ? $this->Beneficiary->name : "",
-            "status" => $this->UnitStatus->title,
-            "price" => $this->price
-
+            "status" => $this->user_id == $this->beneficiary_id ? $this->BeneficiaryStatus->title : $this->UnitStatus->title,
+            "price" => $this->price,
         ];
     }
 }

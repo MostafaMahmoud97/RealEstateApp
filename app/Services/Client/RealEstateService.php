@@ -97,18 +97,28 @@ class RealEstateService
         return Response::successResponse($RealEstate,__("real_estate_client.Real estate has been added success"));
     }
 
-    public function listAllMyProperties(){
+    public function listAllMyProperties($request){
         $User_id = Auth::id();
 
-        $Units = Unit::select('id','real_estate_id','unit_number','unit_area','unit_status_id','price')->with(["RealEstate" => function($q) use ($User_id){
+
+        $Units = Unit::select('id','real_estate_id','beneficiary_id','unit_number','unit_area','beneficiary_status_id','unit_status_id','price')->with(["RealEstate" => function($q) use ($User_id){
             $q->with(["BuildingType" => function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
             },"BuildingTypeUse" =>  function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
             },"media"])->select('id','building_type_id','building_type_use_id','user_id','national_address');
-        }])->whereHas("RealEstate",function ($q) use ($User_id){
-            $q->where("user_id",$User_id);
-        })->whereIn("unit_status_id",[1,2])->get();
+        }]);
+
+
+        if ($request->selected == 1){ // for my properties
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($User_id){
+                $q->where("user_id",$User_id);
+            })->whereIn("unit_status_id",[1,2,3,5])->get();
+        }elseif ($request->selected == 2){ // for my purchased
+            $Units = $Units->where("beneficiary_id" ,$User_id)->where("beneficiary_status_id",4)->get();
+        }elseif ($request->selected == 3){ // for my rented
+            $Units = $Units->where("beneficiary_id" ,$User_id)->where("beneficiary_status_id",5)->get();
+        }
 
         return Response::successResponse(ListAllMyPropertiesResource::collection($Units),__("real_estate_client.Properties have been fetched"));
     }
@@ -124,9 +134,14 @@ class RealEstateService
             }]);
         },"CommercialInfo","PurposeProperty" => function($q){
             $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
-        },"Media"])->whereHas("RealEstate",function ($q) use ($user_id){
-            $q->where("user_id",$user_id);
-        })->whereIn("unit_status_id",[1,2])->find($unit_id);
+        },"Media"])
+            ->where(function ($q) use ($user_id){
+                $q->whereHas("RealEstate",function ($q) use ($user_id){
+                    $q->where("user_id",$user_id);
+                })->whereIn("unit_status_id",[1,2,3,5]);
+            })->OrWhere(function ($q) use ($user_id){
+                $q->where("beneficiary_id",$user_id)->whereIn("beneficiary_status_id",[4,6]);
+            })->find($unit_id);
 
         if (!$Unit){
             return Response::errorResponse(__("real_estate_client.please select valid property"));

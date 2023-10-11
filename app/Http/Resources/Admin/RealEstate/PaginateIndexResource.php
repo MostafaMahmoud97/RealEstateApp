@@ -7,6 +7,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PaginateIndexResource extends JsonResource
 {
+
+
+
     /**
      * Transform the resource into an array.
      *
@@ -15,6 +18,7 @@ class PaginateIndexResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'total'           => $this->total(),
             'count'           => $this->count(),
