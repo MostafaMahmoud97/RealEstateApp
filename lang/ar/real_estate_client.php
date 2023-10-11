@@ -20,6 +20,9 @@ return [
     "Status has been fetched success" => "تم جلب الحالات بنجاح",
     "cover real estate image has been updated success" => "تم تحديث صورة الغلاف العقاري بنجاح",
     "media unit has been updated success" => "تم تحديث وحدة الوسائط بنجاح",
+    "you must choose selected param" => "يجب عليك اختيار المعلمة المحددة",
+    "you must choose selected param as number" => "يجب عليك اختيار المعلمة المحددة كرقم",
+    "you must choose selected param from 1 to 3" => "يجب عليك اختيار المعلمة المحددة من 1 إلى 3",
 
     "you must send unit id" => "يجب عليك إرسال معرف الوحدة",
     "you must send unit id as number" => "يجب عليك إرسال معرف الوحدة كرقم",

@@ -20,6 +20,9 @@ return [
     "Status has been fetched success" => "Status has been fetched success",
     "cover real estate image has been updated success" => "cover real estate image has been updated success",
     "media unit has been updated success" => "media unit has been updated success",
+    "you must choose selected param" => "you must choose selected param",
+    "you must choose selected param as number" => "you must choose selected param as number",
+    "you must choose selected param from 1 to 3" => "you must choose selected param from 1 to 3",
 
 
     "you must send unit id" => "you must send unit id",

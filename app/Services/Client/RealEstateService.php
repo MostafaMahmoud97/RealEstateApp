@@ -109,6 +109,17 @@ class RealEstateService
             },"media"])->select('id','building_type_id','building_type_use_id','user_id','national_address');
         }]);
 
+        // filter
+        if ($request->check_building_use && $request->check_building_use == "commercial"){
+            $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->where("building_type_use_id" , 1);
+            });
+        }elseif ($request->check_building_use && $request->check_building_use == "residential"){
+            $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->where("building_type_use_id" , 2);
+            });
+        }
+// -----------------------------end filter
 
         if ($request->selected == 1){ // for my properties
             $Units = $Units->whereHas("RealEstate",function ($q) use ($User_id){
