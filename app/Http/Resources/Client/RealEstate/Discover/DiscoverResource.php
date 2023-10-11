@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Client\RealEstate;
+namespace App\Http\Resources\Client\RealEstate\Discover;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

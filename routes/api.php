@@ -29,5 +29,7 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::put("update-cover-real-estate",[RealEstateController::class,"updateCoverRealEstate"]);
         Route::put("update-media-unit",[RealEstateController::class,"updateMediaUnit"]);
         Route::get("discover-units",[RealEstateController::class,"DiscoverUnit"]);
+        Route::get("home-units",[RealEstateController::class,"HomeUnit"]);
+        Route::get("show-unit/{unit_id}",[RealEstateController::class,"showUnit"]);
     });
 });

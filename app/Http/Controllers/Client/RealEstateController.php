@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\RealEstate\DisoverRequest;
+use App\Http\Requests\Client\RealEstate\HomeRequest;
 use App\Http\Requests\Client\RealEstate\StoreRequest;
 use App\Http\Requests\Client\RealEstate\UpdateRequest;
 use App\Services\Client\RealEstateService;
@@ -135,5 +136,13 @@ class RealEstateController extends Controller
 
     public function DiscoverUnit(DisoverRequest $request){
         return $this->service->DiscoverUnit($request);
+    }
+
+    public function HomeUnit(HomeRequest $request){
+        return $this->service->HomeUnit($request);
+    }
+
+    public function showUnit($unit_id){
+        return $this->service->showUnit($unit_id);
     }
 }
