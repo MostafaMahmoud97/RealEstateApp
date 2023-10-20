@@ -28,16 +28,11 @@ class RealEstateController extends Controller
 
     public function store(RealEstateStoreRequest $request){
 
-        //validate media
-        if ($request->units){
-            foreach ($request->units as $unit){
-                if ($unit['media']){
-                    foreach ($unit['media'] as $media){
-                        $check = $this->getValidateFile($media);
-                        if (!$check){
-                            return Response::errorResponse(__("real_estate.You must add image or video in media"));
-                        }
-                    }
+        if ($request->unit['media']){
+            foreach ($request->unit['media'] as $media){
+                $check = $this->getValidateFile($media);
+                if (!$check){
+                    return Response::errorResponse(__("real_estate.You must add image or video in media"));
                 }
             }
         }

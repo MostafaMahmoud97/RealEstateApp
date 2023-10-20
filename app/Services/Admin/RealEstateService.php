@@ -60,27 +60,24 @@ class RealEstateService
 
         // add units
         $UnitsArray = [];
-        if ($request->units){
-            foreach ($request->units as $unit){
-                $unit['real_estate_id'] = $RealEstate->id;
+        if ($request->unit){
 
-                $UnitX = Unit::create($unit);
-                $unit['unit_id'] = $UnitX->id;
-                array_push($UnitsArray,$unit);
-                if ($unit['media']){
-                    $path = "Unit_Media/";
-                    foreach ($unit['media'] as $media){
-                        $file_name = $this->SaveFile($media,$path);
-                        $type = $this->getFileType($media);
-                        Media::create([
-                            'mediable_type' => $UnitX->getMorphClass(),
-                            'mediable_id' => $UnitX->id,
-                            'title' => "Unit",
-                            'type' => $type,
-                            'directory' => $path,
-                            'filename' => $file_name
-                        ]);
-                    }
+            $UnitX = Unit::create(array_merge($request->unit,['real_estate_id'=> $RealEstate->id]));
+
+            array_push($UnitsArray,array_merge($request->unit,['unit_id'=>$UnitX->id]));
+            if ($request->unit['media']){
+                $path = "Unit_Media/";
+                foreach ($request->unit['media'] as $media){
+                    $file_name = $this->SaveFile($media,$path);
+                    $type = $this->getFileType($media);
+                    Media::create([
+                        'mediable_type' => $UnitX->getMorphClass(),
+                        'mediable_id' => $UnitX->id,
+                        'title' => "Unit",
+                        'type' => $type,
+                        'directory' => $path,
+                        'filename' => $file_name
+                    ]);
                 }
             }
         }
@@ -88,11 +85,11 @@ class RealEstateService
 
         // add commercial data
         if($request->building_type_use_id == 1){
-            if($request->units){
+            if($request->unit){
                 foreach ($UnitsArray as $unit){
+
                     $commercialInfo = CommercialInfo::create($unit);
                 }
-
             }
         }
 
