@@ -23,6 +23,8 @@ return [
     "you must choose selected param" => "you must choose selected param",
     "you must choose selected param as number" => "you must choose selected param as number",
     "you must choose selected param from 1 to 3" => "you must choose selected param from 1 to 3",
+    "Unit has been added success" => "Unit has been added success",
+    "Unit has been updated success" => "Unit has been updated success",
 
 
     "you must send unit id" => "you must send unit id",
@@ -105,5 +107,9 @@ return [
     "you must send property type id value as 1,2,3,4,5,6,7,8,9" => "you must send property type id value as 1,2,3,4,5,6,7,8,9",
     "you must send property usage id as array" => "you must send property usage id as array",
     "you must send property usage id value as numeric" => "you must send property usage id value as numeric",
-    "you must send property usage id value as 1,2" => "you must send property usage id value as 1,2"
+    "you must send property usage id value as 1,2" => "you must send property usage id value as 1,2",
+    "you must enter real estate id" => "you must enter real estate id",
+    "you must enter real estate id as number" => "you must enter real estate id as number",
+    "you must enter security deposit" => "you must enter security deposit",
+    "you must enter security deposit as number" => "you must enter security deposit as number",
 ];

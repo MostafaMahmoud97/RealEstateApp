@@ -18,6 +18,7 @@ class Unit extends Model
         "unit_status_id",
         "beneficiary_status_id",
         "price",
+        "security_deposit",
         "unit_type",
         "unit_number",
         "floor_number",

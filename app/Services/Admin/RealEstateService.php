@@ -40,7 +40,6 @@ class RealEstateService
             return Response::errorResponse(__("real_estate.You must choose valid user"));
         }
 
-
         //store real estate
         $RealEstate = RealEstate::create($request->all());
 
@@ -255,65 +254,57 @@ class RealEstateService
             return Response::errorResponse(__("real_estate.No reel estate by this id"));
         }
 
-
         $RealEstate = $RealEstate->update($request->all());
 
-        if($request->units){
-            foreach ($request->units as $unit){
-                $Unit = Unit::where("real_estate_id",$real_estate_id)->find($unit["id"]);
-                if (!$unit){
-                    return Response::errorResponse(__("real_estate.No unit by this id"));
-                }
-                $Unit->Update($unit);
+        return Response::successResponse($RealEstate,__("real_estate.Real estate has been updated success"));
+    }
 
-                //update commercial info
-                if ($request->building_type_use_id == 1){
-                    $CommercialInfo = $Unit->CommercialInfo;
-                    $CommercialInfo->update($unit);
-                }
-
-            }
+    public function AddNewUnit($request){
+        $RealEstate = RealEstate::find($request->real_estate_id);
+        if (!$RealEstate){
+            return Response::errorResponse(__("real_estate.No reel estate by this id"));
         }
 
-        // add units
-        $UnitsArray = [];
-        if ($request->new_units){
-            foreach ($request->new_units as $unit){
-                $unit['real_estate_id'] = $real_estate_id;
-
-                $UnitX = Unit::create($unit);
-                $unit['unit_id'] = $UnitX->id;
-                array_push($UnitsArray,$unit);
-                if ($unit['media']){
-                    $path = "Unit_Media/";
-                    foreach ($unit['media'] as $media){
-                        $file_name = $this->SaveFile($media,$path);
-                        $type = $this->getFileType($media);
-                        Media::create([
-                            'mediable_type' => $UnitX->getMorphClass(),
-                            'mediable_id' => $UnitX->id,
-                            'title' => "Unit",
-                            'type' => $type,
-                            'directory' => $path,
-                            'filename' => $file_name
-                        ]);
-                    }
-                }
+        $Unit = Unit::create($request->all());
+        if ($request->media){
+            $path = "Unit_Media/";
+            foreach ($request->media as $media){
+                $file_name = $this->SaveFile($media,$path);
+                $type = $this->getFileType($media);
+                Media::create([
+                    'mediable_type' => $Unit->getMorphClass(),
+                    'mediable_id' => $Unit->id,
+                    'title' => "Unit",
+                    'type' => $type,
+                    'directory' => $path,
+                    'filename' => $file_name
+                ]);
             }
         }
-
 
         // add commercial data
         if($request->building_type_use_id == 1){
-            if($request->new_units){
-                foreach ($UnitsArray as $unit){
-                    $commercialInfo = CommercialInfo::create($unit);
-                }
-
-            }
+            $commercialInfo = CommercialInfo::create(array_merge($request->all(),["unit_id" => $Unit->id]));
         }
 
-        return Response::successResponse($RealEstate,__("real_estate.Real estate has been updated success"));
+        return Response::successResponse($Unit,__("real_estate.Unit has been added success"));
+
+    }
+
+    public function updateUnit($unit_id,$request){
+        $Unit = Unit::find($unit_id);
+        if (!$Unit){
+            return Response::errorResponse(__("real_estate.please select valid unit"));
+        }
+
+        $Unit->update($request->all());
+        //update commercial info
+        if ($request->building_type_use_id == 1){
+            $CommercialInfo = $Unit->CommercialInfo;
+            $CommercialInfo->update($request->all());
+        }
+
+        return Response::successResponse($Unit,__("real_estate.Unit has been updated success"));
     }
 
     public function deleteRealEstate($real_estate_id){

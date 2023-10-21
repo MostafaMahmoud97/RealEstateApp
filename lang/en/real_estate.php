@@ -21,6 +21,9 @@ return [
     "Status has been fetched success" => "Status has been fetched success",
     "cover real estate image has been updated success" => "cover real estate image has been updated success",
     "media unit has been updated success" => "media unit has been updated success",
+    "Unit has been added success" => "Unit has been added success",
+    "Unit has been updated success" => "Unit has been updated success",
+
 
 
     "you must send unit id" => "you must send unit id",
@@ -80,5 +83,9 @@ return [
     "you must enter special sign specification as string" => "you must enter special sign specification as string",
     "you must enter insurance policy number as number" => "you must enter insurance policy number as number",
     "you must enter mezzanine as boolean yes or no" => "you must enter mezzanine as boolean yes or no",
-    "you must enter unit finishing as boolean yes or no" => "you must enter unit finishing as boolean yes or no"
+    "you must enter unit finishing as boolean yes or no" => "you must enter unit finishing as boolean yes or no",
+    "you must enter security deposit" => "you must enter security deposit",
+    "you must enter security deposit as number" => "you must enter security deposit as number",
+    "you must enter real estate id" => "you must enter real estate id",
+    "you must enter real estate id as number" => "you must enter real estate id as number",
 ];

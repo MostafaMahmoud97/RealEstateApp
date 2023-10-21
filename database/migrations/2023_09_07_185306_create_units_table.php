@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger("unit_status_id")->default(1);
             $table->unsignedBigInteger("beneficiary_status_id")->default(0);
             $table->double("price");
+            $table->double("security_deposit")->default(0)->nullable();
             $table->string("unit_type");
             $table->string("unit_number");
             $table->integer("floor_number")->default(0)->nullable();

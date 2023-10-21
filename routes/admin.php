@@ -45,6 +45,8 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("show-unit/{unit_id}",[RealEstateController::class,"showUnit"]);
         Route::get("edit-real-estate/{unit_id}",[RealEstateController::class,"editRealEstate"]);
         Route::put("update-real-estate/{real_estate_id}",[RealEstateController::class,"updateRealEstate"]);
+        Route::post("add-new-unit",[RealEstateController::class,"addNewUnit"]);
+        Route::put("update-unit/{unit_id}",[RealEstateController::class,"updateUnit"]);
         Route::delete("delete-real-estate/{real_estate_id}",[RealEstateController::class,"deleteRealEstate"]);
         Route::delete("delete-unit/{unit_id}",[RealEstateController::class,"deleteUnit"]);
         Route::put("update-cover-real-estate",[RealEstateController::class,"updateCoverRealEstate"]);

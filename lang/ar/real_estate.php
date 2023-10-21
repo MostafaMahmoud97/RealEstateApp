@@ -21,6 +21,9 @@ return [
     "Status has been fetched success" => "تم جلب الحالات بنجاح",
     "cover real estate image has been updated success" => "تم تحديث صورة الغلاف العقاري بنجاح",
     "media unit has been updated success" => "تم تحديث وحدة الوسائط بنجاح",
+    "Unit has been added success" => "تم اضافة الوحدة بنجاح",
+    "Unit has been updated success" => "تم تحديث الوحدة بنجاح",
+
 
     "you must send unit id" => "يجب عليك إرسال معرف الوحدة",
     "you must send unit id as number" => "يجب عليك إرسال معرف الوحدة كرقم",
@@ -79,5 +82,9 @@ return [
     "you must enter special sign specification as string" => "يجب عليك إدخال مواصفات اللوحة الخاصة كسلسلة",
     "you must enter insurance policy number as number" => "يجب عليك إدخال رقم بوليصة التأمين كرقم",
     "you must enter mezzanine as boolean yes or no" => "يجب عليك إدخال الميزانين بشكل منطقي نعم أو لا",
-    "you must enter unit finishing as boolean yes or no" => "يجب عليك إدخال تشطيب الوحدة بالقيمة المنطقية نعم أو لا"
+    "you must enter unit finishing as boolean yes or no" => "يجب عليك إدخال تشطيب الوحدة بالقيمة المنطقية نعم أو لا",
+    "you must enter security deposit" => "يجب عليك إدخال مبلغ التأمين",
+    "you must enter security deposit as number" => "يجب عليك إدخال مبلغ التأمين كرقم",
+    "you must enter real estate id" => "يجب عليك إدخال معرف العقار",
+    "you must enter real estate id as number" => "يجب عليك إدخال معرف العقار كرقم",
 ];

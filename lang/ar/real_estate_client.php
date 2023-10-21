@@ -82,6 +82,8 @@ return [
     "you must enter insurance policy number as number" => "يجب عليك إدخال رقم بوليصة التأمين كرقم",
     "you must enter mezzanine as boolean yes or no" => "يجب عليك إدخال الميزانين بشكل منطقي نعم أو لا",
     "you must enter unit finishing as boolean yes or no" => "يجب عليك إدخال تشطيب الوحدة بالقيمة المنطقية نعم أو لا",
+    "Unit has been added success" => "تم اضافة الوحدة بنجاح",
+    "Unit has been updated success" => "تم تحديث الوحدة بنجاح",
 
     "you must send purpose id as number" => "يجب عليك إرسال معرف الغرض كرقم",
     "you must send purpose id as 1 or 2" => "يجب عليك إرسال معرف الغرض كـ 1 أو 2",
@@ -104,5 +106,9 @@ return [
     "you must send property type id value as 1,2,3,4,5,6,7,8,9" => "يجب عليك إرسال قيمة معرف نوع الخاصية كـ 1,2,3,4,5,6,7,8,9",
     "you must send property usage id as array" => "يجب عليك إرسال معرف استخدام الخاصية كمصفوفة",
     "you must send property usage id value as numeric" => "يجب عليك إرسال قيمة معرف استخدام الخاصية كقيمة رقمية",
-    "you must send property usage id value as 1,2" => "يجب عليك إرسال قيمة معرف استخدام الخاصية كـ 1,2"
+    "you must send property usage id value as 1,2" => "يجب عليك إرسال قيمة معرف استخدام الخاصية كـ 1,2",
+    "you must enter real estate id" => "يجب عليك إدخال معرف العقار",
+    "you must enter real estate id as number" => "يجب عليك إدخال معرف العقار كرقم",
+    "you must enter security deposit" => "يجب عليك إدخال مبلغ التأمين",
+    "you must enter security deposit as number" => "يجب عليك إدخال مبلغ التأمين كرقم",
 ];

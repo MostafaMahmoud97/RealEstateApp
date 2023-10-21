@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RealEstate\RealEstateAddNewUnit;
 use App\Http\Requests\Admin\RealEstate\RealEstateStoreRequest;
 use App\Http\Requests\Admin\RealEstate\RealEstateUpdateRequest;
+use App\Http\Requests\Admin\RealEstate\RealEstateUpdateUnit;
 use App\Models\Media;
 use App\Models\Unit;
 use App\Services\Admin\RealEstateService;
@@ -65,21 +67,24 @@ class RealEstateController extends Controller
     }
 
     public function updateRealEstate($real_estate_id,RealEstateUpdateRequest $request){
-        //validate media
-        if ($request->new_units){
-            foreach ($request->new_units as $unit){
-                if ($unit['media']){
-                    foreach ($unit['media'] as $media){
-                        $check = $this->getValidateFile($media);
-                        if (!$check){
-                            return Response::errorResponse(__("real_estate.You must add image or video in media"));
-                        }
-                    }
+        return $this->service->updateRealEstate($real_estate_id,$request);
+    }
+
+    public function addNewUnit(RealEstateAddNewUnit $request){
+        if ($request->media){
+            foreach ($request->media as $media){
+                $check = $this->getValidateFile($media);
+                if (!$check){
+                    return Response::errorResponse(__("real_estate.You must add image or video in media"));
                 }
             }
         }
 
-        return $this->service->updateRealEstate($real_estate_id,$request);
+        return $this->service->AddNewUnit($request);
+    }
+
+    public function updateUnit($unit_id,RealEstateUpdateUnit $request){
+        return $this->service->updateUnit($unit_id,$request);
     }
 
     public function deleteRealEstate($real_estate_id){

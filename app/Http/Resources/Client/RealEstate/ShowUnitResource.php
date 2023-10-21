@@ -25,6 +25,7 @@ class ShowUnitResource extends JsonResource
                 "unit_area" => $this->unit_area,
                 "activity" => $this['RealEstate']['BuildingTypeUse']->title,
                 "price" => $this->price,
+                "security_deposit" => $this->security_deposit,
                 "user" => $this["RealEstate"]->User,
                 "description" => $this->description,
                 "purpose" => $this['PurposeProperty']->title,
