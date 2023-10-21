@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger("purpose_property_id");
             $table->unsignedBigInteger("unit_status_id")->default(1);
             $table->unsignedBigInteger("beneficiary_status_id")->default(0);
+            $table->unsignedBigInteger("commercial_activity_id")->default(0);
             $table->double("price");
             $table->double("security_deposit")->default(0)->nullable();
             $table->string("unit_type");

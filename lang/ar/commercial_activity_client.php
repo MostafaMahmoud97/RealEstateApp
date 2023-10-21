@@ -10,7 +10,6 @@ return [
     "Commercial activity has been updated success" => "تم نعديل النشاط التجارى بنجاح",
     "you can't delete this commercial activity because it assigned to unit" => "لا يمكنك حذف هذا النشاط التجاري لأنه مخصص للوحدة",
 
-
     "you must send user id" => "يجب ارسل رقم العميل id",
     "user id must be numeric" => "يجب ان يكون رقم العميل رقم صحيح",
     "you must enter company name" => "يجب ادخال اسم الشركة او المؤسسة",

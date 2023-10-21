@@ -17,6 +17,7 @@ class Unit extends Model
         "purpose_property_id",
         "unit_status_id",
         "beneficiary_status_id",
+        "commercial_activity_id",
         "price",
         "security_deposit",
         "unit_type",
@@ -49,6 +50,10 @@ class Unit extends Model
 
     public function Beneficiary(){
         return $this->belongsTo(User::class,"beneficiary_id","id");
+    }
+
+    public function CommercialActivity(){
+        return $this->belongsTo(CommercialActivities::class,"commercial_activity_id","id");
     }
 
     public function PurposeProperty(){

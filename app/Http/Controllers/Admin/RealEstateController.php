@@ -28,6 +28,10 @@ class RealEstateController extends Controller
         return $this->service->getHelpData();
     }
 
+    public function getCommercialActivity($user_id){
+        return $this->service->getCommercialActivity($user_id);
+    }
+
     public function store(RealEstateStoreRequest $request){
 
         if ($request->unit['media']){

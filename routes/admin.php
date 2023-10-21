@@ -37,6 +37,7 @@ Route::group(['middleware' => 'localRequest'], function()
 
     Route::group(["prefix" => "real-estate","middleware" => "auth:admin-api"],function (){
         Route::get("help-data",[RealEstateController::class,"getHelpData"]);
+        Route::get("commercial-activity/{user_id}",[RealEstateController::class,"getCommercialActivity"]);
         Route::get("list-unit-status",[RealEstateController::class,"listAllStatus"]);
         Route::post("store",[RealEstateController::class,"store"]);
         Route::post("list-all-properties",[RealEstateController::class,"listAllProperties"]);

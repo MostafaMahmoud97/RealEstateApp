@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\RealEstate\PaginateListAllUnitsResource;
 use App\Http\Resources\Admin\RealEstate\ShowPropertyResource;
 use App\Models\BuildingType;
 use App\Models\BuildingTypeUse;
+use App\Models\CommercialActivities;
 use App\Models\CommercialInfo;
 use App\Models\Media;
 use App\Models\PurposeProperty;
@@ -32,6 +33,11 @@ class RealEstateService
         $PurposeProperties = PurposeProperty::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
 
         return Response::successResponse(["building_types" => $BuildingTypes,"building_type_uses" => $BuildingTypeUses,"purpose_properties" => $PurposeProperties],__("real_estate.Help data has been fetched success"));
+    }
+
+    public function getCommercialActivity($user_id){
+        $CommercialActivity = CommercialActivities::select("id","company_name","cr_number")->where("user_id",$user_id)->get();
+        return Response::successResponse($CommercialActivity,__("commercial_activity_client.Commercial activities have been fetched success"));
     }
 
     public function store($request){
@@ -242,7 +248,7 @@ class RealEstateService
         },"Units" => function ($q){
             $q->with(["PurposeProperty" => function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
-            },"CommercialInfo","media"]);
+            },"CommercialInfo","CommercialActivity","media"]);
         },"media"])->find($RealEstate_id);
 
         return Response::successResponse(new editRealEstateResource($RealEstate),__("real_estate.Real Estate has been fetched success for update"));

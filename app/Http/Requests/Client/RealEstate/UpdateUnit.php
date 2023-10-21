@@ -25,6 +25,7 @@ class UpdateUnit extends FormRequest
     {
         return [
             "building_type_use_id" => "required|numeric|in:1,2",
+            "commercial_activity_id" => "required_if:building_type_use_id,1|numeric",
             "purpose_property_id" => "required|numeric|in:1,2",
             "price" => "required|numeric",
             "security_deposit" => "required_if:purpose_property_id,1|numeric",
@@ -63,6 +64,8 @@ class UpdateUnit extends FormRequest
             "building_type_use_id.required" => __("real_estate_client.you must choose building type use"),
             "building_type_use_id.numeric" => __("real_estate_client.you must choose building type use and send id number"),
             "building_type_use_id.in" => __("real_estate_client.you must choose building type from 1 : 2"),
+            "commercial_activity_id.required_if" => __("real_estate_client.you must choose commercial activity"),
+            "commercial_activity_id.numeric" => __("real_estate_client.you must choose commercial activity and send id number"),
             "purpose_property_id.required" => __("real_estate_client.you must choose purpose property"),
             "purpose_property_id.numeric" => __("real_estate_client.you must choose purpose property and send id number"),
             "price.required" => __("real_estate_client.you must enter price"),

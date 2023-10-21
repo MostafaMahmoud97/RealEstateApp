@@ -73,7 +73,8 @@ class editUnitResource extends JsonResource
                     "special_sign_specification" => $this['CommercialInfo']->special_sign_specification,
                     "insurance_policy_number" => $this['CommercialInfo']->insurance_policy_number,
                     "unit_finishing" => $this['CommercialInfo']->unit_finishing,
-                ]
+                ],
+                "commercial_activity" => $this["CommercialActivity"]
             ];
         }
     }

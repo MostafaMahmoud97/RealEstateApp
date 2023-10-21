@@ -51,6 +51,10 @@ class CommercialActivityService
         if (!$CommercialActivity){
             return Response::errorResponse(__("commercial_activity.no commercial activity by this id"));
         }
+        $CommercialActivityCheck = CommercialActivities::whereHas("Units")->find($id);
+        if ($CommercialActivityCheck){
+            return Response::errorResponse(__("commercial_activity.you can't delete this commercial activity because it assigned to unit"));
+        }
         $CommercialActivity->delete();
         return Response::successResponse([],__("commercial_activity.Commercial activity has been deleted success"));
     }

@@ -28,4 +28,8 @@ class CommercialActivities extends Model
         "updated_at",
         "deleted_at"
     ];
+
+    public function Units(){
+        return $this->hasMany(Unit::class,"commercial_activity_id","id");
+    }
 }

@@ -88,4 +88,6 @@ return [
     "you must enter security deposit as number" => "you must enter security deposit as number",
     "you must enter real estate id" => "you must enter real estate id",
     "you must enter real estate id as number" => "you must enter real estate id as number",
+    "you must choose commercial activity" => "you must choose commercial activity",
+    "you must choose commercial activity and send id number" => "you must choose commercial activity and send id number",
 ];

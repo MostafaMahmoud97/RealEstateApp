@@ -27,7 +27,7 @@ class CommercialActivitiesController extends Controller
         return $this->service->show($id);
     }
 
-    public function update($id,Request $request){
+    public function update($id,CommercialActivityStoreRequest $request){
         return $this->service->update($id, $request);
     }
 

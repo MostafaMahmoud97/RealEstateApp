@@ -87,4 +87,6 @@ return [
     "you must enter security deposit as number" => "يجب عليك إدخال مبلغ التأمين كرقم",
     "you must enter real estate id" => "يجب عليك إدخال معرف العقار",
     "you must enter real estate id as number" => "يجب عليك إدخال معرف العقار كرقم",
+    "you must choose commercial activity" => "يجب عليك اختيار النشاط التجاري",
+    "you must choose commercial activity and send id number" => "يجب عليك اختيار النشاط التجاري وإرسال رقم الهوية",
 ];
