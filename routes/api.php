@@ -18,7 +18,7 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::post('check-forgot-password-token',[ClientAuthController::class,'sendForgotPasswordToken']);
     Route::post('change-password',[ClientAuthController::class,'change_password']);
 
-    Route::group(["prefix" => "real-estate",],function (){
+    Route::group(["prefix" => "real-estate","middleware" => ["auth:api","verified"]],function (){
         Route::get("help-data",[RealEstateController::class,"getHelpData"]);
         Route::get("commercial-activity",[RealEstateController::class,"getCommercialActivity"]);
         Route::post("store",[RealEstateController::class,"store"]);

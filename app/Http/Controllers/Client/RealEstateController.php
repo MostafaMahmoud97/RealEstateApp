@@ -25,8 +25,7 @@ class RealEstateController extends Controller
         $this->service = $service;
     }
 
-    public function getHelpData(Request $request){
-        return $request->header();
+    public function getHelpData(){
         return $this->service->getHelpData();
     }
 
