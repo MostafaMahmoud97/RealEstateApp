@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Client\ClientAuthController;
 use \App\Http\Controllers\Client\RealEstateController;
 use \App\Http\Controllers\Client\CommercialActivityController;
+use \App\Http\Controllers\Client\ManageRequestController;
 
 
 Route::group(['middleware' => 'localRequest'], function()
@@ -17,6 +18,12 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::post('forgot-password',[ClientAuthController::class,'forgotPassword']);
     Route::post('check-forgot-password-token',[ClientAuthController::class,'sendForgotPasswordToken']);
     Route::post('change-password',[ClientAuthController::class,'change_password']);
+
+    Route::group(["prefix" => "user","middleware" => ["auth:api","verified"]],function (){
+        Route::get("/",[ClientAuthController::class,"show"]);
+        Route::put("update",[ClientAuthController::class,"update"]);
+        Route::put("reset-password",[ClientAuthController::class,"resetPassword"]);
+    });
 
     Route::group(["prefix" => "real-estate","middleware" => ["auth:api","verified"]],function (){
         Route::get("help-data",[RealEstateController::class,"getHelpData"]);
@@ -43,5 +50,20 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("show/{id}",[CommercialActivityController::class,"show"]);
         Route::put("update/{id}",[CommercialActivityController::class,"update"]);
         Route::delete("delete/{id}",[CommercialActivityController::class,"delete"]);
+    });
+
+    Route::group(["prefix" => "request","middleware" => ["auth:api","verified"]],function (){
+        Route::get("/click-send-request/{unit_id}",[ManageRequestController::class,"ClickSendRequest"]);
+        Route::post("/calc-annual-rent",[ManageRequestController::class,"CalcAnnualRent"]);
+        Route::post("/calc-regular-rent-payment",[ManageRequestController::class,"CalcRegularRentPayment"]);
+        Route::post("/submit-request",[ManageRequestController::class,"SubmitRequest"]);
+        Route::get("/get-count-received-request",[ManageRequestController::class,"GetCountReceivedRequest"]);
+        Route::get("/received-request",[ManageRequestController::class,"GetAllReceivedRequest"]);
+        Route::get("/show-received-request/{request_id}",[ManageRequestController::class,"ShowReceivedRequest"]);
+        Route::post("/change-request-status",[ManageRequestController::class,"ChangeRequestStatus"]);
+        Route::get("/list-statues",[ManageRequestController::class,"ListAllRequestStatuses"]);
+        Route::get("/sent-requests",[ManageRequestController::class,"GetSentRequests"]);
+        Route::get("/show-payment-invoice",[ManageRequestController::class,"showDepositInvoice"]);
+        Route::post("/cancel-payment-invoice",[ManageRequestController::class,"CancelPaymentInvoice"]);
     });
 });

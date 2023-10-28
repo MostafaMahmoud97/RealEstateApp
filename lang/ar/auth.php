@@ -26,6 +26,9 @@ return [
 // client
     "client identity is required" => "هوية العميل مطلوبة",
     "Client has been registered success" => "لقد تم تسجيل العميل بنجاح",
+    "user data has been fetched success" => "لقد تم جلب بيانات المستخدم بنجاح",
+    "user has been updated" => "تم تحديث المستخدم",
+    "password has been changed success" => "تم تغيير كلمة المرور بنجاح",
 
 
 ];

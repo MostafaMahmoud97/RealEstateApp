@@ -26,5 +26,8 @@ return [
 // client
     "client identity is required" => "client identity is required",
     "Client has been registered success" => "Client has been registered success",
+    "user data has been fetched success" => "user data has been fetched success",
+    "user has been updated" => "user has been updated",
+    "password has been changed success" => "password has been changed success",
 
 ];

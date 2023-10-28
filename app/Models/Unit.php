@@ -72,6 +72,10 @@ class Unit extends Model
         return $this->hasOne(CommercialInfo::class,"unit_id","id");
     }
 
+    public function Requests(){
+        return $this->hasMany(Request::class,"unit_id","id");
+    }
+
     public function media(){
         return $this->morphMany(Media::class,"mediable");
     }

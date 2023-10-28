@@ -4,6 +4,7 @@
 namespace App\Services\Client;
 
 
+use App\Http\Resources\Client\User\ShowUserResource;
 use App\Models\EmailVerificationClient;
 use App\Models\Nationality;
 use App\Models\PasswordReset;
@@ -105,6 +106,37 @@ class ClientAuthService
         ]);
 
         $user->notify(new VerifyEmailNotify($token,$user->name));
+    }
+
+    public function show(){
+        $user_id = Auth::id();
+        $User = User::with(["TypeIdentity" => function($q){
+            $q->select("id",LaravelLocalization::getCurrentLocale()."_title as title");
+        },"Nationality" => function($q){
+            $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+        }])->find($user_id);
+
+
+        return Response::successResponse(ShowUserResource::make($User),__("auth.user data has been fetched success"));
+    }
+
+    public function update($request){
+        $User_id = Auth::id();
+        $User = User::find($User_id);
+        $User->update($request->all());
+
+        return Response::successResponse($User,__("auth.user has been updated"));
+    }
+
+    public function resetPassword($request){
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        $user->update([
+            "password" => Hash::make($request->password)
+        ]);
+
+        return Response::successResponse($user,__("auth.password has been changed success"));
     }
 
     public function resendVerifyToken(){
