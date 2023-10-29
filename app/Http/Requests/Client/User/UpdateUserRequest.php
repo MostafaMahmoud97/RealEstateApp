@@ -28,7 +28,6 @@ class UpdateUserRequest extends FormRequest
         return [
             "type_identities_id" => "required|numeric",
             "name" => "required|string",
-            "nationality_id" => "required|numeric",
             "id_number" => "required|numeric",
             "phone" => "required|string|unique:users,phone,".$user_id,
             "email" => "required|email|unique:users,email,".$user_id,
@@ -42,8 +41,6 @@ class UpdateUserRequest extends FormRequest
             "type_identities_id.numeric"=> __("client.you must enter number in type id"),
             "name.required"=> __("client.you must enter full name"),
             "name.string" => __("client.you must enter string in full name"),
-            "nationality_id.required" => __("client.you must enter nationality"),
-            "nationality_id.numeric" => __("client.you must enter number in nationality"),
             "id_number.required" => __("client.you must enter id number"),
             "id_number.numeric"  => __("client.you must enter number in id number"),
             "phone.required" => __("client.you must enter phone number"),

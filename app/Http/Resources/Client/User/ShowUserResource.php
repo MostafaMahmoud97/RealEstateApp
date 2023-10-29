@@ -22,8 +22,6 @@ class ShowUserResource extends JsonResource
             "email" => $this->email,
             "type_identity_id" => $this['TypeIdentity']->id,
             "type_identity" => $this['TypeIdentity']->title,
-            "nationality_id" => $this['Nationality']->id,
-            "nationality" => $this['Nationality']->title
         ];
     }
 }
