@@ -125,14 +125,12 @@ class RealEstateService
         }
 // -----------------------------end filter
 
-        if ($request->selected == 1){ // for my properties
+        if ($request->selected == 1 || $request->selected == 2 || $request->selected == 3 || $request->selected == 5){ // for my new, pending , Seller , Lessor
             $Units = $Units->whereHas("RealEstate",function ($q) use ($User_id){
                 $q->where("user_id",$User_id);
-            })->whereIn("unit_status_id",[1,2,3,5])->get();
-        }elseif ($request->selected == 2){ // for my purchased
-            $Units = $Units->where("beneficiary_id" ,$User_id)->where("beneficiary_status_id",4)->get();
-        }elseif ($request->selected == 3){ // for my rented
-            $Units = $Units->where("beneficiary_id" ,$User_id)->where("beneficiary_status_id",5)->get();
+            })->where("unit_status_id",$request->selected)->get();
+        }elseif ($request->selected == 4 || $request->selected == 6){ // Buyer, Lessee
+            $Units = $Units->where("beneficiary_id" ,$User_id)->where("beneficiary_status_id",$request->selected)->get();
         }
 
         return Response::successResponse(ListAllMyPropertiesResource::collection($Units),__("real_estate_client.Properties have been fetched"));

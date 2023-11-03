@@ -8,6 +8,7 @@ use App\Http\Resources\Client\ManageRequest\ReceivedRequestsResource;
 use App\Http\Resources\Client\ManageRequest\SentRequestPaginateResources;
 use App\Http\Resources\Client\ManageRequest\ShowDepositInvoiceResource;
 use App\Http\Resources\Client\ManageRequest\ShowReceivedRequestsResource;
+use App\Models\Contract;
 use App\Models\DepositInvoice;
 use App\Models\RentPaymentCycle;
 use App\Models\Request;
@@ -271,6 +272,12 @@ class ManageRequestService
 
             // Create Invoice
             $this->CreatePaymentInvoice($request->request_id);
+
+            //Create Contract
+            Contract::create([
+                "request_id" => $request->request_id,
+                "contract_status_id" => 1
+            ]);
 
             return Response::successResponse($Request,__("manage_request.request has been approved success"));
         }

@@ -22,7 +22,7 @@ return [
     "media unit has been updated success" => "media unit has been updated success",
     "you must choose selected param" => "you must choose selected param",
     "you must choose selected param as number" => "you must choose selected param as number",
-    "you must choose selected param from 1 to 3" => "you must choose selected param from 1 to 3",
+    "you must choose selected param from 1 to 6" => "you must choose selected param from 1 to 6",
     "Unit has been added success" => "Unit has been added success",
     "Unit has been updated success" => "Unit has been updated success",
 

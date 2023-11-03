@@ -49,15 +49,16 @@ class RealEstateController extends Controller
 
     public function listAllMyProperties(Request $request){
         $Validator = Validator::make($request->all(),[
-            "selected" => "required|numeric|in:1,2,3",
+            "selected" => "required|numeric|in:1,2,3,4,5,6",
         ],[
             "selected.required" => __("real_estate_client.you must choose selected param"),
             "selected.numeric" => __("real_estate_client.you must choose selected param as number"),
-            "selected.in" => __("real_estate_client.you must choose selected param from 1 to 3"),
+            "selected.in" => __("real_estate_client.you must choose selected param from 1 to 6"),
         ]);
 
         if ($Validator->fails()){
-            return Request::errorResponse($Validator->errors());
+
+            return Response::errorResponse($Validator->errors());
         }
 
         return $this->service->listAllMyProperties($request);
