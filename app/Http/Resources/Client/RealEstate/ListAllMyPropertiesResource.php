@@ -22,6 +22,7 @@ class ListAllMyPropertiesResource extends JsonResource
             "address" => $this['RealEstate']->national_address,
             "building_type" => $this['RealEstate']['BuildingType']->title,
             "building_type_use" => $this['RealEstate']['BuildingTypeUse']->title,
+            "purpose" => $this['PurposeProperty']->title,
             "CoverRealEstate" => count($this['RealEstate']['Media']) > 0 ? $this['RealEstate']['Media'][0]->file_path : "",
         ];
     }

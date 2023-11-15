@@ -105,12 +105,14 @@ class RealEstateService
         $User_id = Auth::id();
 
 
-        $Units = Unit::select('id','real_estate_id','beneficiary_id','unit_number','unit_area','beneficiary_status_id','unit_status_id','price')->with(["RealEstate" => function($q) use ($User_id){
+        $Units = Unit::select('id','purpose_property_id','real_estate_id','beneficiary_id','unit_number','unit_area','beneficiary_status_id','unit_status_id','price')->with(["RealEstate" => function($q) use ($User_id){
             $q->with(["BuildingType" => function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
             },"BuildingTypeUse" =>  function($q){
                 $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
             },"media"])->select('id','building_type_id','building_type_use_id','user_id','national_address');
+        },"PurposeProperty" => function($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
         }]);
 
         // filter
@@ -132,6 +134,7 @@ class RealEstateService
         }elseif ($request->selected == 4 || $request->selected == 6){ // Buyer, Lessee
             $Units = $Units->where("beneficiary_id" ,$User_id)->where("beneficiary_status_id",$request->selected)->get();
         }
+
 
         return Response::successResponse(ListAllMyPropertiesResource::collection($Units),__("real_estate_client.Properties have been fetched"));
     }
