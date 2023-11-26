@@ -38,8 +38,8 @@ class AdminAuthService
             $user = Auth::guard('admin-api')->user();
 
             $media = $user->media;
-            if (count($media) > 0){
-                $user->logo = $media[0]->file_path;
+            if ($media->file_path){
+                $user->logo = $media->file_path;
             }else{
                 $user->logo = "";
             }
