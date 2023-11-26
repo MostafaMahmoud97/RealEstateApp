@@ -24,6 +24,8 @@ return [
     "no invoice for this request for pay" => "لا توجد فاتورة لهذا الطلب للدفع",
     "Count pending requests has been fetched success" => "لقد تم جلب عدد الطلبات المعلقة بنجاح",
     "No deposit invoice for cancel" => "لا توجد فاتورة إيداع للإلغاء",
+    "No deposit invoice for pay" => "لا يوجد فاتورة إيداع للدفع",
+    "deposit payment invoice has been payed success" => "لقد تم دفع فاتورة التوثيق بنجاح",
     "deposit payment invoice has been canceled" => "تم إلغاء فاتورة دفع الوديعة",
 
     "you must send unit_id" => "يجب عليك إرسال معرف الوحدة",

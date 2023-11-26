@@ -27,6 +27,10 @@ class ContractStatusTableSeeder extends Seeder
             [
                 "title_ar" => "تم تحميلها على الأطراف",
                 "title_en" => "uploaded to parties"
+            ],
+            [
+                "title_ar" => "الغاء التوثيق",
+                "title_en" => "cancel contract"
             ]
         ];
 

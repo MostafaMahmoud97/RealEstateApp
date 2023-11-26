@@ -373,11 +373,16 @@ class ManageRequestService
 
         $Unit_id = $PaymentInvoice["Request"]->unit_id;
         $Request_id = $PaymentInvoice["Request"]->id;
+        $Contract = $PaymentInvoice["Request"]->Contract;
 
         $Request = Request::find($Request_id);
         $Request->update([
             "request_states_id" => 3
         ]);
+
+        //Cancel contract
+        $Contract->contract_status_id = 4;
+        $Contract->save();
 
         $PaymentInvoice->update([
             "deposit_invoice_status_id" => 3
@@ -393,6 +398,43 @@ class ManageRequestService
 
 
         return Response::successResponse([],__("manage_request.deposit payment invoice has been canceled"));
+    }
+
+    public function PayPaymentInvoice($request){
+        $user_id = Auth::id();
+        $PaymentInvoice = DepositInvoice::with("Request")
+            ->whereHas("Request",function ($q) use ($user_id){
+                $q->where("user_id",$user_id)
+                    ->where("request_states_id",2);
+            })->where("deposit_invoice_status_id",1)
+            ->find($request->deposit_invoice_id);
+
+
+        if (!$PaymentInvoice){
+            return Response::errorResponse(__("manage_request.No deposit invoice for pay"));
+        }
+
+        $Unit_id = $PaymentInvoice["Request"]->unit_id;
+        $Request_id = $PaymentInvoice["Request"]->id;
+        $Contract = $PaymentInvoice["Request"]->Contract;
+
+        $PaymentInvoice->update([
+            "deposit_invoice_status_id" => 2
+        ]);
+
+        //Cancel contract
+        $Contract->contract_status_id = 2;
+        $Contract->save();
+
+        $HoldingRequests = Request::where("unit_id",$Unit_id)
+            ->where("request_states_id",4)->get();
+
+        foreach ($HoldingRequests as $holdingRequest){
+            $holdingRequest->request_states_id = 3;
+            $holdingRequest->save();
+        }
+
+        return Response::successResponse([],__("manage_request.deposit payment invoice has been payed success"));
     }
 
 }

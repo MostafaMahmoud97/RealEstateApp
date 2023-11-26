@@ -65,5 +65,6 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("/sent-requests",[ManageRequestController::class,"GetSentRequests"]);
         Route::get("/show-payment-invoice",[ManageRequestController::class,"showDepositInvoice"]);
         Route::post("/cancel-payment-invoice",[ManageRequestController::class,"CancelPaymentInvoice"]);
+        Route::post("/pay-payment-invoice",[ManageRequestController::class,"PayPaymentInvoice"]);
     });
 });

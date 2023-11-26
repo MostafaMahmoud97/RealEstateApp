@@ -45,4 +45,8 @@ class Request extends Model
     public function DepositInvoice(){
         return $this->hasOne(DepositInvoice::class,"request_id","id");
     }
+
+    public function Contract(){
+        return $this->hasOne(Contract::class,"request_id","id");
+    }
 }

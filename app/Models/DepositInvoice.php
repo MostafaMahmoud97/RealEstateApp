@@ -24,4 +24,8 @@ class DepositInvoice extends Model
     public function Request(){
         return $this->belongsTo(Request::class,"request_id","id");
     }
+
+    public function InvoiceStatus(){
+        return $this->belongsTo(DepositInvoiceStatus::class,"deposit_invoice_status_id","id");
+    }
 }

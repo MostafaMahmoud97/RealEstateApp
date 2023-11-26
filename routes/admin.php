@@ -7,6 +7,7 @@ use \App\Http\Controllers\Admin\ClientController;
 use \App\Http\Controllers\Admin\CommercialActivitiesController;
 use \App\Http\Controllers\Admin\RealEstateController;
 use \App\Http\Controllers\Admin\EmployeeController;
+use \App\Http\Controllers\Admin\DealController;
 
 
 
@@ -62,5 +63,10 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::put("update-logo/{id}",[EmployeeController::class,"update_logo"]);
         Route::put("reset-password/{id}",[EmployeeController::class,"resetPassword"]);
         Route::put("is-active/{id}",[EmployeeController::class,"is_active"]);
+    });
+
+    Route::group(["prefix" => "deals","middleware" => "auth:admin-api"],function (){
+        Route::get("contract-status",[DealController::class,"getContractStatus"]);
+        Route::get("/",[DealController::class,"index"]);
     });
 });

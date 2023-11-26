@@ -64,4 +64,8 @@ class ManageRequestController extends Controller
     public function CancelPaymentInvoice(Request $request){
         return $this->service->CancelPaymentInvoice($request);
     }
+
+    public function PayPaymentInvoice(Request $request){
+        return $this->service->PayPaymentInvoice($request);
+    }
 }

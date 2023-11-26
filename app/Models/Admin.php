@@ -48,7 +48,7 @@ class Admin extends Authenticatable
     }
 
     public function media(){
-        return $this->morphMany(Media::class,"mediable");
+        return $this->morphOne(Media::class,"mediable");
     }
 
 }

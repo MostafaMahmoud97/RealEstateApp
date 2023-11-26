@@ -19,4 +19,12 @@ class Contract extends Model
         "created_at",
         "updated_at"
     ];
+
+    public function Request(){
+        return $this->belongsTo(Request::class,"request_id","id");
+    }
+
+    public function ContractStatus(){
+        return $this->belongsTo(ContractStatus::class,"contract_status_id","id");
+    }
 }

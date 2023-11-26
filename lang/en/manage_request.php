@@ -24,6 +24,8 @@ return [
     "no invoice for this request for pay" => "no invoice for this request for pay",
     "Count pending requests has been fetched success" => "Count pending requests has been fetched success",
     "No deposit invoice for cancel" => "No deposit invoice for cancel",
+    "No deposit invoice for pay" => "No deposit invoice for pay",
+    "deposit payment invoice has been payed success" => "deposit payment invoice has been payed success",
     "deposit payment invoice has been canceled" => "deposit payment invoice has been canceled",
 
     "you must send unit_id" => "you must send unit_id",
