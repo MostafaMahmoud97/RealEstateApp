@@ -21,7 +21,7 @@ class EmployeeIndexResource extends JsonResource
             "email" => $this->email,
             "is_active" => $this->is_active,
             "job_title" => $this->job_title,
-            "logo" => $this['media'] ? $this['media']->file_path : ""
+            "logo" => $this['media']->file_path ? $this['media']->file_path : ""
         ];
     }
 }
