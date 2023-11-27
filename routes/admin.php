@@ -68,5 +68,7 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::group(["prefix" => "deals","middleware" => "auth:admin-api"],function (){
         Route::get("contract-status",[DealController::class,"getContractStatus"]);
         Route::get("/",[DealController::class,"index"]);
+        Route::get("show/{deal_id}",[DealController::class,"showDeal"]);
+        Route::post("upload-contract",[DealController::class,"uploadContract"]);
     });
 });

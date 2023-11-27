@@ -5,13 +5,18 @@ namespace App\Services\Admin;
 
 
 use App\Http\Resources\Admin\Deal\IndexPaginate;
+use App\Http\Resources\Admin\Deal\ShowResource;
 use App\Models\Contract;
 use App\Models\ContractStatus;
+use App\Models\Media;
+use App\Traits\GeneralFileService;
 use Illuminate\Support\Facades\Response;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class DealService
 {
+    use GeneralFileService;
+
     public function getContractStatus(){
         $ContractStatus = ContractStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         return Response::successResponse($ContractStatus,__("deals.status has been fetched success"));
@@ -56,6 +61,89 @@ class DealService
     }
 
     public function showDeal($deal_id){
+        $Contract = Contract::with(["Request" =>function($q){
+            $q->with(["Unit" => function($q){
+                $q->with(["RealEstate" => function($q){
+                    $q->with(["User" => function($q){
+                        $q->with(["TypeIdentity" => function($q){
+                            $q->select("id",LaravelLocalization::getCurrentLocale()."_title as title");
+                        },"Nationality" => function($q){
+                            $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+                        }]);
+                    },"BuildingType" => function($q){
+                        $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+                    },"BuildingTypeUse" => function($q){
+                        $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+                    }]);
+                },"CommercialInfo","CommercialActivity"]);
+            },"User" => function($q){
+                $q->with(["TypeIdentity" => function($q){
+                    $q->select("id",LaravelLocalization::getCurrentLocale()."_title as title");
+                },"Nationality" => function($q){
+                    $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+                }]);
+            },"RentPaymentCycle" => function($q){
+                $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+            }]);
+        }])->whereNotIn("contract_status_id",[1,4])->find($deal_id);
 
+        if (!$Contract){
+            return Response::errorResponse(__("deals.No deal by this id"));
+        }
+
+        if ($Contract["Request"]["Unit"]->purpose_property_id == 1){
+            return Response::successResponse(ShowResource::make($Contract),__("deals.deal has been fetched success"));
+        }else{
+            return Response::successResponse([],"coming soon");
+        }
+
+    }
+
+    public function uploadContract($request){
+        $Contract = Contract::whereNotIn("contract_status_id",[1,4])->find($request->deal_id);
+        if(!$Contract){
+            return Response::errorResponse(__("deals.No deal by this id"));
+        }
+
+        if ($request->contract_file){
+            $path = "Contracts/";
+            $file_name = $this->SaveFile($request->contract_file,$path);
+            $type = $this->getFileType($request->contract_file);
+
+            $ContractMedia = $Contract->media;
+            if ($ContractMedia){
+                $ContractMedia->update([
+                    'type' => $type,
+                    'directory' => $path,
+                    'filename' => $file_name
+                ]);
+            }else{
+                Media::create([
+                    'mediable_type' => $Contract->getMorphClass(),
+                    'mediable_id' => $Contract->id,
+                    'title' => "Contract",
+                    'type' => $type,
+                    'directory' => $path,
+                    'filename' => $file_name
+                ]);
+            }
+
+            $Contract->contract_status_id = 3;
+            $Contract->save();
+
+            $user = $Contract->Request->User;
+
+            $unit = $Contract->Request->Unit;
+
+            $unit->update([
+                "unit_status_id" => $unit->purpose_property_id == 1 ? 5 : 3,
+                "beneficiary_id" => $user->id,
+                "beneficiary_status_id" => $unit->purpose_property_id == 1 ? 6 : 4
+            ]);
+
+            return Response::successResponse([],__("deals.contract has been uploaded"));
+        }
+
+        return Response::errorResponse(__("deals.contract not uploaded please try again"));
     }
 }

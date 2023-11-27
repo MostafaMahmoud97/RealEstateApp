@@ -16,7 +16,6 @@ class Contract extends Model
     ];
 
     protected $hidden = [
-        "created_at",
         "updated_at"
     ];
 
@@ -26,5 +25,9 @@ class Contract extends Model
 
     public function ContractStatus(){
         return $this->belongsTo(ContractStatus::class,"contract_status_id","id");
+    }
+
+    public function media(){
+        return $this->morphOne(Media::class,"mediable");
     }
 }

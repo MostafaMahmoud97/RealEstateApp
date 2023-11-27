@@ -6,6 +6,7 @@ use \App\Http\Controllers\Client\ClientAuthController;
 use \App\Http\Controllers\Client\RealEstateController;
 use \App\Http\Controllers\Client\CommercialActivityController;
 use \App\Http\Controllers\Client\ManageRequestController;
+use \App\Http\Controllers\Client\DealClientController;
 
 
 Route::group(['middleware' => 'localRequest'], function()
@@ -66,5 +67,10 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("/show-payment-invoice",[ManageRequestController::class,"showDepositInvoice"]);
         Route::post("/cancel-payment-invoice",[ManageRequestController::class,"CancelPaymentInvoice"]);
         Route::post("/pay-payment-invoice",[ManageRequestController::class,"PayPaymentInvoice"]);
+    });
+
+    Route::group(["prefix" => "deals" , "middleware" => ["auth:api","verified"]],function (){
+        Route::get("/status-contract",[DealClientController::class,"DealStatusList"]);
+        Route::get("/contracts",[DealClientController::class,"index"]);
     });
 });

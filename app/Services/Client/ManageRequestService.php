@@ -69,6 +69,7 @@ class ManageRequestService
         $contract_sealing_date = $request->contract_sealing_date;
 
         $tenancy_end_date = Carbon::parse($contract_sealing_date)->addYears($request->number_years);
+        $tenancy_end_date = Carbon::parse($tenancy_end_date)->subDay();
         $tenancy_end_date->format("Y-m-d");
 
         $annual_rent = $Unit->price * 12;
