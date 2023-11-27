@@ -8,6 +8,8 @@ return [
     "you must send deal id" => "you must send deal id",
     "you must send deal id as number" => "you must send deal id as number",
     "you must send contract file" => "you must send contract file",
-    "you must send contract file as pdf" => "you must send contract file as pdf"
+    "you must send contract file as pdf" => "you must send contract file as pdf",
+    "Status have been fetched success" => "Status have been fetched success",
+    "contracts have been fetched success" => "contracts have been fetched success",
 
 ];
