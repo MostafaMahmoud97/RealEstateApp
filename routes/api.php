@@ -7,6 +7,7 @@ use \App\Http\Controllers\Client\RealEstateController;
 use \App\Http\Controllers\Client\CommercialActivityController;
 use \App\Http\Controllers\Client\ManageRequestController;
 use \App\Http\Controllers\Client\DealClientController;
+use \App\Http\Controllers\Client\SettingController;
 
 
 Route::group(['middleware' => 'localRequest'], function()
@@ -19,6 +20,10 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::post('forgot-password',[ClientAuthController::class,'forgotPassword']);
     Route::post('check-forgot-password-token',[ClientAuthController::class,'sendForgotPasswordToken']);
     Route::post('change-password',[ClientAuthController::class,'change_password']);
+
+    Route::group(["prefix" => "setting","middleware" => ["auth:api","verified"]],function (){
+        Route::get("all-help-data",[SettingController::class,"get_all_help_data"]);
+    });
 
     Route::group(["prefix" => "user","middleware" => ["auth:api","verified"]],function (){
         Route::get("/",[ClientAuthController::class,"show"]);
