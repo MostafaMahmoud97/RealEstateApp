@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Client\ClientStoreRequest;
+use App\Http\Requests\Client\User\SaveFCMTokenRequest;
 use App\Http\Requests\Client\User\UpdateUserRequest;
 use App\Services\Client\ClientAuthService;
 use Illuminate\Http\Request;
@@ -74,7 +75,7 @@ class ClientAuthController extends Controller
         return $this->service->change_password($request);
     }
 
-    public function saveFCMToken(Request $request){
+    public function saveFCMToken(SaveFCMTokenRequest $request){
         return $this->service->saveFCMToken($request);
     }
 }

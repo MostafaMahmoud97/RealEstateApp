@@ -29,5 +29,9 @@ return [
     "user data has been fetched success" => "user data has been fetched success",
     "user has been updated" => "user has been updated",
     "password has been changed success" => "password has been changed success",
+    "FCMToken has been updated success" => "FCMToken has been updated success",
+    "FCMToken is required" => "FCMToken is required",
+    "Platform is required" => "Platform is required",
+    "Platform must be android or ios" => "Platform must be android or ios"
 
 ];

@@ -29,6 +29,9 @@ return [
     "user data has been fetched success" => "لقد تم جلب بيانات المستخدم بنجاح",
     "user has been updated" => "تم تحديث المستخدم",
     "password has been changed success" => "تم تغيير كلمة المرور بنجاح",
-
+    "FCMToken has been updated success" => "تم تحديث FCCMToken بنجاح",
+    "FCMToken is required" => "مطلوب FCCMToken",
+    "Platform is required" => "المنصة مطلوبة",
+    "Platform must be android or ios" => "يجب أن تكون المنصة android أو ios"
 
 ];
