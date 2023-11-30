@@ -8,6 +8,7 @@ use \App\Http\Controllers\Client\CommercialActivityController;
 use \App\Http\Controllers\Client\ManageRequestController;
 use \App\Http\Controllers\Client\DealClientController;
 use \App\Http\Controllers\Client\SettingController;
+use \App\Http\Controllers\Client\ChatController;
 
 
 Route::group(['middleware' => 'localRequest'], function()
@@ -77,5 +78,10 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::group(["prefix" => "deals" , "middleware" => ["auth:api","verified"]],function (){
         Route::get("/status-contract",[DealClientController::class,"DealStatusList"]);
         Route::get("/contracts",[DealClientController::class,"index"]);
+    });
+
+    Route::group(["prefix" => "chat","middleware" => ["auth:api","verified"]],function (){
+        Route::post("/start-chat",[ChatController::class,"startChat"]);
+        Route::get("/index",[ChatController::class,"getMyChat"]);
     });
 });

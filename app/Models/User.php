@@ -76,6 +76,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Unit::class,"beneficiary_id","id");
     }
 
+    public function ChatUser(){
+        return $this->belongsToMany(User::class,"chat_users","user_one_id","user_two_id","id","id");
+    }
+
+    public function ChatUserTwo(){
+        return $this->belongsToMany(User::class,"chat_users","user_two_id","user_one_id","id","id");
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $token = mt_rand(1000, 9999);
