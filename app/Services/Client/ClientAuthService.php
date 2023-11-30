@@ -246,4 +246,15 @@ class ClientAuthService
         return Response::successResponse([],__("auth.password reset successfully"));
 
     }
+
+    public function saveFCMToken($request){
+        $user = Auth::user();
+
+        $user->update([
+            "fcm_token" => $request->fcm_token,
+            "platform" => $request->platform
+        ]);
+
+        return Response::successResponse($user,__("auth.FCMToken has been updated success"));
+    }
 }

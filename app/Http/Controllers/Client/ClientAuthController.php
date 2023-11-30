@@ -73,4 +73,8 @@ class ClientAuthController extends Controller
     public function change_password(Request $request){
         return $this->service->change_password($request);
     }
+
+    public function saveFCMToken(Request $request){
+        return $this->service->saveFCMToken($request);
+    }
 }

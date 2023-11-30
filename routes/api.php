@@ -30,6 +30,7 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("/",[ClientAuthController::class,"show"]);
         Route::put("update",[ClientAuthController::class,"update"]);
         Route::put("reset-password",[ClientAuthController::class,"resetPassword"]);
+        Route::put("store-fcm-token",[ClientAuthController::class,"saveFCMToken"]);
     });
 
     Route::group(["prefix" => "real-estate","middleware" => ["auth:api","verified"]],function (){
