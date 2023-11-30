@@ -29,12 +29,22 @@ class SettingService
         $TypeIdentity = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title as title")->get();
         $ContractTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")
             ->whereNotIn("id",[1,2])->get();
-        $homeTaps = [
-            [
-                "id" => "",
-                "title" => "all"
-            ]
-        ];
+        if (LaravelLocalization::getCurrentLocale() == "er"){
+            $homeTaps = [
+                [
+                    "id" => "",
+                    "title" => "All"
+                ]
+            ];
+        }else{
+            $homeTaps = [
+                [
+                    "id" => "",
+                    "title" => "الكل"
+                ]
+            ];
+        }
+
 
         foreach ($BuildingType as $item){
             array_push($homeTaps , $item);
