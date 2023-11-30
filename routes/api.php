@@ -85,4 +85,6 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::post("/start-chat",[ChatController::class,"startChat"]);
         Route::get("/index",[ChatController::class,"getMyChat"]);
     });
+
+    Route::get("send-notification-test",[\App\Http\Controllers\NotificationTestController::class,"sendPushNotification"]);
 });
