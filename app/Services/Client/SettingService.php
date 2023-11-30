@@ -29,6 +29,17 @@ class SettingService
         $TypeIdentity = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title as title")->get();
         $ContractTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")
             ->whereNotIn("id",[1,2])->get();
+        $homeTaps = [
+            [
+                "id" => "",
+                "title" => "all"
+            ]
+        ];
+
+        foreach ($BuildingType as $item){
+            array_push($homeTaps , $item);
+        }
+
 
         $data = [
             "building_type" => $BuildingType,
@@ -39,7 +50,8 @@ class SettingService
             "purpose_property" => $PurposeProperty,
             "request_status" => $RequestStatus,
             "type_identity" => $TypeIdentity,
-            "contract_taps" => $ContractTaps
+            "contract_taps" => $ContractTaps,
+            "home_taps" => $homeTaps
         ];
 
         return Response::successResponse($data,"data has been fetched");
