@@ -454,7 +454,7 @@ class RealEstateService
             });
         }
 
-        if ($request->property_usage_id){
+        if ($request->property_usage_id && $request->property_usage_id != null && $request->property_usage_id != "" ){
             $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
                 $q->whereIn("building_type_use_id",$request->property_usage_id);
             });
