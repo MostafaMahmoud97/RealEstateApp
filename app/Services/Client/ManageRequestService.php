@@ -4,10 +4,12 @@
 namespace App\Services\Client;
 
 
+use App\Events\AdminNotifyEvent;
 use App\Http\Resources\Client\ManageRequest\ReceivedRequestsResource;
 use App\Http\Resources\Client\ManageRequest\SentRequestPaginateResources;
 use App\Http\Resources\Client\ManageRequest\ShowDepositInvoiceResource;
 use App\Http\Resources\Client\ManageRequest\ShowReceivedRequestsResource;
+use App\Models\Admin;
 use App\Models\Contract;
 use App\Models\DepositInvoice;
 use App\Models\RentPaymentCycle;
@@ -336,6 +338,16 @@ class ManageRequestService
                 $this->pushNotification($UserNotified->fcm_token,"approve request",$User->name." approve a request to rent the unit");
             }
 
+            //Send Notification Admin
+            $Admins = Admin::all();
+            Notification::send($Admins,new ClientNotification($data));
+            $data = [
+                "title" => "approve request",
+                "content" => $User->name." approve a request to rent the unit",
+                "code" => "U113"
+            ];
+            event(new AdminNotifyEvent($data));
+
             return Response::successResponse($Request,__("manage_request.request has been approved success"));
         }
     }
@@ -470,6 +482,16 @@ class ManageRequestService
             $this->pushNotification($UserNotified->fcm_token,"cancel request",$User->name." cancel a request to rent the unit");
         }
 
+        //Send Notification Admin
+        $Admins = Admin::all();
+        Notification::send($Admins,new ClientNotification($data));
+        $data = [
+            "title" => "cancel request",
+            "content" => $User->name." cancel a request to rent the unit",
+            "code" => "U114"
+        ];
+        event(new AdminNotifyEvent($data));
+
 
         return Response::successResponse([],__("manage_request.deposit payment invoice has been canceled"));
     }
@@ -525,6 +547,16 @@ class ManageRequestService
         if ($UserNotified->fcm_token){
             $this->pushNotification($UserNotified->fcm_token,"Pay the cost of documentation",$User->name." paid the cost of documenting the contract");
         }
+
+        //Send Notification Admin
+        $Admins = Admin::all();
+        Notification::send($Admins,new ClientNotification($data));
+        $data = [
+            "title" => "Pay the cost of documentation",
+            "content" => $User->name." paid the cost of documenting the contract",
+            "code" => "U115"
+        ];
+        event(new AdminNotifyEvent($data));
 
         return Response::successResponse([],__("manage_request.deposit payment invoice has been payed success"));
     }

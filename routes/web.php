@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/test', function () {
+//    return view('test_x');
+//});
+
 Route::get("/show",function (){
     return view("pdf.contract");
 });
