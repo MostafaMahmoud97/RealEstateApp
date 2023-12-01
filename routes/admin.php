@@ -8,6 +8,7 @@ use \App\Http\Controllers\Admin\CommercialActivitiesController;
 use \App\Http\Controllers\Admin\RealEstateController;
 use \App\Http\Controllers\Admin\EmployeeController;
 use \App\Http\Controllers\Admin\DealController;
+use \App\Http\Controllers\Admin\NotificationController;
 
 
 
@@ -70,5 +71,11 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("/",[DealController::class,"index"]);
         Route::get("show/{deal_id}",[DealController::class,"showDeal"]);
         Route::post("upload-contract",[DealController::class,"uploadContract"]);
+    });
+
+    Route::group(["prefix" => "notification","middleware" => "auth:admin-api"],function (){
+        Route::get("/",[NotificationController::class,"index"]);
+        Route::post("/mark-single-as-read",[NotificationController::class,"markSingleNotiAsRead"]);
+        Route::get("/mark-all-as-read",[NotificationController::class,"markAllNotiAsRead"]);
     });
 });
