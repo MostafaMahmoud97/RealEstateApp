@@ -25,7 +25,7 @@ class ChangeRequestStatus extends FormRequest
     {
         return [
             "request_id" => "required|integer",
-            "status" => "required|in:1,2"
+            "status" => "required|in:0,1"
         ];
     }
 

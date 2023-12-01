@@ -14,13 +14,19 @@ use App\Models\RentPaymentCycle;
 use App\Models\Request;
 use App\Models\RequestStatus;
 use App\Models\Unit;
+use App\Models\User;
+use App\Notifications\ClientNotification;
+use App\Traits\FireBaseServiceTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ManageRequestService
 {
+    use FireBaseServiceTrait;
+
     public function ClickSendRequest($unit_id){
         $user_id = Auth::id();
         $Unit = Unit::whereHas("RealEstate", function ($q) use ($user_id){
@@ -168,6 +174,23 @@ class ManageRequestService
                 "regular_rent_payment" => $RegularRentPayment
             ]);
 
+            //Send Notification
+            $UserNotified = $Unit->RealEstate->User;
+            $User = Auth::user();
+            $data = [
+                "title_ar" => "ارسال طلب",
+                "title_en" => "send request",
+                "content_ar" => $User->name." قام بارسال طلب وحدة للاجار ",
+                "content_en" => $User->name." sent a request to rent the unit",
+                "code" => "U111"
+            ];
+
+            Notification::send($UserNotified,new ClientNotification($data));
+
+            if ($UserNotified->fcm_token){
+                $this->pushNotification($UserNotified->fcm_token,"send request",$User->name." sent a request to rent the unit");
+            }
+
             return  Response::successResponse($Request,__("manage_request.request has been sent success"));
 
         }else{ // in Sell Status
@@ -248,10 +271,28 @@ class ManageRequestService
             return Response::errorResponse(__("manage_request.you can't take action with this request"));
         }
 
+        $UserNotified = $Request->User;
+        $User = Auth::user();
+
         if ($request->status == 0){
             $Request = $Request->update([
                 "request_states_id" => 3
             ]);
+
+            //Send Notification
+            $data = [
+                "title_ar" => "رفض الطلب",
+                "title_en" => "reject request",
+                "content_ar" => $User->name." قام برفض طلب وحدة الاجار ",
+                "content_en" => $User->name." reject a request to rent the unit",
+                "code" => "U112"
+            ];
+
+            Notification::send($UserNotified,new ClientNotification($data));
+
+            if ($UserNotified->fcm_token){
+                $this->pushNotification($UserNotified->fcm_token,"reject request",$User->name." reject a request to rent the unit");
+            }
 
             return Response::successResponse($Request,__("manage_request.request has been rejected success"));
 
@@ -279,6 +320,21 @@ class ManageRequestService
                 "request_id" => $request->request_id,
                 "contract_status_id" => 1
             ]);
+
+            //Send Notification
+            $data = [
+                "title_ar" => "قبوال الطلب",
+                "title_en" => "approve request",
+                "content_ar" => $User->name." قام بقبوال طلب وحدة الاجار ",
+                "content_en" => $User->name." approve a request to rent the unit",
+                "code" => "U113"
+            ];
+
+            Notification::send($UserNotified,new ClientNotification($data));
+
+            if ($UserNotified->fcm_token){
+                $this->pushNotification($UserNotified->fcm_token,"approve request",$User->name." approve a request to rent the unit");
+            }
 
             return Response::successResponse($Request,__("manage_request.request has been approved success"));
         }
@@ -397,6 +453,23 @@ class ManageRequestService
             $holdingRequest->save();
         }
 
+        //Send Notification
+        $UserNotified = $Request->Unit->RealEstate->User;
+        $User = Auth::user();
+        $data = [
+            "title_ar" => "الغاء الطلب",
+            "title_en" => "cancel request",
+            "content_ar" => $User->name." قام بالغاء طلب وحدة الاجار ",
+            "content_en" => $User->name." cancel a request to rent the unit",
+            "code" => "U114"
+        ];
+
+        Notification::send($UserNotified,new ClientNotification($data));
+
+        if ($UserNotified->fcm_token){
+            $this->pushNotification($UserNotified->fcm_token,"cancel request",$User->name." cancel a request to rent the unit");
+        }
+
 
         return Response::successResponse([],__("manage_request.deposit payment invoice has been canceled"));
     }
@@ -433,6 +506,24 @@ class ManageRequestService
         foreach ($HoldingRequests as $holdingRequest){
             $holdingRequest->request_states_id = 3;
             $holdingRequest->save();
+        }
+
+        //Send Notification
+        $Request = Request::find($Request_id);
+        $UserNotified = $Request->Unit->RealEstate->User;
+        $User = Auth::user();
+        $data = [
+            "title_ar" => "دفع تكلفة التوثيق",
+            "title_en" => "Pay the cost of documentation",
+            "content_ar" => $User->name." قام بدفع تكلفة توثيق العقد ",
+            "content_en" => $User->name." paid the cost of documenting the contract",
+            "code" => "U115"
+        ];
+
+        Notification::send($UserNotified,new ClientNotification($data));
+
+        if ($UserNotified->fcm_token){
+            $this->pushNotification($UserNotified->fcm_token,"Pay the cost of documentation",$User->name." paid the cost of documenting the contract");
         }
 
         return Response::successResponse([],__("manage_request.deposit payment invoice has been payed success"));

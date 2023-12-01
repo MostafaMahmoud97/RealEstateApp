@@ -9,13 +9,19 @@ use App\Http\Resources\Admin\Deal\ShowResource;
 use App\Models\Contract;
 use App\Models\ContractStatus;
 use App\Models\Media;
+use App\Models\Request;
+use App\Notifications\ClientNotification;
+use App\Traits\FireBaseServiceTrait;
 use App\Traits\GeneralFileService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class DealService
 {
     use GeneralFileService;
+    use FireBaseServiceTrait;
 
     public function getContractStatus(){
         $ContractStatus = ContractStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
@@ -140,6 +146,28 @@ class DealService
                 "beneficiary_id" => $user->id,
                 "beneficiary_status_id" => $unit->purpose_property_id == 1 ? 6 : 4
             ]);
+
+            //Send Notification
+            $UserOne = $Contract->Request->Unit->RealEstate->User;
+            $UserTwo = $Contract->Request->User;
+
+            $data = [
+                "title_ar" => "توثيق العقد",
+                "title_en" => "Documentation of the contract",
+                "content_ar" => "تم توثيق العقد بنجاح",
+                "content_en" => "The contract has been successfully documented",
+                "code" => "U116"
+            ];
+
+            Notification::send($UserOne,new ClientNotification($data));
+            Notification::send($UserTwo,new ClientNotification($data));
+
+            if ($UserOne->fcm_token){
+                $this->pushNotification($UserOne->fcm_token,"Documentation of the contract","The contract has been successfully documented");
+            }
+            if ($UserTwo->fcm_token){
+                $this->pushNotification($UserTwo->fcm_token,"Documentation of the contract","The contract has been successfully documented");
+            }
 
             return Response::successResponse([],__("deals.contract has been uploaded"));
         }

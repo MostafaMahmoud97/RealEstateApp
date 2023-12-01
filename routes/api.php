@@ -9,6 +9,7 @@ use \App\Http\Controllers\Client\ManageRequestController;
 use \App\Http\Controllers\Client\DealClientController;
 use \App\Http\Controllers\Client\SettingController;
 use \App\Http\Controllers\Client\ChatController;
+use \App\Http\Controllers\Client\NotificationController;
 
 
 Route::group(['middleware' => 'localRequest'], function()
@@ -86,5 +87,10 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("/index",[ChatController::class,"getMyChat"]);
     });
 
-    Route::get("send-notification-test",[\App\Http\Controllers\NotificationTestController::class,"sendPushNotification"]);
+    Route::group(["prefix" => "notification","middleware" => ["auth:api","verified"]],function (){
+        Route::get("/",[NotificationController::class,"index"]);
+        Route::post("/mark-single-as-read",[NotificationController::class,"markSingleNotiAsRead"]);
+        Route::get("/mark-all-as-read",[NotificationController::class,"markAllNotiAsRead"]);
+    });
+
 });

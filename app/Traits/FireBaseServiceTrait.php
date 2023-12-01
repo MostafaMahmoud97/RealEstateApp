@@ -43,7 +43,5 @@ trait FireBaseServiceTrait
 
         $response = curl_exec($ch);
 
-        return $response;
-
     }
 }
