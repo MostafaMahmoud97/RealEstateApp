@@ -27,6 +27,7 @@ class SettingService
         $PurposeProperty = PurposeProperty::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         $RequestStatus = RequestStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         $TypeIdentity = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title as title")->get();
+        $MyListingTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         $ContractTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")
             ->whereNotIn("id",[1,2])->get();
         if (LaravelLocalization::getCurrentLocale() == "er"){
@@ -54,6 +55,7 @@ class SettingService
         $data = [
             "building_type" => $BuildingType,
             "building_type_use" => $BuildingTypeUse,
+            "my_listing_taps" => $MyListingTaps,
             "contract_status" => $ContractStatus,
             "invoice_status" => $InvoiceStatus,
             "nationality" => $Nationality,
