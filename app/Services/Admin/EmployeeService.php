@@ -86,8 +86,8 @@ class EmployeeService
 
         if ($request->logo){
             $Media = $Employee->media;
-            foreach ($Media as $media){
-                $media->delete();
+            if($Media){
+                $Media->delete();
             }
 
             $path = "Admin_logo/";
