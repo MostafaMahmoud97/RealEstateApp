@@ -10,6 +10,7 @@ use App\Models\ContractStatus;
 use App\Models\DepositInvoiceStatus;
 use App\Models\Nationality;
 use App\Models\PurposeProperty;
+use App\Models\RentPaymentCycle;
 use App\Models\RequestStatus;
 use App\Models\TypeIdentity;
 use App\Models\UnitStatus;
@@ -28,6 +29,7 @@ class SettingService
         $RequestStatus = RequestStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         $TypeIdentity = TypeIdentity::select("id",LaravelLocalization::getCurrentLocale()."_title as title")->get();
         $MyListingTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
+        $RentPaymentCycles = RentPaymentCycle::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         $ContractTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")
             ->whereNotIn("id",[1,2])->get();
         if (LaravelLocalization::getCurrentLocale() == "er"){
@@ -63,7 +65,8 @@ class SettingService
             "request_status" => $RequestStatus,
             "type_identity" => $TypeIdentity,
             "contract_taps" => $ContractTaps,
-            "home_taps" => $homeTaps
+            "home_taps" => $homeTaps,
+            "rent_payment_cycle" => $RentPaymentCycles
         ];
 
         return Response::successResponse($data,"data has been fetched");

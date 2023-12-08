@@ -48,12 +48,11 @@ class ManageRequestService
         $data = [];
 
         if ($Unit->purpose_property_id == 1){
-            $RentPaymentCycles = RentPaymentCycle::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
-            $SecurityDeposit = $Unit->security_deposit;
-            $data = ["rent_payment_cycles" => $RentPaymentCycles,"security_deposit" => $SecurityDeposit];
+            return Response::successResponse(true,__("manage_request.data has been fetched success"));
+        }else{
+            return Response::successResponse("Coming soon",__("manage_request.data has been fetched success"));
         }
 
-        return Response::successResponse($data,__("manage_request.data has been fetched success"));
     }
 
 
@@ -82,7 +81,34 @@ class ManageRequestService
 
         $annual_rent = $Unit->price * 12;
 
-        $data = ["tenancy_end_date" => $tenancy_end_date,"annual_rent" => $annual_rent];
+        //Rent payment cycle
+        $rent_payment_cycle = RentPaymentCycle::find($request->rent_payment_cycle_id);
+        if (!$rent_payment_cycle){
+            return Response::errorResponse(__("manage_request.please select valid rent payment cycle"));
+        }
+
+        $RegularRentPayment = 0;
+
+        if ($rent_payment_cycle->id == 1){
+            $RegularRentPayment = $Unit->price;
+        }elseif ($rent_payment_cycle->id == 2){
+            $RegularRentPayment = $Unit->price * 3;
+        }elseif ($rent_payment_cycle->id == 3){
+            $RegularRentPayment = $Unit->price * 6;
+        }elseif ($rent_payment_cycle->id == 4){
+            $RegularRentPayment = $Unit->price * 12;
+        }
+
+
+        $data = [
+            "tenancy_end_date" => $tenancy_end_date,
+            "annual_rent" => $annual_rent,
+            "regular_rent_payment" => $RegularRentPayment
+        ];
+
+        if ($Unit->purpose_property_id == 1){
+            $data["security_deposit"] = $Unit->security_deposit;
+        }
 
         return Response::successResponse($data,__("manage_request.annual rent calculation has been calculated success"));
     }
