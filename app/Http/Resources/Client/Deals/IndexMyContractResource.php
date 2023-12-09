@@ -23,7 +23,7 @@ class IndexMyContractResource extends JsonResource
         "status" => $this["ContractStatus"]->title,
         "created_at" => $this->created_at,
         "cover" => count($this["Request"]["Unit"]["RealEstate"]["media"]) > 0 ? $this["Request"]["Unit"]["RealEstate"]["media"][0]->file_path : "",
-        "contract" => $this["media"]->file_path ? $this["media"]->file_path : "",
+        "contract" => $this["media"] ? $this["media"]->file_path : "",
     ];
     }
 }
