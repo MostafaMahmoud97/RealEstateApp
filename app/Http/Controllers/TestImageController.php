@@ -13,16 +13,16 @@ class TestImageController extends Controller
 
     public function store_image(Request $request){
         $Validator = Validator::make($request->all(),[
-            "image" => "required|mimes:jpg,png,jpeg"
+            "image" => "required|string"
         ]);
 
         if ($Validator->fails()){
             return Response::errorResponse($Validator->errors());
         }
         $path = "Test_image/";
-        $file_name = $this->SaveFile($request->image, $path);
+        $file_name = $this->SaveBase64Image($request->image,$request->extention, $path);
 
-        return Response::successResponse([],"Image Save success");
+        return Response::successResponse($file_name,"Image Save success");
 
     }
 }

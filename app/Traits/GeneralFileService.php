@@ -12,6 +12,23 @@ Trait GeneralFileService{
         return $file_name;
     }
 
+    public function SaveBase64Image($image,$extention,$path){
+        $file_name = uniqid().'.'.$extention;
+        Storage::disk('public')->put($path.'/'.$file_name,base64_decode($image));
+        return $file_name;
+    }
+
+    public function getFileTypeByBase64($extintion){
+        if ($extintion == "jpg" || $extintion == "png" || $extintion == "jpeg"){
+            return "image";
+        }elseif($extintion == "pdf"){
+            return "file";
+        }elseif ($extintion == "mp4"|| $extintion == "avchd"|| $extintion == "mov"|| $extintion == "webm"|| $extintion == "avi"|| $extintion == "flv"|| $extintion == "wmv"){
+            return "video";
+        }
+    }
+
+
     public function getFileType($file){
         $fileName = $file->getClientOriginalName();
         $arraySplit = explode('.',$fileName);
@@ -29,6 +46,14 @@ Trait GeneralFileService{
         $fileName = $file->getClientOriginalName();
         $arraySplit = explode('.',$fileName);
         $extintion = $arraySplit[(count($arraySplit)-1)];
+        if ($extintion == "jpg" || $extintion == "png" || $extintion == "jpeg"|| $extintion == "mp4"|| $extintion == "avchd"|| $extintion == "mov"|| $extintion == "webm"|| $extintion == "avi"|| $extintion == "flv"|| $extintion == "wmv"){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getValidateFileBase64($extintion){
         if ($extintion == "jpg" || $extintion == "png" || $extintion == "jpeg"|| $extintion == "mp4"|| $extintion == "avchd"|| $extintion == "mov"|| $extintion == "webm"|| $extintion == "avi"|| $extintion == "flv"|| $extintion == "wmv"){
             return true;
         }else{

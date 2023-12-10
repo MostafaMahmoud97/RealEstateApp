@@ -37,7 +37,7 @@ class RealEstateController extends Controller
         //validate media
         if ($request->unit['media']){
             foreach ($request->unit['media'] as $media){
-                $check = $this->getValidateFile($media);
+                $check = $this->getValidateFileBase64($media["extention"]);
                 if (!$check){
                     return Response::errorResponse(__("real_estate_client.You must add image or video in media"));
                 }
@@ -79,7 +79,7 @@ class RealEstateController extends Controller
     public function addNewUnit(AddNewUnit $request){
         if ($request->media){
             foreach ($request->media as $media){
-                $check = $this->getValidateFile($media);
+                $check = $this->getValidateFileBase64($media["extention"]);
                 if (!$check){
                     return Response::errorResponse(__("real_estate_client.You must add image or video in media"));
                 }
@@ -103,10 +103,10 @@ class RealEstateController extends Controller
 
     public function updateCoverRealEstate(Request $request){
         $Validator = Validator::make($request->all(),[
-            "cover" => "required|mimes:jpg,png,jpeg|max:2048",
+            "cover" => "required|string",
+            "extention" => "required|in:jpg,png,jpeg",
         ],[
             "cover.required" => __("real_estate_client.you must choose cover image"),
-            "cover.mimes" => __("real_estate_client.you must choose cover image as jpg,png,jpeg"),
         ]);
 
         if ($Validator->fails()){
@@ -119,7 +119,8 @@ class RealEstateController extends Controller
     public function updateMediaUnit(Request $request){
         $Validator = Validator::make($request->all(),[
             "media" => "required|array|min:1",
-            "media.*" => "max:2048",
+            "media.*.media" => "required|string",
+            "media.*.extention" => "required|string",
         ],[
             "media.required" => __("real_estate_client.you must choose unit media"),
             "media.array" => __("real_estate_client.you must choose unit media as array"),
@@ -131,7 +132,7 @@ class RealEstateController extends Controller
 
         //validate media
         foreach ($request->media as $media){
-            $check = $this->getValidateFile($media);
+            $check = $this->getValidateFileBase64($media["extention"]);
             if (!$check){
                 return Response::errorResponse(__("real_estate_client.You must add image or video in media"));
             }

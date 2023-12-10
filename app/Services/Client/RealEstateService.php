@@ -53,8 +53,8 @@ class RealEstateService
 
         if ($request->cover_real_estate){
             $path = "RealEstateCover/";
-            $file_name = $this->SaveFile($request->cover_real_estate,$path);
-            $type = $this->getFileType($request->cover_real_estate);
+            $file_name = $this->SaveBase64Image($request->cover_real_estate,$request->cover_real_estate_extention,$path);
+            $type = $this->getFileTypeByBase64($request->cover_real_estate_extention);
             Media::create([
                 'mediable_type' => $RealEstate->getMorphClass(),
                 'mediable_id' => $RealEstate->id,
@@ -73,8 +73,8 @@ class RealEstateService
             if ($request->unit['media']){
                 $path = "Unit_Media/";
                 foreach ($request->unit['media'] as $media){
-                    $file_name = $this->SaveFile($media,$path);
-                    $type = $this->getFileType($media);
+                    $file_name = $this->SaveBase64Image($media['media'],$media["extention"],$path);
+                    $type = $this->getFileTypeByBase64($media["extention"]);
                     Media::create([
                         'mediable_type' => $UnitX->getMorphClass(),
                         'mediable_id' => $UnitX->id,
@@ -211,8 +211,8 @@ class RealEstateService
         if ($request->media){
             $path = "Unit_Media/";
             foreach ($request->media as $media){
-                $file_name = $this->SaveFile($media,$path);
-                $type = $this->getFileType($media);
+                $file_name = $this->SaveBase64Image($media["media"],$media["extention"],$path);
+                $type = $this->getFileTypeByBase64($media["extention"]);
                 Media::create([
                     'mediable_type' => $Unit->getMorphClass(),
                     'mediable_id' => $Unit->id,
@@ -305,8 +305,8 @@ class RealEstateService
 
         if ($request->cover){
             $path = "RealEstateCover/";
-            $file_name = $this->SaveFile($request->cover,$path);
-            $type = $this->getFileType($request->cover);
+            $file_name = $this->SaveBase64Image($request->cover,$request->extention,$path);
+            $type = $this->getFileTypeByBase64($request->extention);
             Media::create([
                 'mediable_type' => $RealEstate->getMorphClass(),
                 'mediable_id' => $RealEstate->id,
@@ -339,8 +339,8 @@ class RealEstateService
         if ($request->media) {
             $path = "Unit_Media/";
             foreach ($request->media as $media) {
-                $file_name = $this->SaveFile($media, $path);
-                $type = $this->getFileType($media);
+                $file_name = $this->SaveBase64Image($media["media"],$media["extention"], $path);
+                $type = $this->getFileTypeByBase64($media["extention"]);
                 Media::create([
                     'mediable_type' => $Unit->getMorphClass(),
                     'mediable_id' => $Unit->id,

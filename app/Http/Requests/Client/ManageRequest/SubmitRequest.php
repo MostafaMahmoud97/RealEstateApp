@@ -26,7 +26,7 @@ class SubmitRequest extends FormRequest
         return [
             "unit_id" => "required|integer",
             "contract_sealing_date" => "required|date_format:Y-m-d",
-            "number_years" => "required|integer|gt:0",
+            "number_years" => "required|integer|gt:0|lt:15",
         ];
     }
 

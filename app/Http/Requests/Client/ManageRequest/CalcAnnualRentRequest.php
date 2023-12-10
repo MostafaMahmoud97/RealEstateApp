@@ -26,7 +26,7 @@ class CalcAnnualRentRequest extends FormRequest
         return [
             "unit_id" => "required|integer",
             "contract_sealing_date" => "required|date_format:Y-m-d",
-            "number_years" => "required|integer|gt:0",
+            "number_years" => "required|integer|gt:0|ls:15",
             "rent_payment_cycle_id" => "required|numeric|exists:rent_payment_cycles,id"
         ];
     }
