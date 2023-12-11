@@ -170,11 +170,7 @@ class RealEstateService
         },"CommercialInfo","PurposeProperty" => function($q){
             $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
         },"Media"])
-            ->where(function ($q) use ($user_id){
-                $q->whereHas("RealEstate",function ($q) use ($user_id){
-                    $q->where("user_id",$user_id);
-                })->whereIn("unit_status_id",[1,2,3,5]);
-            })->OrWhere(function ($q) use ($user_id){
+            ->OrWhere(function ($q) use ($user_id){
                 $q->where("beneficiary_id",$user_id)->whereIn("beneficiary_status_id",[4,6]);
             })
             ->find($unit_id);
