@@ -17,7 +17,8 @@ class ShowMyPropertyResource extends JsonResource
 
         if($this['RealEstate']['BuildingTypeUse']->id == 1){
             return [
-                "id" => $this->id,
+                "unit_id" => $this->id,
+                "realestate_id" => $this['RealEstate']->id,
                 "building_type" => $this['RealEstate']['BuildingType']->title,
                 "address" => $this['RealEstate']->national_address,
                 "lat" => $this["RealEstate"]->lat,
@@ -58,7 +59,8 @@ class ShowMyPropertyResource extends JsonResource
 
         }else{
             return [
-                "id" => $this->id,
+                "unit_id" => $this->id,
+                "realestate_id" => $this['RealEstate']->id,
                 "building_type" => $this['RealEstate']['BuildingType']->title,
                 "address" => $this['RealEstate']->national_address,
                 "lat" => $this["RealEstate"]->lat,

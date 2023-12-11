@@ -163,6 +163,8 @@ class RealEstateService
             return Response::errorResponse(__("real_estate_client.please select valid property"));
         }
 
+
+
         return Response::successResponse(ShowMyPropertyResource::make($Unit),__("real_estate_client.property has been fetched"));
     }
 
