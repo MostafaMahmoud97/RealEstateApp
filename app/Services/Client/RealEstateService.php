@@ -161,7 +161,7 @@ class RealEstateService
             })->find($unit_id);
 
 
-        $Unit = Unit::find($user_id);
+        $Unit = Unit::find($unit_id);
         return $Unit;
 
         if (!$Unit){
