@@ -114,4 +114,7 @@ return [
     "you must enter security deposit as number" => "you must enter security deposit as number",
     "you must choose commercial activity" => "you must choose commercial activity",
     "you must choose commercial activity and send id number" => "you must choose commercial activity and send id number",
+    "no real estate by this id" => "no real estate by this id",
+    "Real estate fetched success" => "Real estate fetched success",
+    "unit has been fetched success" => "unit has been fetched success"
 ];

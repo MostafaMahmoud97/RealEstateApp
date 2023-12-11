@@ -113,4 +113,7 @@ return [
     "you must enter security deposit as number" => "يجب عليك إدخال مبلغ التأمين كرقم",
     "you must choose commercial activity" => "يجب عليك اختيار النشاط التجاري",
     "you must choose commercial activity and send id number" => "يجب عليك اختيار النشاط التجاري وإرسال رقم الهوية",
+    "no real estate by this id" => "لا توجد عقارات بهذا المعرف",
+    "Real estate fetched success" => "جلبت العقارات النجاح",
+    "unit has been fetched success" => "تم جلب الوحدة النجاح"
 ];
