@@ -158,7 +158,9 @@ class RealEstateService
                 })->whereIn("unit_status_id",[1,2,3,5]);
             })->OrWhere(function ($q) use ($user_id){
                 $q->where("beneficiary_id",$user_id)->whereIn("beneficiary_status_id",[4,6]);
-            })->find(5);
+            })->find($unit_id);
+
+        return $Unit;
 
         if (!$Unit){
             return Response::errorResponse(__("real_estate_client.please select valid property"));
