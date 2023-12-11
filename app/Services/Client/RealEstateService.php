@@ -141,7 +141,7 @@ class RealEstateService
 
     public function showMyProperty($unit_id){
 
-        return $unit_id;
+
         $user_id = Auth::id();
 
         $Unit = Unit::with(["RealEstate" => function($q){
