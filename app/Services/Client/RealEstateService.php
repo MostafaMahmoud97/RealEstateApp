@@ -141,7 +141,6 @@ class RealEstateService
 
     public function showMyProperty($unit_id){
 
-
         $user_id = Auth::id();
 
         $Unit = Unit::with(["RealEstate" => function($q){
@@ -159,7 +158,7 @@ class RealEstateService
                 })->whereIn("unit_status_id",[1,2,3,5]);
             })->OrWhere(function ($q) use ($user_id){
                 $q->where("beneficiary_id",$user_id)->whereIn("beneficiary_status_id",[4,6]);
-            })->find($unit_id);
+            })->find(5);
 
         if (!$Unit){
             return Response::errorResponse(__("real_estate_client.please select valid property"));
