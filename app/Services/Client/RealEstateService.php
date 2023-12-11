@@ -160,8 +160,17 @@ class RealEstateService
                 $q->where("beneficiary_id",$user_id)->whereIn("beneficiary_status_id",[4,6]);
             })->find($unit_id);
 
-
-        $Unit = Unit::find($unit_id);
+//------------------->
+        $Unit = Unit::with(["RealEstate" => function($q){
+            $q->with(["Media","BuildingType" => function($q){
+                $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+            },"BuildingTypeUse" => function($q){
+                $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+            }]);
+        },"CommercialInfo","PurposeProperty" => function($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        },"Media"])
+            ->find($unit_id);
         return $Unit;
 
         if (!$Unit){
