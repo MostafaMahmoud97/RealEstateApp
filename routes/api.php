@@ -41,6 +41,8 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("list-all-my-properties",[RealEstateController::class,"listAllMyProperties"]);
         Route::get("show-my-property/{unit_id}",[RealEstateController::class,"showMyProperty"]);
         Route::get("edit-real-estate/{unit_id}",[RealEstateController::class,"editRealEstate"]);
+        Route::get("edit-real-estate-new/{real_estate_id}",[RealEstateController::class,"editRealEstateNew"]);
+        Route::get("edit-unit-new/{unit_id}",[RealEstateController::class,"editUnitNew"]);
         Route::put("update-real-estate/{real_estate_id}",[RealEstateController::class,"updateRealEstate"]);
         Route::put("update-unit/{unit_id}",[RealEstateController::class,"updateUnit"]);
         Route::post("add-new-unit",[RealEstateController::class,"addNewUnit"]);

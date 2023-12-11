@@ -72,6 +72,14 @@ class RealEstateController extends Controller
         return $this->service->editRealEstate($unit_id);
     }
 
+    public function editRealEstateNew($realEstate_id){
+        return $this->service->editRealEstateNew($realEstate_id);
+    }
+
+    public function editUnitNew($unit_id){
+        return $this->service->editUnitNew($unit_id);
+    }
+
     public function updateRealEstate($real_estate_id,UpdateRequest $request){
         return $this->service->updateRealEstate($real_estate_id,$request);
     }

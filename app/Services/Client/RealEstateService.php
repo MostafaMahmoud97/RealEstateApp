@@ -189,6 +189,42 @@ class RealEstateService
         return Response::successResponse(new editRealEstateResource($RealEstate),__("real_estate_client.Real Estate has been fetched success for update"));
     }
 
+    public function editRealEstateNew($realEstate_id){
+
+        $user_id = Auth::id();
+
+        $RealEstate = RealEstate::with(["BuildingType" => function ($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        },"BuildingTypeUse" => function ($q){
+            $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
+        },"media"])->where("user_id",$user_id)->find($realEstate_id);
+
+        if (!$RealEstate){
+            return Response::errorResponse(__("real_estate_client.no real estate by this id"));
+        }
+
+
+        return Response::successResponse($RealEstate,__("real_estate_client.Real estate fetched success"));
+    }
+
+    public function editUnitNew($unit_id){
+        $user_id = Auth::id();
+
+        $Unit = Unit::with(["CommercialActivity","PurposeProperty" => function($q){
+            $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
+        },"CommercialInfo","media"])
+            ->where("beneficiary_id",0)->whereHas("RealEstate",function ($q) use ($user_id){
+            $q->where("user_id",$user_id);
+        })->find($unit_id);
+
+        if (!$Unit){
+            return Response::errorResponse("real_estate_client.please select valid unit");
+        }
+
+        return Response::successResponse($Unit,__("real_estate_client.unit has been fetched success"));
+    }
+
+
     public function updateRealEstate($real_estate_id,$request){
         $user_id = Auth::id();
         $RealEstate = RealEstate::where("user_id",$user_id)->find($real_estate_id);
