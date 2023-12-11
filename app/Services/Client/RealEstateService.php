@@ -160,6 +160,8 @@ class RealEstateService
                 $q->where("beneficiary_id",$user_id)->whereIn("beneficiary_status_id",[4,6]);
             })->find($unit_id);
 
+
+        $Unit = Unit::find($user_id);
         return $Unit;
 
         if (!$Unit){
