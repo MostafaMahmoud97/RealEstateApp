@@ -288,7 +288,9 @@ class RealEstateService
             if ($CommercialInfo){
                 $CommercialInfo->update($request->all());
             }else{
-                $CommercialInfo = CommercialInfo::create($request->all(),["unit_id" => $unit_id]);
+                $data = $request->all();
+                $data["unit_id"] = $unit_id;
+                $CommercialInfo = CommercialInfo::create($data);
             }
 
         }
