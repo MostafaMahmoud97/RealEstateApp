@@ -45,15 +45,15 @@ class ShowMyPropertyResource extends JsonResource
                 "CoverRealEstate" => count($this['RealEstate']['Media']) > 0 ? $this['RealEstate']['Media'][0]->file_path : "",
                 "media" => $this['Media'],
 
-                "unit_length" => $this["CommercialInfo"]->unit_length,
-                "unit_direction" => $this["CommercialInfo"]->unit_direction,
-                "number_parking_lots" => $this["CommercialInfo"]->number_parking_lots,
-                "sign_area" => $this["CommercialInfo"]->sign_area,
-                "sign_location" => $this["CommercialInfo"]->sign_location,
-                "special_sign_specification" => $this["CommercialInfo"]->special_sign_specification,
-                "insurance_policy_number" => $this["CommercialInfo"]->insurance_policy_number,
-                "mezzanine" => $this["CommercialInfo"]->mezzanine,
-                "unit_finishing" => $this["CommercialInfo"]->unit_finishing,
+                "unit_length" => $this["CommercialInfo"] ? $this["CommercialInfo"]->unit_length : "",
+                "unit_direction" => $this["CommercialInfo"] ? $this["CommercialInfo"]->unit_direction : "",
+                "number_parking_lots" => $this["CommercialInfo"] ? $this["CommercialInfo"]->number_parking_lots : "",
+                "sign_area" => $this["CommercialInfo"] ? $this["CommercialInfo"]->sign_area : "",
+                "sign_location" => $this["CommercialInfo"] ? $this["CommercialInfo"]->sign_location : "",
+                "special_sign_specification" => $this["CommercialInfo"] ? $this["CommercialInfo"]->special_sign_specification : "",
+                "insurance_policy_number" => $this["CommercialInfo"] ? $this["CommercialInfo"]->insurance_policy_number : "",
+                "mezzanine" => $this["CommercialInfo"] ? $this["CommercialInfo"]->mezzanine : "",
+                "unit_finishing" => $this["CommercialInfo"] ? $this["CommercialInfo"]->unit_finishing : "",
             ];
 
 
