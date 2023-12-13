@@ -98,7 +98,7 @@ class RealEstateService
             }
         }
 
-        return Response::successResponse($RealEstate,__("real_estate_client.Real estate has been added success"));
+        return Response::successResponse($UnitX,__("real_estate_client.Real estate has been added success"));
     }
 
     public function listAllMyProperties($request){
