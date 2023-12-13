@@ -211,7 +211,7 @@ class RealEstateService
         $user_id = Auth::id();
 
         $Unit = Unit::with(["RealEstate" => function($q){
-            $q->select("id","building_type_use_id")->with(["BuildingTypeUse",function($q){
+            $q->select("id","building_type_use_id")->with(["BuildingTypeUse"=>function($q){
                 $q->select("id","title_".LaravelLocalization::getCurrentLocale()." as title");
             }]);
         },"CommercialActivity","PurposeProperty" => function($q){
