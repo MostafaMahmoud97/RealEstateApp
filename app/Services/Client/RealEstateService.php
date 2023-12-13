@@ -285,7 +285,12 @@ class RealEstateService
         //update commercial info
         if ($request->building_type_use_id == 1){
             $CommercialInfo = $Unit->CommercialInfo;
-            $CommercialInfo->update($request->all());
+            if ($CommercialInfo){
+                $CommercialInfo->update($request->all());
+            }else{
+                $CommercialInfo = CommercialInfo::create($request->all(),["unit_id" => $unit_id]);
+            }
+
         }
 
         return Response::successResponse($Unit,__("real_estate_client.Unit has been updated success"));
