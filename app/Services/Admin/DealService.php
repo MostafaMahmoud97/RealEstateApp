@@ -163,10 +163,10 @@ class DealService
             Notification::send($UserTwo,new ClientNotification($data));
 
             if ($UserOne->fcm_token){
-                $this->pushNotification($UserOne->fcm_token,"Documentation of the contract","The contract has been successfully documented");
+                $this->PushNotificationPerformRequest($UserOne->fcm_token,"Documentation of the contract","The contract has been successfully documented");
             }
             if ($UserTwo->fcm_token){
-                $this->pushNotification($UserTwo->fcm_token,"Documentation of the contract","The contract has been successfully documented");
+                $this->PushNotificationPerformRequest($UserTwo->fcm_token,"Documentation of the contract","The contract has been successfully documented");
             }
 
             return Response::successResponse([],__("deals.contract has been uploaded"));

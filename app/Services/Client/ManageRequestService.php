@@ -216,7 +216,7 @@ class ManageRequestService
             Notification::send($UserNotified,new ClientNotification($data));
 
             if ($UserNotified->fcm_token){
-                $this->pushNotification($UserNotified->fcm_token,"send request",$User->name." sent a request to rent the unit");
+                $this->PushNotificationPerformRequest($UserNotified->fcm_token,"send request",$User->name." sent a request to rent the unit");
             }
 
             return  Response::successResponse($Request,__("manage_request.request has been sent success"));
@@ -319,7 +319,7 @@ class ManageRequestService
             Notification::send($UserNotified,new ClientNotification($data));
 
             if ($UserNotified->fcm_token){
-                $this->pushNotification($UserNotified->fcm_token,"reject request",$User->name." reject a request to rent the unit");
+                $this->PushNotificationPerformRequest($UserNotified->fcm_token,"reject request",$User->name." reject a request to rent the unit");
             }
 
             return Response::successResponse($Request,__("manage_request.request has been rejected success"));
@@ -361,7 +361,7 @@ class ManageRequestService
             Notification::send($UserNotified,new ClientNotification($data));
 
             if ($UserNotified->fcm_token){
-                $this->pushNotification($UserNotified->fcm_token,"approve request",$User->name." approve a request to rent the unit");
+                $this->PushNotificationPerformRequest($UserNotified->fcm_token,"approve request",$User->name." approve a request to rent the unit");
             }
 
             //Send Notification Admin
@@ -505,7 +505,7 @@ class ManageRequestService
         Notification::send($UserNotified,new ClientNotification($data));
 
         if ($UserNotified->fcm_token){
-            $this->pushNotification($UserNotified->fcm_token,"cancel request",$User->name." cancel a request to rent the unit");
+            $this->PushNotificationPerformRequest($UserNotified->fcm_token,"cancel request",$User->name." cancel a request to rent the unit");
         }
 
         //Send Notification Admin
@@ -571,7 +571,7 @@ class ManageRequestService
         Notification::send($UserNotified,new ClientNotification($data));
 
         if ($UserNotified->fcm_token){
-            $this->pushNotification($UserNotified->fcm_token,"Pay the cost of documentation",$User->name." paid the cost of documenting the contract");
+            $this->PushNotificationPerformRequest($UserNotified->fcm_token,"Pay the cost of documentation",$User->name." paid the cost of documenting the contract");
         }
 
         //Send Notification Admin

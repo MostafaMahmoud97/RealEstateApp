@@ -4,6 +4,8 @@ namespace App\Traits;
 
 
 
+use GuzzleHttp\Client;
+
 trait FireBaseServiceTrait
 {
     public function pushNotification($token,$title,$body)
@@ -43,5 +45,38 @@ trait FireBaseServiceTrait
 
         $response = curl_exec($ch);
 
+    }
+
+    public function PushNotificationPerformRequest($token,$title,$body)
+    {
+
+        $SERVER_API_KEY = config("firebase_service.api_key");
+
+        $client = new Client([
+            'base_uri' => "https://fcm.googleapis.com",
+        ]);
+
+        $data = [
+            "registration_ids" => [
+                $token
+            ],
+
+            "notification" => [
+                "title" => $title,
+                "body" => $body,
+                "sound" => "default"
+            ],
+        ];
+
+        $data_string = json_encode($data);
+
+        $headers = [
+            "Authorization" => "key=".$SERVER_API_KEY,
+            "Content-Type" => "application/json"
+        ];
+
+
+        $response = $client->request("POST", "/fcm/send", ['body' => $data_string, 'headers' => $headers]);
+        return $response->getBody()->getContents();
     }
 }
