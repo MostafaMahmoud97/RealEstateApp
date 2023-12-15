@@ -31,11 +31,11 @@ return new class extends Migration
             $table->boolean("composite_kitchen_cabinets")->default(0)->nullable();
             $table->string("ac_type")->default("")->nullable();
             $table->integer("num_ac_units")->default(0)->nullable();
-            $table->integer("electricity_meter_number")->default(0)->nullable();
+            $table->bigInteger("electricity_meter_number")->default(0)->nullable();
             $table->double("electricity_meter_reading")->default(0)->nullable();
-            $table->integer("gas_meter_number")->default(0)->nullable();
+            $table->bigInteger("gas_meter_number")->default(0)->nullable();
             $table->double("gas_meter_reading")->default(0)->nullable();
-            $table->integer("water_meter_number")->default(0)->nullable();
+            $table->bigInteger("water_meter_number")->default(0)->nullable();
             $table->double("water_meter_reading")->default(0)->nullable();
             $table->text("description")->nullable();
             $table->boolean("is_publish")->default(0)->nullable();
