@@ -43,7 +43,7 @@ class StoreRequest extends FormRequest
             "unit.unit_number" => "required|string",
             "unit.floor_number" => "numeric|nullable",
             "unit.unit_area" => "required|numeric",
-            "unit.furnished" => "string|nullable",
+            "unit.furnished" => "boolean|nullable",
             "unit.composite_kitchen_cabinets" => "boolean|nullable",
             "unit.ac_type" => "string|nullable",
             "unit.num_ac_units" => "numeric|nullable",
@@ -66,7 +66,7 @@ class StoreRequest extends FormRequest
             "unit.special_sign_specification" => "string|nullable",
             "unit.insurance_policy_number" => "numeric|nullable",
             "unit.mezzanine" => "boolean|nullable",
-            "unit.unit_finishing" => "boolean|nullable",
+            "unit.unit_finishing" => "string|nullable",
         ];
     }
 
@@ -104,7 +104,7 @@ class StoreRequest extends FormRequest
             "unit.floor_number.numeric" => __("real_estate_client.you must enter floor number as number"),
             "unit.unit_area.required" => __("real_estate_client.you must enter unit area"),
             "unit.unit_area.numeric" => __("real_estate_client.you must enter unit area as number"),
-            "unit.furnished.string" => __("real_estate_client.you must enter furnished as string"),
+            "unit.furnished.boolean" => __("real_estate_client.you must enter furnished as boolean 1 or 0"),
             "unit.composite_kitchen_cabinets.boolean" => __("real_estate_client.you must enter furnished as boolean 1 or 0"),
             "unit.ac_type.string" => __("real_estate_client.you must enter ac_type as string"),
             "unit.num_ac_units.numeric" => __("real_estate_client.you must enter num_ac_units as numeric"),
@@ -127,7 +127,7 @@ class StoreRequest extends FormRequest
             "unit.special_sign_specification.string" => __("real_estate_client.you must enter special sign specification as string"),
             "unit.insurance_policy_number.numeric" => __("real_estate_client.you must enter insurance policy number as number"),
             "unit.mezzanine.boolean" => __("real_estate_client.you must enter mezzanine as boolean yes or no"),
-            "unit.unit_finishing.boolean" => __("real_estate_client.you must enter unit finishing as boolean yes or no"),
+            "unit.unit_finishing.string" => __("real_estate_client.you must enter unit finishing as string"),
 
         ];
     }

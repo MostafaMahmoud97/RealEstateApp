@@ -62,7 +62,6 @@ return [
     "you must enter floor number as number" => "you must enter floor number as number",
     "you must enter unit area" => "you must enter unit area",
     "you must enter unit area as number" => "you must enter unit area as number",
-    "you must enter furnished as string" => "you must enter furnished as string",
     "you must enter furnished as boolean 1 or 0" => "you must enter furnished as boolean 1 or 0",
     "you must enter ac_type as string" => "you must enter ac_type as string",
     "you must enter num_ac_units as numeric" => "you must enter num_ac_units as numeric",
@@ -84,7 +83,7 @@ return [
     "you must enter special sign specification as string" => "you must enter special sign specification as string",
     "you must enter insurance policy number as number" => "you must enter insurance policy number as number",
     "you must enter mezzanine as boolean yes or no" => "you must enter mezzanine as boolean yes or no",
-    "you must enter unit finishing as boolean yes or no" => "you must enter unit finishing as boolean yes or no",
+    "you must enter unit finishing as string" => "you must enter unit finishing as string",
 
     "you must send purpose id as number" => "you must send purpose id as number",
     "you must send purpose id as 1 or 2" => "you must send purpose id as 1 or 2",

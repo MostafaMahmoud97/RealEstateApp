@@ -59,7 +59,6 @@ return [
     "you must enter floor number as number" => "يجب عليك إدخال رقم الطابق كرقم",
     "you must enter unit area" => "يجب عليك إدخال مساحة الوحدة",
     "you must enter unit area as number" => "يجب عليك إدخال مساحة الوحدة كرقم",
-    "you must enter furnished as string" => "يجب عليك إدخال مفروشة كسلسلة",
     "you must enter furnished as boolean 1 or 0" => "يجب عليك إدخال مفروشة كقيمة منطقية 1 أو 0",
     "you must enter ac_type as string" => "يجب عليك إدخال نوع المكيف كسلسلة",
     "you must enter num_ac_units as numeric" => "يجب عليك إدخال عدد وحدات تكييف الهواء كأرقام",
@@ -81,7 +80,7 @@ return [
     "you must enter special sign specification as string" => "يجب عليك إدخال مواصفات اللوحة الخاصة كسلسلة",
     "you must enter insurance policy number as number" => "يجب عليك إدخال رقم بوليصة التأمين كرقم",
     "you must enter mezzanine as boolean yes or no" => "يجب عليك إدخال الميزانين بشكل منطقي نعم أو لا",
-    "you must enter unit finishing as boolean yes or no" => "يجب عليك إدخال تشطيب الوحدة بالقيمة المنطقية نعم أو لا",
+    "you must enter unit finishing as string" => "يجب عليك إدخال تشطيب الوحدة كسلسلة",
     "Unit has been added success" => "تم اضافة الوحدة بنجاح",
     "Unit has been updated success" => "تم تحديث الوحدة بنجاح",
 
