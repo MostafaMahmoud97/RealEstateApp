@@ -90,9 +90,9 @@ class RealEstateService
 
         // add commercial data
         if($request->building_type_use_id == 1){
-            if($request->units){
-                foreach ($UnitsArray as $unit){
-                    $commercialInfo = CommercialInfo::create($unit);
+            if($request->unit){
+                foreach ($UnitsArray as $unitt){
+                    $commercialInfo = CommercialInfo::create($unitt);
                 }
 
             }
