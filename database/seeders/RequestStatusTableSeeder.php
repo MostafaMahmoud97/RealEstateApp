@@ -29,8 +29,8 @@ class RequestStatusTableSeeder extends Seeder
                 "title_en" => "Not Available"
             ],
             [
-                "title_ar" => "تحتجز",
-                "title_en" => "Holding"
+                "title_ar" => "جارى فحص الطلب",
+                "title_en" => "Processing Request"
             ],
         ];
 
