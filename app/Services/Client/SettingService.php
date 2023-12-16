@@ -42,7 +42,7 @@ class SettingService
 
             $RequestStatusX = [
                 [
-                    "id" => "",
+                    "id" => 0,
                     "title" => "All"
                 ]
             ];
@@ -57,7 +57,7 @@ class SettingService
 
             $RequestStatusX = [
                 [
-                    "id" => "",
+                    "id" => 0,
                     "title" => "الكل"
                 ]
             ];
