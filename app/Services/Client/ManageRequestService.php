@@ -160,9 +160,10 @@ class ManageRequestService
         })->whereDoesntHave("Requests",function ($q) use ($user_id,$unit_id){
             $q->where(function ($q){
                 $q->where("request_states_id",2)->whereDate("tenancy_end_date",">=",Carbon::today()->toDateString());
-            })->OrWhere(function ($q) use ($unit_id,$user_id){
-                $q->where("unit_id",$unit_id)->where("user_id",$user_id)->whereDate("tenancy_end_date",">=",Carbon::today()->toDateString());
             });
+//                ->OrWhere(function ($q) use ($unit_id,$user_id){
+//                $q->where("unit_id",$unit_id)->where("user_id",$user_id)->whereDate("tenancy_end_date",">=",Carbon::today()->toDateString());
+//            })
         })->find($request->unit_id);
 
         if (!$Unit){
