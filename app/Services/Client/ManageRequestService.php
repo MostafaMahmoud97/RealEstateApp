@@ -416,7 +416,7 @@ class ManageRequestService
                    $q->where("request_states_id",$request->status)->whereHas("DepositInvoice",function ($q){
                        $q->where("deposit_invoice_status_id",1);
                    });
-                }else{
+                }elseif($request->status != 0){
                     $q->where("request_states_id",$request->status);
                 }
             })

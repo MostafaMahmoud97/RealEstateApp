@@ -39,8 +39,23 @@ class SettingService
                     "title" => "All"
                 ]
             ];
+
+            $RequestStatusX = [
+                [
+                    "id" => "",
+                    "title" => "All"
+                ]
+            ];
+
         }else{
             $homeTaps = [
+                [
+                    "id" => "",
+                    "title" => "الكل"
+                ]
+            ];
+
+            $RequestStatusX = [
                 [
                     "id" => "",
                     "title" => "الكل"
@@ -53,6 +68,10 @@ class SettingService
             array_push($homeTaps , $item);
         }
 
+        foreach ($RequestStatus as $status){
+            array_push($RequestStatusX,$status);
+        }
+
 
         $data = [
             "building_type" => $BuildingType,
@@ -62,7 +81,7 @@ class SettingService
             "invoice_status" => $InvoiceStatus,
             "nationality" => $Nationality,
             "purpose_property" => $PurposeProperty,
-            "request_status" => $RequestStatus,
+            "request_status" => $RequestStatusX,
             "type_identity" => $TypeIdentity,
             "contract_taps" => $ContractTaps,
             "home_taps" => $homeTaps,
