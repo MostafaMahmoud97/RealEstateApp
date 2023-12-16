@@ -32,7 +32,7 @@ class SettingService
         $RentPaymentCycles = RentPaymentCycle::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")->get();
         $ContractTaps = UnitStatus::select("id","title_".LaravelLocalization::getCurrentLocale()." as title")
             ->whereNotIn("id",[1,2])->get();
-        if (LaravelLocalization::getCurrentLocale() == "er"){
+        if (LaravelLocalization::getCurrentLocale() == "en"){
             $homeTaps = [
                 [
                     "id" => "",
