@@ -16,6 +16,7 @@ class SentRequestResources extends JsonResource
     {
         return [
             "request_id" => $this->id,
+            "unit_id" => $this["Unit"]->id,
             "purpose_property" => $this["Unit"]["PurposeProperty"]->title,
             "address" => $this["Unit"]['RealEstate']->national_address,
             "building_type" => $this["Unit"]['RealEstate']['BuildingType']->title,
