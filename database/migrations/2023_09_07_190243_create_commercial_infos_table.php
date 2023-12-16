@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text("special_sign_specification")->nullable();
             $table->bigInteger("insurance_policy_number")->default(0)->nullable();
             $table->boolean("mezzanine")->default(0)->nullable();
-            $table->boolean("unit_finishing")->default(0)->nullable();
+            $table->string("unit_finishing")->default("")->nullable();
 
             $table->softDeletes();
             $table->timestamps();

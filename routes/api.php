@@ -99,3 +99,5 @@ Route::group(['middleware' => 'localRequest'], function()
 
 
 Route::post("test-upload-image",[\App\Http\Controllers\TestImageController::class,"store_image"]);
+
+Route::get("notify-test",[\App\Http\Controllers\TestNotification::class,"NotifyTest"]);

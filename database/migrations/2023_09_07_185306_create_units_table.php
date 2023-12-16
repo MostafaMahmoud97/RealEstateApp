@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string("unit_number");
             $table->integer("floor_number")->default(0)->nullable();
             $table->double("unit_area");
-            $table->string("furnished")->default("")->nullable();
+            $table->boolean("furnished")->default(0)->nullable();
             $table->boolean("composite_kitchen_cabinets")->default(0)->nullable();
             $table->string("ac_type")->default("")->nullable();
             $table->integer("num_ac_units")->default(0)->nullable();
