@@ -241,7 +241,7 @@ class ManageRequestService
     public function GetAllReceivedRequest(){
         $user_id = Auth::id();
         $Requests = Request::select("id","unit_id","user_id")->with(["User" => function($q){
-            $q->select("id","name","email");
+            $q->select("id","name","email","phone");
         },"Unit" => function($q){
             $q->select("id","real_estate_id","purpose_property_id","price","unit_area","unit_number")->with(["RealEstate" => function($q){
                 $q->select("id","building_type_id","building_type_use_id","national_address")->with(["media","BuildingType" => function($q){
