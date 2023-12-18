@@ -127,6 +127,7 @@ class ClientAuthService
         $User->update($request->all());
 
         if ($email != $request->email){
+            return $email;
             $User->update([
                 "email_verified_at" => null
             ]);
