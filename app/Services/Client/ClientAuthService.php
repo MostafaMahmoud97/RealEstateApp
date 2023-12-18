@@ -128,7 +128,8 @@ class ClientAuthService
 
         if ($email != $request->email){
 
-            return $User;
+            $User->email_verified_at = null;
+            $User->save();
         }
 
         return Response::successResponse($User,__("auth.user has been updated"));
