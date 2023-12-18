@@ -123,7 +123,14 @@ class ClientAuthService
     public function update($request){
         $User_id = Auth::id();
         $User = User::find($User_id);
+        $email = $User->email;
         $User->update($request->all());
+
+        if ($email == $request->email){
+            $User->update([
+                "email_verified_at" => null
+            ]);
+        }
 
         return Response::successResponse($User,__("auth.user has been updated"));
     }
