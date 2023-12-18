@@ -132,6 +132,10 @@ class ClientAuthService
         $user_id = Auth::id();
         $user = User::find($user_id);
 
+        if (!Hash::check($request->old_password, $user->password)){
+            return Response::errorResponse(__("auth.old password is invalid"));
+        }
+
         $user->update([
             "password" => Hash::make($request->password)
         ]);
@@ -221,13 +225,13 @@ class ClientAuthService
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|min:8'
         ],[
             "token.required" => __("auth.token has been required"),
             "email.required" => __("auth.email has been required"),
             "email.email" => __("auth.The email must be valid and contain @"),
             "password.required" => __("auth.the password is required"),
-            "password.min" => __("auth.The minimum password length is 6 characters"),
+            "password.min" => __("auth.The minimum password length is 8 characters"),
             "password.confirmed" => __("auth.the confirmation password doesn't match with password"),
         ]);
 
