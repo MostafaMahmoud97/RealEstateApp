@@ -34,11 +34,11 @@ class AdminAuthService
         if ($user) {
             auth('admin-api')->setUser($user);
 
-            $token = Auth::guard('admin-api')->user()->createToken('passport_token')->accessToken;
+            $token = Auth::guard('admin-api')->user()->createToken('passport_token',["admin"])->accessToken;
             $user = Auth::guard('admin-api')->user();
 
             $media = $user->media;
-            if ($media->file_path){
+            if ($media != null){
                 $user->logo = $media->file_path;
             }else{
                 $user->logo = "";

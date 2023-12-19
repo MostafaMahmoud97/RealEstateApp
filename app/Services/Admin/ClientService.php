@@ -104,10 +104,20 @@ class ClientService
                 "is_active" => 1
             ]);
         }else{
+            $tokens = $client->tokens;
+
             $client->update([
                 "is_active" => 0
             ]);
+
+            foreach ($tokens as $token){
+                if(count($token->scopes) > 0 && $token->scopes[0] == "user"){
+                    $token->revoke();
+                }
+            }
         }
+        $client = User::find($client_id);
+
         return Response::successResponse($client,__("client.Client has been updated success"));
     }
 }

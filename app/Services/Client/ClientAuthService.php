@@ -39,10 +39,10 @@ class ClientAuthService
 
         $user = $this->checkLogin($request->client_identity,$request->password);
         if ($user) {
-            auth()->setUser($user);
+            auth("api")->setUser($user);
 
-            $token = Auth::user()->createToken('passport_token')->accessToken;
-            $user = Auth::user();
+            $token = Auth::guard("api")->user()->createToken('passport_token',["user"])->accessToken;
+            $user = Auth::guard("api")->user();
 
 
             if($user->is_active == 0){
