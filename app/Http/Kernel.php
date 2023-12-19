@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureEmailsVerified;
 use App\Http\Middleware\LocalizeApiRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -71,7 +72,8 @@ class Kernel extends HttpKernel
         'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
-        'localRequest'            => LocalizeApiRequests::class
+        'localRequest'            => LocalizeApiRequests::class,
+        'verified-cust' => EnsureEmailsVerified::class
     ];
 
 }

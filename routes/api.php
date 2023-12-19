@@ -23,18 +23,18 @@ Route::group(['middleware' => 'localRequest'], function()
     Route::post('check-forgot-password-token',[ClientAuthController::class,'sendForgotPasswordToken']);
     Route::post('change-password',[ClientAuthController::class,'change_password']);
 
-    Route::group(["prefix" => "setting","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "setting","middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("all-help-data",[SettingController::class,"get_all_help_data"]);
     });
 
-    Route::group(["prefix" => "user","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "user","middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("/",[ClientAuthController::class,"show"]);
         Route::put("update",[ClientAuthController::class,"update"]);
         Route::put("reset-password",[ClientAuthController::class,"resetPassword"]);
         Route::put("store-fcm-token",[ClientAuthController::class,"saveFCMToken"]);
     });
 
-    Route::group(["prefix" => "real-estate","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "real-estate","middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("help-data",[RealEstateController::class,"getHelpData"]);
         Route::get("commercial-activity",[RealEstateController::class,"getCommercialActivity"]);
         Route::post("store",[RealEstateController::class,"store"]);
@@ -55,7 +55,7 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("show-unit/{unit_id}",[RealEstateController::class,"showUnit"]);
     });
 
-    Route::group(["prefix" => "commercial-activity","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "commercial-activity","middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("/",[CommercialActivityController::class,"index"]);
         Route::post("store",[CommercialActivityController::class,"store"]);
         Route::get("show/{id}",[CommercialActivityController::class,"show"]);
@@ -63,7 +63,7 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::delete("delete/{id}",[CommercialActivityController::class,"delete"]);
     });
 
-    Route::group(["prefix" => "request","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "request","middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("/click-send-request/{unit_id}",[ManageRequestController::class,"ClickSendRequest"]);
         Route::post("/calc-annual-rent",[ManageRequestController::class,"CalcAnnualRent"]);
         Route::post("/calc-regular-rent-payment",[ManageRequestController::class,"CalcRegularRentPayment"]);
@@ -79,17 +79,17 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::post("/pay-payment-invoice",[ManageRequestController::class,"PayPaymentInvoice"]);
     });
 
-    Route::group(["prefix" => "deals" , "middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "deals" , "middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("/status-contract",[DealClientController::class,"DealStatusList"]);
         Route::get("/contracts",[DealClientController::class,"index"]);
     });
 
-    Route::group(["prefix" => "chat","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "chat","middleware" => ["auth:api","verified-cust"]],function (){
         Route::post("/start-chat",[ChatController::class,"startChat"]);
         Route::get("/index",[ChatController::class,"getMyChat"]);
     });
 
-    Route::group(["prefix" => "notification","middleware" => ["auth:api","verified"]],function (){
+    Route::group(["prefix" => "notification","middleware" => ["auth:api","verified-cust"]],function (){
         Route::get("/",[NotificationController::class,"index"]);
         Route::post("/mark-single-as-read",[NotificationController::class,"markSingleNotiAsRead"]);
         Route::get("/mark-all-as-read",[NotificationController::class,"markAllNotiAsRead"]);
