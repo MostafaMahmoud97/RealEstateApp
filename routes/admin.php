@@ -9,6 +9,7 @@ use \App\Http\Controllers\Admin\RealEstateController;
 use \App\Http\Controllers\Admin\EmployeeController;
 use \App\Http\Controllers\Admin\DealController;
 use \App\Http\Controllers\Admin\NotificationController;
+use \App\Http\Controllers\Admin\DashboardController;
 
 
 
@@ -77,5 +78,12 @@ Route::group(['middleware' => 'localRequest'], function()
         Route::get("/",[NotificationController::class,"index"]);
         Route::post("/mark-single-as-read",[NotificationController::class,"markSingleNotiAsRead"]);
         Route::get("/mark-all-as-read",[NotificationController::class,"markAllNotiAsRead"]);
+    });
+
+    Route::group(["prefix" => "dashboard","middleware" => "auth:admin-api"],function (){
+        Route::get("get-contracts",[DashboardController::class,"getContract"]);
+        Route::get("get-users",[DashboardController::class,"getUsers"]);
+        Route::get("get-deals",[DashboardController::class,"getDeals"]);
+        Route::get("get-units",[DashboardController::class,"getUnits"]);
     });
 });
