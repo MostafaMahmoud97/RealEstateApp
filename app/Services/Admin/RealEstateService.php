@@ -206,6 +206,39 @@ class RealEstateService
             $Units = $Units->select("id","real_estate_id","purpose_property_id","price","unit_number","unit_area");
         }
 
+        if ($request->purpose_id){
+            $Units = $Units->whereHas("PurposeProperty",function ($q) use ($request){
+                $q->where("id",$request->purpose_id);
+            });
+        }
+
+        if ($request->price && $request->price['min'] && $request->price['max']){
+            $Units = $Units->whereBetween("price",[$request->price['min'],$request->price['max']]);
+        }
+
+        if ($request->area && $request->area['min'] && $request->area['max']){
+            $Units = $Units->whereBetween("unit_area",[$request->area['min'],$request->area['max']]);
+        }
+
+        if ($request->lots && $request->lots['min'] && $request->lots['max']){
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->whereBetween("number_parking_lots",[$request->lots['min'],$request->lots['max']]);
+            });
+        }
+
+        if ($request->property_type_id){
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->where("building_type_id",$request->property_type_id);
+            });
+        }
+
+        if ($request->property_usage_id && $request->property_usage_id != null && $request->property_usage_id != "" ){
+            $Units = $Units->whereHas("RealEstate",function ($q) use ($request){
+                $q->whereIn("building_type_use_id",$request->property_usage_id);
+            });
+        }
+
+
         $Units = $Units->paginate(8);
 
         return Response::successResponse(PaginateListAllUnitsResource::make($Units),__("real_estate.Units have been fetched success"));
