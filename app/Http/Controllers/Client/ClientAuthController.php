@@ -42,7 +42,7 @@ class ClientAuthController extends Controller
     public function resetPassword(Request $request){
         $Validation = Validator::make($request->all(),[
             "old_password" => "required",
-            "password" => "required|confirmed|min:8"
+            "password" => "required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/"
         ],[
             "old_password.required" => __("client.you must enter password"),
             "password.required" => __("client.you must enter password"),

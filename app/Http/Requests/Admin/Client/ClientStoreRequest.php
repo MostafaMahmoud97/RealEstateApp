@@ -30,7 +30,7 @@ class ClientStoreRequest extends FormRequest
             "id_number" => "required|numeric",
             "phone" => "required|string|unique:users,phone",
             "email" => "required|email|unique:users,email",
-            "password" => "required|confirmed|min:6"
+            "password" => "required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/"
         ];
     }
 
@@ -54,7 +54,7 @@ class ClientStoreRequest extends FormRequest
             "email.unique" => __("client.This email is already in use"),
             "password.required" => __("client.you must enter password"),
             "password.confirmed" => __("client.password confirmation not match with password"),
-            "password.min" => __("client.you must enter min:6 characters in password"),
+            "password.min" => __("client.you must enter min:8 characters in password"),
         ];
     }
 }

@@ -27,7 +27,7 @@ class EmployeeStoreRequest extends FormRequest
             "name" => "required|string",
             "phone" => "required|string|unique:admins,phone",
             "email" => "required|email|unique:admins,email",
-            "password" => "required|confirmed|min:8",
+            "password" => "required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/",
             "job_title" => "required|string",
             "logo" => "required|mimes:jpg,png,jpeg|max:2048"
         ];

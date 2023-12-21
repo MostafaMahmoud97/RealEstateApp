@@ -40,7 +40,7 @@ class ClientController extends Controller
 
     public function resetPassword($id,Request $request){
         $Validation = Validator::make($request->all(),[
-            "password" => "required|confirmed|min:8"
+            "password" => "required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/"
         ],[
             "password.required" => __("client.you must enter password"),
             "password.confirmed" => __("client.password confirmation not match with password"),

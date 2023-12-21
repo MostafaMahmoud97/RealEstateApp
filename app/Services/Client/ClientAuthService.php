@@ -26,11 +26,10 @@ class ClientAuthService
     public function login($request){
         $validator = Validator::make($request->all(), [
             'client_identity' => 'required',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ],[
             "client_identity.required" => __("auth.client identity is required"),
             "password.required" => __("auth.the password is required"),
-            "password.min" => __("auth.The minimum password length is 6 characters"),
         ]);
 
         if ($validator->fails()) {
@@ -232,7 +231,7 @@ class ClientAuthService
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:8'
+            'password' => 'required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/'
         ],[
             "token.required" => __("auth.token has been required"),
             "email.required" => __("auth.email has been required"),

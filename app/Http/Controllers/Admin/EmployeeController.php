@@ -51,7 +51,7 @@ class EmployeeController extends Controller
 
     public function resetPassword($id,Request $request){
         $Validation = Validator::make($request->all(),[
-            "password" => "required|confirmed|min:8"
+            "password" => "required|confirmed|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/"
         ],[
             "password.required" => __("employee.you must enter password"),
             "password.confirmed" => __("employee.password confirmation not match with password"),
