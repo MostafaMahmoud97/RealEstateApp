@@ -188,7 +188,7 @@ class RealEstateService
     public function listAllUnits($request){
 
         $Units = Unit::with(["RealEstate" =>function($q){
-            $q->select("id","lat","lon","building_type_id","building_type_use_id","national_address","price")
+            $q->select("id","lat","lon","building_type_id","building_type_use_id","national_address")
                 ->with(["media","BuildingType" => function($q){
                     $q->select('id','title_'.LaravelLocalization::getCurrentLocale()." as title");
                 },"BuildingTypeUse" => function($q){
